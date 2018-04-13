@@ -425,10 +425,10 @@ function crawlScores(users, handle) {
 					var i18n = {};
 					i18nModule.init(i18n);
 					if (user[0].lang != 'unknown') {
-						i18nModule.setLocale(i18n, user[0].lang);
+						i18nModule.setLocale(i18n, users[0].lang);
 					}
 					var device = require('byteballcore/device.js');
-					device.sendMessageToDevice(user[0].device_address, 'text', i18n.__("I couldn't get your WCG score for the ongoing distribution, please check that your account name is: {{accountName}}", {
+					device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("I couldn't get your WCG score for the ongoing distribution, please check that your account name is: {{accountName}}", {
 						accountName: users[0].account_name
 					}) + "\n" + getTxtCommandButton(i18n.__("ok"), "ok"));
 					db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
