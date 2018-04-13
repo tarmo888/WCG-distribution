@@ -263,7 +263,7 @@ function checkAndRegisterNewName(from_address, newName, id_WCG, i18n, handle) {
 
 							if (id_WCG === statsObject.memberId) {
 								arrPeers[from_address].step = "home";
-								db.query("UPDATE users SET account_name=? WHERE id_wcg=?", [id_WCG], function() {
+								db.query("UPDATE users SET account_name=? WHERE id_wcg=?", [newName, id_WCG], function() {
 									return handle(i18n.__("New name validated.") + "\n➡ " + getTxtCommandButton(i18n.__("ok"), "ok"))
 								});
 
