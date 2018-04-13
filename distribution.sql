@@ -32,7 +32,7 @@ CREATE TABLE wcg_scores (
 	id_distribution INTEGER,
 	device_address CHAR(33) NOT NULL,
 	payout_address  CHAR(33),
-	member_id,
+	member_id INTEGER,
 	score FLOAT,
 	diff_from_previous FLOAT,
 	unit_payment CHAR(44),
@@ -46,7 +46,7 @@ CREATE TABLE wcg_scores (
 CREATE TABLE wcg_meta_infos (
 	id_distribution INTEGER,
 	device_address CHAR(33) NOT NULL,
-	member_id,
+	member_id INTEGER,
 	nb_devices INTEGER,
 	run_time_per_day FLOAT,
 	run_time_per_result FLOAT,
