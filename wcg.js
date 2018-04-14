@@ -532,8 +532,8 @@ function processAnyAuthorizedDistribution() {
 						arrOutputsBytes.forEach(function(output) {
 							arrPayoutAdresses.push(output.address);
 						});
-						db.query("UPDATE wcg_scores SET unit_payment=? WHERE payout_address IN (?)", [unit.unit, arrPayoutAdresses], function() {
-							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.payout_address IN (?)", [arrPayoutAdresses], function(rows) {
+						db.query("UPDATE wcg_scores SET unit_payment=? WHERE payout_address IN (?) AND id_distribution=?", [unit.unit, arrPayoutAdresses, authorizedDistributions[0].id], function() {
+							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.payout_address IN (?) AND id_distribution=?", [arrPayoutAdresses,authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
 									
 									var i18n = {};
