@@ -105,13 +105,16 @@ function processTxt(from_address, text) {
 					return;
 				}
 
+				/*
+				 * If admin authorized a distribution
+				 */
+
 				if (text.indexOf("distribute_") > -1 && headlessWallet.isControlAddress(from_address)) {
 					db.query("UPDATE distributions SET is_authorized=1 WHERE id = ?", [Number(text.split("_")[1])], function() {
 						processAnyAuthorizedDistribution();
 						device.sendMessageToDevice(from_address, 'text', "Distribution id " + text.split("_")[1] + " authorized");
 					});
 				}
-
 
 
 				/*
@@ -451,7 +454,7 @@ function crawlScores(users, handle) {
 								db.takeConnectionFromPool(function(conn) {
 									var arrQueries = [];
 									conn.addQuery(arrQueries, "BEGIN");
-									conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores (id_distribution, device_address, payout_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?, ? - (SELECT score FROM wcg_scores WHERE id_distribution = (SELECT max( id_distribution) FROM wcg_scores WHERE member_id =?)))", [users[0].device_address, users[0].payout_address, statsObject.memberId, statsObject.points, statsObject.points, statsObject.memberId]);
+									conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores (id_distribution, device_address, payout_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?, ? - (SELECT score FROM wcg_scores WHERE id_distribution = (SELECT max( id_distribution) FROM wcg_scores WHERE member_id =?) AND member_id =?))", [users[0].device_address, users[0].payout_address, statsObject.memberId, statsObject.points, statsObject.points, statsObject.memberId, statsObject.memberId]);
 									conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos (id_distribution, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?,?,?,?,?)", [users[0].device_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
 									conn.addQuery(arrQueries, "UPDATE wcg_scores SET bytes_reward= diff_from_previous * ? WHERE id_distribution =(SELECT max( id_distribution) FROM wcg_scores WHERE member_id =?) AND member_id =?", [conversion.getPriceInBytes(1) * WCGpointToDollar, statsObject.memberId, statsObject.memberId]);
 									conn.addQuery(arrQueries, "COMMIT");
@@ -617,14 +620,21 @@ function verifyDistribution(distributionID, distributionDate) {
 
 function sendReportToAdmin() {
 
-	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, SUM (diff_from_previous) as points_total FROM wcg_scores INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
+	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, score FROM wcg_scores INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) AND bytes_reward>0 ORDER BY bytes_reward DESC", function(rows) {
 
+		var totalAsset =0;
+		var totalBytes =0;
+		rows.forEach(function(row) {
+			totalAsset+= row.score;
+			totalBytes+= row.bytes_reward;
+		});
 		var bodyEmail = "Distribution id " + rows[0].id_distribution + "ready, paste distribute_" + rows[0].id_distribution + " to start it\n";
-		bodyEmail += "Total bytes to be distributed " + Math.round(rows[0].points_total) + " to " + rows.length + " users\n";
-		bodyEmail += "user	bytes reward\n";
+		bodyEmail += "Total bytes to be distributed " + Math.round(totalBytes) + " to " + rows.length + " users\n";
+		bodyEmail += "Total assets to be distributed " + Math.round(totalAsset) + " to " + rows.length + " users\n";
+		bodyEmail += "user	bytes reward	Asset reward\n";
 
 		rows.forEach(function(row) {
-			bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward);
+			bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.score);
 		});
 		notifications.notifyAdmin("Distribution id " + rows[0].id_distribution + "ready", bodyEmail)
 	});
