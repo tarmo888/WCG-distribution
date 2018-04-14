@@ -424,7 +424,7 @@ function crawlScores(users, handle) {
 				if (errParsing) {
 					var i18n = {};
 					i18nModule.init(i18n);
-					if (user[0].lang != 'unknown') {
+					if (users[0].lang != 'unknown') {
 						i18nModule.setLocale(i18n, users[0].lang);
 					}
 					var device = require('byteballcore/device.js');
