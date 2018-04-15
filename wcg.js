@@ -38,7 +38,7 @@ const languagesAvailable = {
 var my_address;
 var arrPeers = [];
 var honorificAsset;
-var labelAsset="WCG-test";
+var labelAsset="WCG";
 
 if (isMultiLingual) {
 	var arrLanguage = [];
@@ -341,35 +341,45 @@ function checkAndReformatRawObject(rawObject, handle) {
 
 	if (rawObject.MemberStats && rawObject.MemberStats.MemberStat && rawObject.MemberStats.MemberStat[0] &&
 		rawObject.MemberStats.MemberStat[0].Name && rawObject.MemberStats.MemberStat[0].Name[0] &&
-		rawObject.MemberStats.MemberStat[0].MemberId && rawObject.MemberStats.MemberStat[0].MemberId[0] &&
-		rawObject.MemberStats.MemberStat[0].NumDevices && rawObject.MemberStats.MemberStat[0].NumDevices[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsTotals && rawObject.MemberStats.MemberStat[0].StatisticsTotals[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points && rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsAverages && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerDay && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerDay[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerResult && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerResult[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerHourRunTime && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerHourRunTime[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay[0] &&
-		rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult[0]) {
+		rawObject.MemberStats.MemberStat[0].MemberId && rawObject.MemberStats.MemberStat[0].MemberId[0]) {
 
-		let formatedObject = {
+		var formatedObject = {
 			name: rawObject.MemberStats.MemberStat[0].Name[0],
 			memberId: Number(rawObject.MemberStats.MemberStat[0].MemberId[0]),
-			numDevices: Number(rawObject.MemberStats.MemberStat[0].NumDevices[0]),
-			points: Number(rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points[0]),
-			runTimePerDay: Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerDay[0]),
-			runTimePerResult: Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerResult[0]),
-			pointsPerHourRunTime: Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerHourRunTime[0]),
-			pointsPerDay: Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay[0]),
-			pointsPerResult: Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult[0])
-
+			numDevices: 0,
+			points: 0,
+			runTimePerDay: 0,
+			runTimePerResult: 0,
+			pointsPerHourRunTime: 0,
+			pointsPerDay: 0,
+			pointsPerResult: 0
 		}
 
-		return handle(null, formatedObject);
+		if (rawObject.MemberStats.MemberStat[0].NumDevices && rawObject.MemberStats.MemberStat[0].NumDevices[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsTotals && rawObject.MemberStats.MemberStat[0].StatisticsTotals[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points && rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsAverages && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerDay && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerDay[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerResult && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerResult[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerHourRunTime && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerHourRunTime[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay[0] &&
+			rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult[0]) {
+
+			formatedObject.numDevices = Number(rawObject.MemberStats.MemberStat[0].NumDevices[0]);
+			formatedObject.points = Number(rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points[0]);
+			formatedObject.runTimePerDay = Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerDay[0]);
+			formatedObject.runTimePerResult = Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerResult[0]);
+			formatedObject.pointsPerHourRunTime = Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerHourRunTime[0]);
+			formatedObject.pointsPerDay = Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay[0]);
+			formatedObject.pointsPerResult = Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult[0]);
+		}
+
+
 	} else {
 		return handle("There was a problem with XML returned by WCG");
 	}
 
+	return handle(null, formatedObject);
 
 }
 
@@ -545,7 +555,7 @@ function processAnyAuthorizedDistribution() {
 										i18nModule.setLocale(i18n, row.lang);
 									}
 									
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("I sent you {{amountByte}}GB and {{amountAsset}}{{labelAsset}} in reward for your contributions.",{amountByte:(row.bytes_reward/Math.pow(10,9)).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:labelAsset}));
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("I sent you {{amountByte}}GB and {{amountAsset}} {{labelAsset}} in reward for your contributions.",{amountByte:(row.bytes_reward/Math.pow(10,9)).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:labelAsset}));
 								});
 							});
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
@@ -620,12 +630,14 @@ function verifyDistribution(distributionID, distributionDate) {
 
 function sendReportToAdmin() {
 
-	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, score FROM wcg_scores INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) AND bytes_reward>0 ORDER BY bytes_reward DESC", function(rows) {
+	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous FROM wcg_scores \n\
+			 INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
+			 WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) AND bytes_reward>0 ORDER BY bytes_reward DESC", function(rows) {
 
-		var totalAsset =0;
-		var totalBytes =0;
+		var totalAsset = 0;
+		var totalBytes = 0;
 		rows.forEach(function(row) {
-			totalAsset+= row.score;
+			totalAsset+= row.diff_from_previous;
 			totalBytes+= row.bytes_reward;
 		});
 		var bodyEmail = "Distribution id " + rows[0].id_distribution + "ready, paste distribute_" + rows[0].id_distribution + " to start it\n";
@@ -634,7 +646,7 @@ function sendReportToAdmin() {
 		bodyEmail += "user	bytes reward	Asset reward\n";
 
 		rows.forEach(function(row) {
-			bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.score);
+			bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.diff_from_previous)+"\n";
 		});
 		notifications.notifyAdmin("Distribution id " + rows[0].id_distribution + "ready", bodyEmail)
 	});
