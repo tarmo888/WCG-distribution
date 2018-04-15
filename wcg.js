@@ -522,7 +522,7 @@ function processAnyAuthorizedDistribution() {
 			var walletGeneral = require('byteballcore/wallet_general.js');
 			var divisibleAsset = require('byteballcore/divisible_asset.js');
 			var composer = require('byteballcore/composer.js');
-			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAsset) {
+			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAsset,arrMemberID) {
 				if (!arrOutputsBytes) { // done
 					db.query("UPDATE distributions SET is_completed=1 WHERE id=?", [authorizedDistributions[0].id], function() {});
 					return verifyDistribution(authorizedDistributions[0].id, authorizedDistributions[0].creation_date);
@@ -541,12 +541,8 @@ function processAnyAuthorizedDistribution() {
 
 					} else {
 
-						var arrPayoutAdresses = []
-						arrOutputsBytes.forEach(function(output) {
-							arrPayoutAdresses.push(output.address);
-						});
-						db.query("UPDATE wcg_scores SET unit_payment=? WHERE payout_address IN (?) AND id_distribution=?", [unit.unit, arrPayoutAdresses, authorizedDistributions[0].id], function() {
-							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.payout_address IN (?) AND id_distribution=?", [arrPayoutAdresses,authorizedDistributions[0].id], function(rows) {
+						db.query("UPDATE wcg_scores SET unit_payment=? WHERE member_id IN (?) AND id_distribution=?", [unit, arrMemberID, authorizedDistributions[0].id], function() {
+							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.member_id IN (?) AND id_distribution=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
 									
 									var i18n = {};
@@ -578,7 +574,7 @@ function processAnyAuthorizedDistribution() {
 
 function createDistributionOutputs(distributionID, distributionDate, handleOutputs) {
 	db.query(
-		"SELECT bytes_reward,payout_address, device_address, diff_from_previous \n\
+		"SELECT bytes_reward,payout_address, device_address,diff_from_previous,member_id \n\
 		FROM wcg_scores \n\
 		LEFT JOIN outputs \n\
 			ON wcg_scores.payout_address=outputs.address \n\
@@ -596,6 +592,7 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 				return handleOutputs();
 			var arrOutputsBytes = [];
 			var arrOutputsAsset = [];
+			var arrMemberID = [];
 			rows.forEach(function(row) {
 				arrOutputsBytes.push({
 					amount: Math.round(row.bytes_reward),
@@ -605,8 +602,10 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 					amount: Math.round(row.diff_from_previous),
 					address: row.payout_address
 				});
+				arrMemberID.push(row.member_id);
+				
 			});
-			handleOutputs(arrOutputsBytes, arrOutputsAsset);
+			handleOutputs(arrOutputsBytes, arrOutputsAsset,arrMemberID);
 		}
 	);
 }
