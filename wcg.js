@@ -631,13 +631,16 @@ function sendReportToAdmin() {
 
 	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous FROM wcg_scores \n\
 			 INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
-			 WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) AND bytes_reward>0 ORDER BY bytes_reward DESC", function(rows) {
+			 WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
 
 		var totalAsset = 0;
 		var totalBytes = 0;
 		rows.forEach(function(row) {
 			totalAsset+= row.diff_from_previous;
 			totalBytes+= row.bytes_reward;
+			if(row.diff_from_previous<0){
+				return notifications.notifyAdmin("Error for distribution id " + rows[0].id_distribution, "Member ID " + row.member_id + "  has negative reward");
+			}
 		});
 		var bodyEmail = "Distribution id " + rows[0].id_distribution + "ready, paste distribute_" + rows[0].id_distribution + " to start it\n";
 		bodyEmail += "Total bytes to be distributed " + Math.round(totalBytes) + " to " + rows.length + " users\n";
@@ -647,7 +650,7 @@ function sendReportToAdmin() {
 		rows.forEach(function(row) {
 			bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.diff_from_previous)+"\n";
 		});
-		notifications.notifyAdmin("Distribution id " + rows[0].id_distribution + "ready", bodyEmail)
+		return notifications.notifyAdmin("Distribution id " + rows[0].id_distribution + "ready", bodyEmail)
 	});
 
 }
