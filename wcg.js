@@ -443,7 +443,7 @@ function crawlScores(users, handle) {
 					var device = require('byteballcore/device.js');
 					device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("I couldn't get your WCG score for the ongoing distribution, please check that your account name is: {{accountName}}", {
 						accountName: users[0].account_name
-					}) + "\n" + getTxtCommandButton(i18n.__("ok"), "ok"));
+					}) + "\n➡ " + getTxtCommandButton(i18n.__("ok"), "ok"));
 					db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 						users.shift();
 						crawlScores(users, function() {
@@ -481,11 +481,16 @@ function crawlScores(users, handle) {
 
 
 							} else {
+								var i18n = {};
+								i18nModule.init(i18n);
+								if (users[0].lang != 'unknown') {
+									i18nModule.setLocale(i18n, users[0].lang);
+								}
 								var device = require('byteballcore/device.js');
-								device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("I detected that the account named {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't get the distribution until you fix this issue or link you new WCG account.", {
+								device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("I detected that the account named {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't get the distribution until you fix this issue or link your new WCG account.", {
 								accountName: users[0].account_name,
 								WCG_id: users[0].id_wcg
-								}) + "\n" + getTxtCommandButton(i18n.__("ok"), "ok"));
+								}) + "\n➡ " + getTxtCommandButton(i18n.__("ok"), "ok"));
 								db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 									users.shift();
 									crawlScores(users, function() {
@@ -596,7 +601,7 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 			AND bytes_reward>0 \n\
 			AND diff_from_previous>0  \n\
 		ORDER BY bytes_reward \n\
-		LIMIT 5", [my_address, distributionDate, distributionID],
+		LIMIT 128", [my_address, distributionDate, distributionID],
 		function(rows) {
 			if (rows.length === 0)
 				return handleOutputs();
@@ -639,26 +644,33 @@ function verifyDistribution(distributionID, distributionDate) {
 
 function sendReportToAdmin() {
 
-	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous FROM wcg_scores \n\
-			 INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
-			 WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
+	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name FROM wcg_scores \n\
+			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
+			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
+			WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
 
 		var totalAsset = 0;
 		var totalBytes = 0;
+		var totalUsers = 0;
 		rows.forEach(function(row) {
 			totalAsset+= row.diff_from_previous;
 			totalBytes+= row.bytes_reward;
 			if(row.diff_from_previous<0){
 				return notifications.notifyAdmin("Error for distribution id " + rows[0].id_distribution, "Member ID " + row.member_id + "  has negative reward");
 			}
+			if(row.diff_from_previous>0){
+				totalUsers++;
+			}
 		});
 		var bodyEmail = "Distribution id " + rows[0].id_distribution + "ready, paste distribute_" + rows[0].id_distribution + " to start it\n";
-		bodyEmail += "Total bytes to be distributed " + Math.round(totalBytes) + " to " + rows.length + " users\n";
-		bodyEmail += "Total assets to be distributed " + Math.round(totalAsset) + " to " + rows.length + " users\n";
-		bodyEmail += "user	bytes reward	Asset reward\n";
+		bodyEmail += "Total bytes to be distributed " + Math.round(totalBytes) + " to " + totalUsers + " users\n";
+		bodyEmail += "Total assets to be distributed " + Math.round(totalAsset) + " to " + totalUsers + " users\n";
+		bodyEmail += "User ID	Bytes reward	Asset reward	Account name\n";
 
 		rows.forEach(function(row) {
-			bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.diff_from_previous)+"\n";
+			if(row.diff_from_previous>0){
+				bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.diff_from_previous)+ "	" + row.account_name + "\n";
+			}
 		});
 		return notifications.notifyAdmin("Distribution id " + rows[0].id_distribution + "ready", bodyEmail)
 	});
