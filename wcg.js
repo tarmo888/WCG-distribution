@@ -4,6 +4,7 @@ const async = require('async');
 const i18nModule = require("i18n");
 const request = require('request');
 const xml2js = require('xml2js');
+const fs = require('fs');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
 const desktopApp = require('byteballcore/desktop_app.js');
@@ -637,6 +638,7 @@ function verifyDistribution(distributionID, distributionDate) {
 				console.log("---- total paid: " + total + ", overpaid: " + overpaid);
 				console.error("----- total paid: " + total + ", overpaid: " + overpaid);
 				notifications.notifyAdmin("Distribution id " + distributionID + "done", distributionDate + "\n ---- total paid: " + total + ", overpaid: " + overpaid);
+				writeDistributionReport(distributionID,distributionDate);
 			});
 		}
 	);
@@ -678,6 +680,40 @@ function sendReportToAdmin() {
 }
 
 
+function writeDistributionReport(distributionID, distributionDate) {
+
+	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,unit_payment,score FROM wcg_scores \n\
+			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
+			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
+			WHERE wcg_scores.id_distribution = ? AND bytes_reward>0 ORDER BY bytes_reward DESC", [distributionID], function(rows) {
+
+		var totalAsset = 0;
+		var totalBytes = 0;
+		rows.forEach(function(row) {
+			totalAsset += row.diff_from_previous;
+			totalBytes += row.bytes_reward;
+
+		});
+		var body = "<html><body><h3>Distribution id " + rows[0].id_distribution + " on " + distributionDate + "</h3><br>";
+		body += "Total bytes distributed " + Math.round(totalBytes) + " to " + rows.length + " users<br>";
+		body += "Total " + labelAsset + " distributed " + Math.round(totalAsset) + " to " + rows.length + " users<br>";
+		body += "<table border='1'><tr><td>User ID</td><td>Account name</td><td>constated score</td><td>bytes reward</td><td>" + labelAsset + " reward</td><td>Unit</td>";
+
+		rows.forEach(function(row) {
+				body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
+					Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.unit_payment + "'>unit</a></td></tr>";
+		});
+
+		body += "</table></body></html>";
+		fs.writeFile("reports/" + distributionID + "--" + distributionDate + ".html", body, function(err) {
+			if (err) {
+				notifications.notifyAdmin("I couldn't write report", err);
+				return console.log("Couldn't write log file " + err);
+			}
+
+		});
+	});
+}
 
 function getLanguagesSelection() {
 
@@ -778,7 +814,7 @@ eventBus.on('headless_wallet_ready', function() {
 					},
 					5000);
 			}
-
+writeDistributionReport(36,"lundi");
 			honorificAsset = honorific_asset[0].unit;
 			console.log("honorific asset: " + honorificAsset);
 			setTimeout(function() {
