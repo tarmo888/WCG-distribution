@@ -481,7 +481,17 @@ function crawlScores(users, handle) {
 
 
 							} else {
-
+								var device = require('byteballcore/device.js');
+								device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("I detected that the account named {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't get the distribution until you fix this issue or link you new WCG account.", {
+								accountName: users[0].account_name,
+								WCG_id: users[0].id_wcg
+								}) + "\n" + getTxtCommandButton(i18n.__("ok"), "ok"));
+								db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
+									users.shift();
+									crawlScores(users, function() {
+										return handle();
+									});
+								});
 
 							}
 						}
