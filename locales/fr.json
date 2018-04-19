@@ -1,0 +1,49 @@
+{
+
+	"Please create a World Community Grid account or modify an existing one with this username: {{username}} ": "Veuillez créer un compte World Community Grid ou modifier un compte existant avec le nom: {{username}} ",
+
+	"You can change it later if you desire. Click on the link below when done.": "Vous pourrez changer le nom plus tard si vous le désirez. Lorsque votre compte est nommé, cliquez le lien ci-dessous.",
+
+	"Check my account": "Vérifier mon compte",
+
+	"Your WCG account is successfully linked.": "Votre compte WCG a été authentifié.",
+
+	"Please insert the address you want to use as payout address (click on '...' Insert my address)": "Veuillez insérer l'adresse à laquelle vous souhaitez recevoir les paiements (cliquez sur '...' et insérez une adresse)",
+
+	"Congratulations!": "Félicitations !",
+
+	"Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.": "Installation complète ! Périodiquement, des récompenses proportionnelles à votre contribution au projet World Community Grid project avec le compte {{accountName}} (ID: {{accountID}}) seront envoyées à votre adresse.",
+
+	"Change linked WCG account": "Changer de compte WCG",
+
+	"Change payout address": "Changer l'adresse de paiement",
+
+	"Change account name": "Changer de nom de compte",
+
+	"Please enter the new name for your WCG account id {{accountID}}": "Veuillez entrer le nouveau nom de votre compte WCG id {{accountID}}",
+
+	"Cancel": "Annuler",
+
+	"New name validated.": "Nouveau nom validé",
+
+	"Ok": "Ok",
+
+	"Account check failed. Please make sure you set {{accountName}} as account name and retry.": "La vérification du compte a échoué. Assurez-vous que vous avez choisi {{accountName}} comme nom de compte puis réessayer.",
+
+	"Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "Il a été impossible d'obtenir votre score WCG pour la distribution en cours. Assurez-vous que le nom de votre compte est: {{accountName}}",
+
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Un paiement de {{amountByte}}GB et {{amountAsset}} {{labelAsset}} vous a été fait en récompense de votre contribution",
+
+	"An unexpected error occurred. Admin is notified. Please try again in a few hours.": "Une erreur inattendue s'est produite. L'administrateur est notifié. Merci de réessayer dans quelques heures.",
+
+	"This name doesn't correspond to the WCG account ID {{accountID}}": "Ce nom ne correspond pas au compte id {{accountID}}",
+
+	"Change my account name": "Changer mon nom de compte",
+
+	"This is not a valid address.": "Cette adresse n'est pas valide.",
+
+	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "Le nom de compte: {{accountName}} ne correspond pas à l'id {{WCG_id}}. Vous ne recevrez pas de paiements tant que ce problème ne sera pas résolu ou que vous n'aurez pas authentifié ce nouveau compte",
+
+	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution":"Pour plus d'information, merci de visiter notre wiki: https://wiki.byteball.org/WCG_distribution"
+
+}

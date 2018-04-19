@@ -24,14 +24,35 @@ const amountBytesOutputs = 5000;
 const amountAssetOutputs = 100000;
 
 const prefixForName = "Byteball_";
-const isMultiLingual = false;
+const isMultiLingual = true;
 
 const languagesAvailable = {
 	en: {
-		name: "english"
+		name: "English"
+	},
+	da: {
+		name: "Dansk"
 	},
 	fr: {
-		name: "français"
+		name: "Français"
+	},
+	zn: {
+		name: "中文"
+	},
+	ja: {
+		name: "日本語"
+	},
+	es: {
+		name: "Español"
+	},
+	de: {
+		name: "Deutsch"
+	},
+	ko: {
+		name: "한국어"
+	},
+	id: {
+		name: "Bahasa Indonesia"
 	}
 }
 
@@ -84,24 +105,18 @@ function processTxt(from_address, text) {
 				if (text.indexOf('selectLanguage_') == 0 && isMultiLingual) {
 
 					if (text.split('_')[1] && languagesAvailable[text.split('_')[1]]) {
-
-						db.query("UPDATE users SET lang=? WHERE device_address == ? ", [text.split('_')[1], from_address],
-							function() {
-								i18nModule.setLocale(i18n, text.split('_')[1]);
-								device.sendMessageToDevice(from_address, 'text', i18n.__("Language set as {{language}}", {
-									language: text.split('_')[1]
-								}) + "\n➡ " + getTxtCommandButton(i18n.__("ok"), "ok"));
-								return;
-							});
+						db.query("UPDATE users SET lang=? WHERE device_address == ? ", [text.split('_')[1], from_address]);
+						i18nModule.setLocale(i18n, text.split('_')[1]);
+						device.sendMessageToDevice(from_address, 'text', "➡ " + getTxtCommandButton("Go back to language selection", "selectLanguage"));
 					}
-					return;
+
 				}
 
 
 				/*
 				 * If unknown language then we propose to select one
 				 */
-				if (user[0].lang === 'unknown' && isMultiLingual) {
+				if ((user[0].lang === 'unknown' || text ==="selectLanguage") && isMultiLingual) {
 					device.sendMessageToDevice(from_address, 'text', getLanguagesSelection());
 					return;
 				}
@@ -144,7 +159,7 @@ function processTxt(from_address, text) {
 					var returnedTxt = i18n.__("Please create a World Community Grid account or modify an existing one with this username: {{username}} ", {
 						username: prefixForName + user[0].salt + user[0].id
 					});
-					returnedTxt += "\n" + i18n.__("You will be able to change it later if you desire. When done click on the link below.");
+					returnedTxt += "\n" + i18n.__("You can change it later if you desire. Click on the link below when done.");
 					returnedTxt += "\n➡ " + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount");
 					device.sendMessageToDevice(from_address, 'text', returnedTxt);
 					return;
@@ -184,9 +199,9 @@ function processTxt(from_address, text) {
 
 				if (text == "changeAccountName") {
 					arrPeers[from_address].step = "changeAccountName";
-					device.sendMessageToDevice(from_address, 'text', i18n.__("Please indicate the new name for your WGC account id {{accountID}}", {
+					device.sendMessageToDevice(from_address, 'text', i18n.__("Please enter the new name for your WCG account id {{accountID}}", {
 						accountID: user[0].id_wcg
-					}) + "\n➡ " + getTxtCommandButton(i18n.__("cancel", "cancel")));
+					}) + "\n➡ " + getTxtCommandButton(i18n.__("Cancel", "cancel")));
 					return;
 				}
 
@@ -224,21 +239,21 @@ function processTxt(from_address, text) {
 				 * Welcome message for a complete set-up
 				 */
 
-				device.sendMessageToDevice(from_address, 'text', getSetupCompletedMessage() + "\n➡ " + getTxtCommandButton(i18n.__("change linked account"), "linkAccount") + "\n➡ " + getTxtCommandButton(i18n.__("change payout address"), "changePayoutAddress") + "\n➡ " + getTxtCommandButton(i18n.__("change the account name"), "changeAccountName"));
+				device.sendMessageToDevice(from_address, 'text', getSetupCompletedMessage() + "\n➡ " + getTxtCommandButton(i18n.__("Change linked WCG account"), "linkAccount") + "\n➡ " + getTxtCommandButton(i18n.__("Change payout address"), "changePayoutAddress") + "\n➡ " + getTxtCommandButton(i18n.__("Change account name"), "changeAccountName"));
 
 				function getSetupCompletedMessage() {
-					return i18n.__("Your setup is complete. Periodically, you will receive rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}})", {
+					return i18n.__("Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.", {
 							accountName: user[0].account_name,
 							accountID: user[0].id_wcg
 						}) +
-						"\n"
+						"\n" + i18n.__("For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution") + "\n";
 				}
 			}
 		});
 }
 
 function getMessageInsertAddress() {
-	return "Please insert the address you want to be payed to (click on ... Insert my address)";
+	return "Please insert the address you want to use as payout address (click on '...' Insert my address)";
 }
 
 
@@ -248,35 +263,35 @@ function checkAndRegisterNewName(from_address, newName, id_WCG, i18n, handle) {
 	}, function(error, response, body) {
 		if (error || response.statusCode !== 200) {
 			arrPeers[from_address].step = "home";
-			return handle(i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n➡ " + getTxtCommandButton(i18n.__("retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("choose another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("cancel"), "cancel"));
+			return handle(i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n➡ " + getTxtCommandButton(i18n.__("retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("choose another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 		} else {
 			xml2js.parseString(body, function(errParsing, rawObject) {
 				if (errParsing) {
 					arrPeers[from_address].step = "home";
 					return handle(i18n.__("Check of your account failed. Please check that you set {{accountName}} as account name and retry.", {
 						accountName: newName
-					}) + "\n➡ " + getTxtCommandButton(i18n.__("retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("change for another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("cancel"), "cancel"));
+					}) + "\n➡ " + getTxtCommandButton(i18n.__("retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("change for another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 
 				} else {
 					checkAndReformatRawObject(rawObject, function(errReformating, statsObject) {
 						if (errReformating) {
 							notifications.notifyAdmin(errReformating, body);
 							arrPeers[from_address].step = "home";
-							return handle(i18n.__("There was an unexpected error, admin is notified. Please try again in a few hours.") + "\n" + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n" + getTxtCommandButton(i18n.__("cancel"), "cancel"));
+							return handle(i18n.__("An unexpected error occurred. Admin is notified. Please try again in a few hours.") + "\n" + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n" + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 						} else {
 
 							if (id_WCG === statsObject.memberId) {
 								arrPeers[from_address].step = "home";
 								db.query("UPDATE users SET account_name=? WHERE id_wcg=?", [newName, id_WCG], function() {
-									return handle(i18n.__("New name validated.") + "\n➡ " + getTxtCommandButton(i18n.__("ok"), "ok"))
+									return handle(i18n.__("New name validated.") + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"))
 								});
 
 
 							} else {
 								arrPeers[from_address].step = "home";
-								return handle(i18n.__("Sorry this name doesn't correspond to the WCG account ID {{accountID}}", {
+								return handle(i18n.__("This name doesn't correspond to the WCG account ID {{accountID}}", {
 									accountID: id_WCG
-								}) + "\n➡ " + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n" + getTxtCommandButton(i18n.__("cancel"), "cancel"));
+								}) + "\n➡ " + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n" + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 
 							}
 						}
@@ -298,7 +313,7 @@ function checkAndLinkAccount(accountName, from_address, i18n, handle) {
 		} else {
 			xml2js.parseString(body, function(errParsing, rawObject) {
 				if (errParsing) {
-					return handle(i18n.__("Check of your account failed. Please be sure that you set {{accountName}} as account name and retry.", {
+					return handle(i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
 						accountName: accountName
 					}) + "\n➡ " + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount"));
 
@@ -320,7 +335,7 @@ function checkAndLinkAccount(accountName, from_address, i18n, handle) {
 								async.series(arrQueries, function() {
 									conn.release();
 									arrPeers[from_address].step = "insertAddress";
-									return handle(i18n.__("You WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
+									return handle(i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
 
 								});
 							});
@@ -438,13 +453,13 @@ function crawlScores(users, handle) {
 				if (errParsing) {
 					var i18n = {};
 					i18nModule.init(i18n);
-					if (users[0].lang != 'unknown') {
+					if (users[0].lang != 'unknown' && isMultiLingual) {
 						i18nModule.setLocale(i18n, users[0].lang);
 					}
 					var device = require('byteballcore/device.js');
-					device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("I couldn't get your WCG score for the ongoing distribution, please check that your account name is: {{accountName}}", {
+					device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}: {{accountName}}", {
 						accountName: users[0].account_name
-					}) + "\n➡ " + getTxtCommandButton(i18n.__("ok"), "ok"));
+					}) + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"));
 					db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 						users.shift();
 						crawlScores(users, function() {
@@ -484,14 +499,14 @@ function crawlScores(users, handle) {
 							} else {
 								var i18n = {};
 								i18nModule.init(i18n);
-								if (users[0].lang != 'unknown') {
+								if (users[0].lang != 'unknown' && isMultiLingual) {
 									i18nModule.setLocale(i18n, users[0].lang);
 								}
 								var device = require('byteballcore/device.js');
-								device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("I detected that the account named {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't get the distribution until you fix this issue or link your new WCG account.", {
+								device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.", {
 								accountName: users[0].account_name,
 								WCG_id: users[0].id_wcg
-								}) + "\n➡ " + getTxtCommandButton(i18n.__("ok"), "ok"));
+								}) + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"));
 								db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 									users.shift();
 									crawlScores(users, function() {
@@ -563,11 +578,11 @@ function processAnyAuthorizedDistribution() {
 									
 									var i18n = {};
 									i18nModule.init(i18n);
-									if (row.lang != 'unknown') {
+									if (row.lang != 'unknown' && isMultiLingual) {
 										i18nModule.setLocale(i18n, row.lang);
 									}
 									
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("I sent you {{amountByte}}GB and {{amountAsset}} {{labelAsset}} in reward for your contributions.",{amountByte:(row.bytes_reward/Math.pow(10,9)).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:labelAsset}));
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/Math.pow(10,9)).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:labelAsset}));
 								});
 							});
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
@@ -682,7 +697,7 @@ function sendReportToAdmin() {
 
 function writeDistributionReport(distributionID, distributionDate) {
 
-	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,unit_payment,score FROM wcg_scores \n\
+	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,unit_payment,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
 			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
 			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
 			WHERE wcg_scores.id_distribution = ? AND bytes_reward>0 ORDER BY bytes_reward DESC", [distributionID], function(rows) {
@@ -694,17 +709,17 @@ function writeDistributionReport(distributionID, distributionDate) {
 			totalBytes += row.bytes_reward;
 
 		});
-		var body = "<html><body><h3>Distribution id " + rows[0].id_distribution + " on " + distributionDate + "</h3><br>";
-		body += "Total bytes distributed " + Math.round(totalBytes) + " to " + rows.length + " users<br>";
-		body += "Total " + labelAsset + " distributed " + Math.round(totalAsset) + " to " + rows.length + " users<br>";
-		body += "<table border='1'><tr><td>User ID</td><td>Account name</td><td>constated score</td><td>bytes reward</td><td>" + labelAsset + " reward</td><td>Unit</td>";
+		var body = "<html><head><link rel='stylesheet' href='report.css'></head><body><div id='main'><div id='title'><h3>Distribution id " + rows[0].id_distribution + " on " + distributionDate + "</h3></div>";
+		body += "<div id='totalBytes'>" + Math.round(totalBytes) + " bytes distributed  to " + rows.length + " users</div>";
+		body += "<div id='totalAsset'>" + Math.round(totalAsset) +" " + labelAsset + " distributed " + + " to " + rows.length + " users</div>";
+		body += "<div id='tableDistrib'><table class='distribution'><tr><td>User ID</td><td>Account name</td><td>score read</td><td>bytes reward</td><td>" + labelAsset + " reward</td><td>Address</td><td>Unit</td>";
 
 		rows.forEach(function(row) {
 				body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
-					Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.unit_payment + "'>unit</a></td></tr>";
+					Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>"+row.payout_address+"</a></td><td><a href='https://explorer.byteball.org/#" + row.unit_payment + "'>unit</a></td></tr>";
 		});
 
-		body += "</table></body></html>";
+		body += "</table></div></div></body></html>";
 		fs.writeFile("reports/" + distributionID + "--" + distributionDate + ".html", body, function(err) {
 			if (err) {
 				notifications.notifyAdmin("I couldn't write report", err);
@@ -721,7 +736,7 @@ function getLanguagesSelection() {
 	for (var index in languagesAvailable) {
 		returnedTxt += "\n➡ " + getTxtCommandButton(languagesAvailable[index].name, "selectLanguage_" + index);
 	}
-	returnedTxt += "\n➡ " + getTxtCommandButton("cancel");
+	
 	return returnedTxt;
 }
 
@@ -814,7 +829,7 @@ eventBus.on('headless_wallet_ready', function() {
 					},
 					5000);
 			}
-writeDistributionReport(36,"lundi");
+
 			honorificAsset = honorific_asset[0].unit;
 			console.log("honorific asset: " + honorificAsset);
 			setTimeout(function() {

@@ -1,0 +1,51 @@
+{
+
+	"Please create a World Community Grid account or modify an existing one with this username: {{username}}": "Harap buat akun Komunitas Dunia Grid atau ubah yang sudah ada dengan nama pengguna ini: {{username}}",
+
+	"You can change it later if you desire. Click on the link below when done.": "Anda dapat mengubah nanti jika anda inginkan. klik pada tautan di bawah ini ketika dilakukan.",
+
+	"Check my account": "Periksa Akun saya",
+
+	"Your WCG account is successfully linked.": "Akun wcg anda berhasil terkait.",
+
+	"Please insert the address you want to use as payout address (click on '...' Insert my address)": "Silakan masukkan alamat yang ingin anda gunakan sebagai alamat pembayaran (klik '...' Masukkan alamat saya)",
+
+	"Congratulations!": "Selamat!",
+
+	"Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.": "Pengaturan selesai! Secara berkala, hadiah sebanding dengan kontribusi anda ke proyek Jaringan Komunitas Dunia di bawah akun {{accountName} (ID: {{accountID}}) akan dikirim ke akun pembayaran anda",
+
+	"Change linked WCG account": "Ubah akun WCG yang ditautkan",
+
+	"Change payout address": "Ubah alamat pembayaran",
+
+	"Change account name": "Ubah nama akun",
+
+	"Please enter the new name for your WCG account id {{accountID}}": "Silahkan masukkan nama baru untuk akun WCG anda {{accountID}}",
+
+	"Cancel": "Batal",
+
+	"New name validated.": "Nama baru divalidasi",
+
+	"Ok": "Oke",
+
+	"Account check failed. Please make sure you set {{accountName}} as account name and retry.": "Pemeriksaan akun gagal. Harap pastikan anda menetapkan {{accountName}} sebagai nama akun dan coba lagi.",
+
+	"Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "Tidak dapat memperoleh skor WCG anda untuk distribusi berkelanjutan. Pastikan nama akun Anda adalah: {{accountName}}",
+
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Pembayaran dari {{amountByte}} GB dan {{amountAsset}} {{labelAsset}} dibuat untuk menghargai kontribusi anda.",
+
+	"An unexpected error occurred. Admin is notified. Please try again in a few hours.": "Telah terjadi kesalahan yang tidak diinginkan. Admin sudah diberitahu tentang masalah ini. Silahkan mencoba kembali dalam beberapa jam.",
+
+	"This name doesn't correspond to the WCG account ID {{accountID}}": "Nama ini tidak sesuai dengan ID akun WCG {{accountID}}",
+
+	"Change my account name": "Ubah nama akun saya",
+
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Pembayaran dari {{amountByte}} GB dan {{amountAsset}} {{labelAsset}} dibuat untuk menghargai kontribusi anda.",
+
+	"This is not a valid address.": "Ini bukan alamat yang valid",
+
+	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "Nama akun: {{accountName}} tidak sesuai dengan ID {{WCG_id}}. Anda tidak akan menerima pembayaran sampai anda memperbaiki masalah ini atau menautkan akun WCG anda yang baru.",
+
+	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "Untuk informasi lebih lanjut, silakan kunjungi wiki kami: https://wiki.byteball.org/WCG_distribution"
+
+}
