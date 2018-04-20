@@ -15,13 +15,13 @@ const db = require('byteballcore/db.js');
 const validationUtils = require("byteballcore/validation_utils.js");
 const conversion = require('./modules/conversion');
 
-const daysBetweenDistributions = 1;
-const WCGpointToDollar = 1 / 20000000;
+const daysBetweenDistributions = 7;
+const WCGpointToDollar = 1 / 200000;
 
 //values used to create outputs at start
-const minBytesOutputsAvailable = 100;
-const amountBytesOutputs = 5000;
-const amountAssetOutputs = 100000;
+const minBytesOutputsAvailable = 30;
+const amountBytesOutputs = 100000000;
+const amountAssetOutputs = 1000000;
 
 const prefixForName = "Byteball_";
 const isMultiLingual = true;
@@ -679,9 +679,9 @@ function sendReportToAdmin() {
 				totalUsers++;
 			}
 		});
-		var bodyEmail = "Distribution id " + rows[0].id_distribution + "ready, paste distribute_" + rows[0].id_distribution + " to start it\n";
-		bodyEmail += "Total bytes to be distributed " + Math.round(totalBytes) + " to " + totalUsers + " users\n";
-		bodyEmail += "Total assets to be distributed " + Math.round(totalAsset) + " to " + totalUsers + " users\n";
+		var bodyEmail = "Distribution id " + rows[0].id_distribution + " ready, paste distribute_" + rows[0].id_distribution + " to start it\n";
+		bodyEmail += "Total bytes to be distributed: " + Math.round(totalBytes) + " to " + totalUsers + " users\n";
+		bodyEmail += "Total assets to be distributed: " + Math.round(totalAsset) + " to " + totalUsers + " users\n";
 		bodyEmail += "User ID	Bytes reward	Asset reward	Account name\n";
 
 		rows.forEach(function(row) {
@@ -770,7 +770,7 @@ function createOutputsIfNeeded(asset, minQty, minAmountBytes, minAmountAsset) {
 				};
 				headlessWallet.sendMultiPayment(opts, function(err, unit) {
 					if (err) {
-						notifications.notifyAdmin("OutpoutCreation failed", err);
+						notifications.notifyAdmin("Creation of outputs failed", err);
 					}
 
 				});
@@ -837,7 +837,7 @@ eventBus.on('headless_wallet_ready', function() {
 				processAnyAuthorizedDistribution();
 				initiateNewDistributionIfNeeded();
 				createOutputsIfNeeded(honorificAsset, minBytesOutputsAvailable, amountBytesOutputs, amountAssetOutputs);
-				setInterval(initiateNewDistributionIfNeeded, 60 * 60 * 1000);
+				setInterval(initiateNewDistributionIfNeeded, 5 * 60 * 1000);
 			}, 5000);
 		});
 
