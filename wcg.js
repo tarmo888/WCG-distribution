@@ -2,8 +2,6 @@
 "use strict";
 const async = require('async');
 const i18nModule = require("i18n");
-const request = require('request');
-const xml2js = require('xml2js');
 const fs = require('fs');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
