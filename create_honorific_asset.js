@@ -25,7 +25,6 @@ function createAsset(){
 		}
 	});
 	var asset = {
-		cap: Math.pow(10, 15),
 		is_private: false,
 		is_transferrable: false,
 		auto_destroy: false,
