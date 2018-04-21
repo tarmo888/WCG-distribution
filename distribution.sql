@@ -1,7 +1,7 @@
 CREATE TABLE users (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	device_address CHAR(33) NOT NULL UNIQUE,
-	payout_address CHAR(33),
+	payout_address CHAR(32),
 	id_wcg INTEGER UNIQUE,
 	account_name CHAR (30),
 	salt CHAR(5),
@@ -31,11 +31,11 @@ INSERT INTO distributions (is_crawled,is_completed,is_authorized) VALUES (1,1,1)
 CREATE TABLE wcg_scores (
 	id_distribution INTEGER,
 	device_address CHAR(33) NOT NULL,
-	payout_address  CHAR(33),
+	payout_address  CHAR(32),
 	member_id INTEGER,
 	score FLOAT,
 	diff_from_previous FLOAT,
-	unit_payment CHAR(44),
+	payment_unit CHAR(44),
 	bytes_reward INTEGER DEFAULT 0,
 	PRIMARY KEY (id_distribution, member_id),
 	UNIQUE(id_distribution, device_address),

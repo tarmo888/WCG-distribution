@@ -11,7 +11,51 @@ exports.bIgnoreUnpairRequests = true;
 exports.hub = 'byteball.org/bb';
 exports.deviceName = 'WCG-distribution';
 exports.permanent_pairing_secret = '0000';
-exports.control_addresses = ['0UXWB7F3ZERLSLC5MFD7IKEHNYDSVPFWV'];
+exports.control_addresses = [''];
 
 
-console.log('finished sports oracle conf');
+exports.daysBetweenDistributions = 7;
+exports.WCGpointToDollar = 1 / 200000;
+exports.labelAsset="WCG";
+exports.prefixForName = "Byteball_";
+
+exports.isMultiLingual = true;
+
+
+exports.languagesAvailable = {
+	en: {
+		name: "English"
+	},
+	da: {
+		name: "Dansk"
+	},
+	fr: {
+		name: "Français"
+	},
+	zn: {
+		name: "中文"
+	},
+	ja: {
+		name: "日本語"
+	},
+	es: {
+		name: "Español"
+	},
+	de: {
+		name: "Deutsch"
+	},
+	ko: {
+		name: "한국어"
+	},
+	id: {
+		name: "Bahasa Indonesia"
+	}
+};
+
+//values used to create outputs at start
+exports.minBytesOutputsAvailable = 30;
+exports.amountBytesOutputs = 100000000;
+exports.amountAssetOutputs = 1000000;
+
+
+console.log('finished WCG bot conf');
