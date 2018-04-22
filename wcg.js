@@ -211,7 +211,7 @@ function processTxt(from_address, text) {
 								device.sendMessageToDevice(from_address, 'text', i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n➡ " + getTxtCommandButton(i18n.__("retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("choose another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 							},
 							ifFailed: function() {
-																device.sendMessageToDevice(from_address, 'text', i18n.__("Check of your account failed. Please check that you set {{accountName}} as account name and retry.", {
+																device.sendMessageToDevice(from_address, 'text', i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
 									accountName: arrPeers[from_address].newName
 								}) + "\n➡ " + getTxtCommandButton(i18n.__("Retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("Change for another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 
@@ -568,7 +568,7 @@ function writeDistributionReport(distributionID, distributionDate) {
 		});
 		var body = "<html><head><link rel='stylesheet' href='report.css'></head><body><div id='main'><div id='title'><h3>Distribution id " + rows[0].id_distribution + " on " + distributionDate + "</h3></div>";
 		body += "<div id='totalBytes'>" + Math.round(totalBytes) + " bytes distributed  to " + rows.length + " users</div>";
-		body += "<div id='totalAsset'>" + Math.round(totalAsset) +" " + conf.labelAsset + " distributed " + + " to " + rows.length + " users</div>";
+		body += "<div id='totalAsset'>" + Math.round(totalAsset) +" " + conf.labelAsset + " distributed " + " to " + rows.length + " users</div>";
 		body += "<div id='tableDistrib'><table class='distribution'><tr><td>User ID</td><td>Account name</td><td>score read</td><td>bytes reward</td><td>" + conf.labelAsset + " reward</td><td>Address</td><td>Unit</td>";
 
 		rows.forEach(function(row) {
