@@ -1,49 +1,28 @@
 {
-
 	"Please create a World Community Grid account or modify an existing one with this username: {{username}} ": "Opret en konto på World Community Grid (eller redigér en eksisterende) med følgende navn : {{username}} ",
-
 	"You can change it later if you desire. Click on the link below when done.": "Du kan ændre navnet senere hvis du vil. Klik på linket herunder når du er klar.",
-
 	"Check my account": "Tjek min konto",
-
 	"Your WCG account is successfully linked.": "Din WCG-konto blev linket korrekt.",
-
 	"Please insert the address you want to use as payout address (click on '...' Insert my address)": "Indsæt den adresse, du vil modtage udbetalinger på (klik på '...' Indsæt min adresse)",
-
 	"Congratulations!": "Tillykke!",
-
 	"Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.": "Opsætning fuldført. Du vil med jævne mellemrum modtage udbetalinger til din angivne konto i forhold til dit bidrag til World Community Grid med kontoen {{accountName}} (ID: {{accountID}})",
-
 	"Change linked WCG account": "Skift linket WCG-konto",
-
 	"Change payout address": "Skift udbetalings-adresse",
-
 	"Change account name": "Skiift kontonavn",
-
 	"Please enter the new name for your WCG account id {{accountID}}": "Angiv det nye navn på din WCG-konto med ID {{accountID}}",
-
 	"Cancel": "Annuller",
-
 	"New name validated.": "Nyt navn bekræftet.",
-
 	"Ok": "Ok",
-
 	"Account check failed. Please make sure you set {{accountName}} as account name and retry.": "Tjek af konto mislykkedes. Sørg for at du har brugt {{accountName}} som kontonavn og prøv igen.",
-
 	"Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "Kunne ikke hente din WCG-score til igangværende distribution. Sørg for at dit kontonavn er: {{accountName}}",
-
-	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Udbetaling på {{amountByte}}GB og {{amountAsset}} {{labelAsset} er gennemført som tak for din indsats",
-
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Udbetaling på {{amountByte}}GB og {{amountAsset}} {{labelAsset}} er gennemført som tak for din indsats",
 	"An unexpected error occurred. Admin is notified. Please try again in a few hours.": "Der opstod i fejl. Admin er adviseret om problemet. Prøv igen om et par timer.",
-
 	"This name doesn't correspond to the WCG account ID {{accountID}}": "Dette navn svarer ikke til navnet på WCG kontoen med ID {{accountID}}",
-
 	"Change my account name": "Skift mit kontonavn",
-
 	"This is not a valid address.": "Det er en ugyldig adresse.",
-
 	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "Kontonavnet {{accountName}} svarer ikke til ID {{WCG_id}}. Du vil ikke modtage betalinger før det er rettet eller du har linket en ny WCG-konto.",
-
-	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "For yderligere information, se vores wiki: https://wiki.byteball.org/WCG_distribution"
-
+	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "For yderligere information, se vores wiki: https://wiki.byteball.org/WCG_distribution",
+	"Check of your account failed. Please check that you set {{accountName}} as account name and retry.": "Check of your account failed. Please check that you set {{accountName}} as account name and retry.",
+	"Retry": "Retry",
+	"Change for another account name": "Change for another account name"
 }
