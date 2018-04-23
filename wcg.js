@@ -598,41 +598,44 @@ function getLanguagesSelection() {
 }
 
 
-function createOutputsIfNeeded(asset, minQty, minAmountBytes, minAmountAsset) {
+function createOutputsIfNeeded(asset, minQty, minAmountOutputBytes, minAmountOutputAsset) {
 
-	db.query("SELECT COUNT(*) AS count_big_outputs FROM outputs JOIN units USING(unit) \n\
-		WHERE address=? AND is_stable=1 AND amount>=? AND asset IS NULL AND is_spent=0", [my_address, minAmountBytes],
+	db.query("SELECT * FROM (SELECT COUNT(*) AS count_bytes_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset IS NULL AND is_spent=0),\n\
+(SELECT COUNT(*) AS count_asset_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>? AND asset=? AND is_spent=0)", [my_address, minAmountOutputBytes,minAmountOutputAsset,honorificAsset],
 		function(rows) {
-			if (rows[0].count_big_outputs < minAmountBytes) {
+				console.log("query: " + JSON.stringify(rows));
 				var arrOutputsBytes = [];
-				var arrOutputsAsset = [];
-				for (var i = rows[0].count_big_outputs; i < minQty || i == 128; i++) {
-					
-					arrOutputsAsset.push({
-						amount: minAmountAsset,
-						address: my_address
-					});
+				for (var i = rows[0].count_bytes_outputs; i < minQty && i <= 128; i++) {
+
 					arrOutputsBytes.push({
-						amount: minAmountBytes,
+						amount: minAmountOutputBytes,
 						address: my_address
 					});
 
 				}
+				
+				var arrOutputsAsset = [];
+				for (var i = rows[0].count_asset_outputs; i < minQty && i <= 128; i++) {
+					
+					arrOutputsAsset.push({
+						amount: minAmountOutputAsset,
+						address: my_address
+					});
 
+				}
 				var opts = {
 					asset: asset,
 					base_outputs: arrOutputsBytes,
 					asset_outputs: arrOutputsAsset,
 					change_address: my_address
 				};
+							console.log("opts: " + JSON.stringify(opts));
 				headlessWallet.sendMultiPayment(opts, function(err, unit) {
 					if (err) {
 						notifications.notifyAdmin("Creation of outputs failed", err);
 					}
 
 				});
-
-			}
 
 		});
 }
