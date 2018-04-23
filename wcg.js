@@ -305,6 +305,9 @@ function crawlScores(users, handle) {
 	if (users.length == 0) {
 		return handle();
 	}
+	
+	var i18n = {};
+	i18nModule.init(i18n);
 
 	wcg_api.query(users[0].account_name, {
 
@@ -317,8 +320,6 @@ function crawlScores(users, handle) {
 			}, 60 * 1000);
 		},
 		ifFailed: function() {
-			var i18n = {};
-			i18nModule.init(i18n);
 			if (users[0].lang != 'unknown' && conf.isMultiLingual) {
 				i18nModule.setLocale(i18n, users[0].lang);
 			}
@@ -359,8 +360,6 @@ function crawlScores(users, handle) {
 				});
 
 			} else {
-				var i18n = {};
-				i18nModule.init(i18n);
 				if (users[0].lang != 'unknown' && conf.isMultiLingual) {
 					i18nModule.setLocale(i18n, users[0].lang);
 				}
@@ -410,6 +409,8 @@ function processAnyAuthorizedDistribution() {
 			var walletGeneral = require('byteballcore/wallet_general.js');
 			var divisibleAsset = require('byteballcore/divisible_asset.js');
 			var composer = require('byteballcore/composer.js');
+			var i18n = {};
+			i18nModule.init(i18n);
 			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAsset,arrMemberID) {
 				if (!arrOutputsBytes) { // done
 					db.query("UPDATE distributions SET is_completed=1 WHERE id=?", [authorizedDistributions[0].id], function() {});
@@ -433,8 +434,6 @@ function processAnyAuthorizedDistribution() {
 							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
 									
-									var i18n = {};
-									i18nModule.init(i18n);
 									if (row.lang != 'unknown' && conf.isMultiLingual) {
 										i18nModule.setLocale(i18n, row.lang);
 									}
@@ -699,7 +698,6 @@ eventBus.on('headless_wallet_ready', function() {
 				setInterval(initiateNewDistributionIfNeeded, 5 * 60 * 1000);
 			}, 5000);
 		});
-
 
 	});
 
