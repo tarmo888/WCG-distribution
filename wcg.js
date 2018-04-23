@@ -189,7 +189,7 @@ function processTxt(from_address, text) {
 					assocPeers[from_address].step = "changeAccountName";
 					device.sendMessageToDevice(from_address, 'text', i18n.__("Please enter the new name for your WCG account id {{accountID}}", {
 						accountID: user[0].member_id
-					}) + "\n➡ " + getTxtCommandButton(i18n.__("Cancel", "cancel")));
+					}) + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 					return;
 				}
 
