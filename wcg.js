@@ -87,6 +87,7 @@ function processTxt(from_address, text) {
 						processAnyAuthorizedDistribution();
 						device.sendMessageToDevice(from_address, 'text', "Distribution id " + text.split("_")[1] + " authorized");
 					});
+					return;
 				}
 
 
@@ -509,7 +510,7 @@ function verifyDistribution(distributionID, distributionDate) {
 				var overpaid = total - expected_total;
 				console.log("---- total paid: " + total + ", overpaid: " + overpaid);
 				console.error("----- total paid: " + total + ", overpaid: " + overpaid);
-				notifications.notifyAdmin("Distribution id " + distributionID + "done", distributionDate + "\n ---- total paid: " + total + ", overpaid: " + overpaid);
+				notifications.notifyAdmin("Distribution id " + distributionID + " done", distributionDate + "\n ---- total paid: " + total + ", overpaid: " + overpaid);
 				writeDistributionReport(distributionID,distributionDate);
 			});
 		}
@@ -546,7 +547,7 @@ function sendReportToAdmin() {
 				bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.diff_from_previous)+ "	" + row.account_name + "\n";
 			}
 		});
-		return notifications.notifyAdmin("Distribution id " + rows[0].distribution_id + "ready", bodyEmail)
+		return notifications.notifyAdmin("Distribution id " + rows[0].distribution_id + " ready", bodyEmail)
 	});
 
 }
@@ -604,7 +605,7 @@ function createOutputsIfNeeded(asset, minQty, minAmountOutputBytes, minAmountOut
 (SELECT COUNT(*) AS count_asset_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset=? AND is_spent=0)", [my_address, minAmountOutputBytes, minAmountOutputAsset, honorificAsset],
 		function(rows) {
 			var arrOutputsBytes = [];
-			for (var i = rows[0].count_bytes_outputs; i < minQty && i <= 128; i++) {
+			for (var i = rows[0].count_bytes_outputs; i <= minQty && i <= 128; i++) {
 
 				arrOutputsBytes.push({
 					amount: minAmountOutputBytes,
@@ -614,7 +615,7 @@ function createOutputsIfNeeded(asset, minQty, minAmountOutputBytes, minAmountOut
 			}
 
 			var arrOutputsAsset = [];
-			for (var i = rows[0].count_asset_outputs; i < minQty && i <= 128; i++) {
+			for (var i = rows[0].count_asset_outputs; i <= minQty && i <= 128; i++) {
 
 				arrOutputsAsset.push({
 					amount: minAmountOutputAsset,
