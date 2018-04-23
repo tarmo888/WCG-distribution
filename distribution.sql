@@ -2,7 +2,7 @@ CREATE TABLE users (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	device_address CHAR(33) NOT NULL UNIQUE,
 	payout_address CHAR(32),
-	id_wcg INTEGER UNIQUE,
+	member_id INTEGER UNIQUE,
 	account_name CHAR (30),
 	salt CHAR(5),
 	lang CHAR (20) DEFAULT 'unknown',
@@ -29,7 +29,7 @@ CREATE TABLE distributions (
 INSERT INTO distributions (is_crawled,is_completed,is_authorized) VALUES (1,1,1); -- insert a first dummy distribution
 
 CREATE TABLE wcg_scores (
-	id_distribution INTEGER,
+	distribution_id INTEGER,
 	device_address CHAR(33) NOT NULL,
 	payout_address  CHAR(32),
 	member_id INTEGER,
@@ -37,14 +37,14 @@ CREATE TABLE wcg_scores (
 	diff_from_previous FLOAT,
 	payment_unit CHAR(44),
 	bytes_reward INTEGER DEFAULT 0,
-	PRIMARY KEY (id_distribution, member_id),
-	UNIQUE(id_distribution, device_address),
-	FOREIGN KEY (id_distribution) REFERENCES distributions(id),
+	PRIMARY KEY (distribution_id, member_id),
+	UNIQUE(distribution_id, device_address),
+	FOREIGN KEY (distribution_id) REFERENCES distributions(id),
 	FOREIGN KEY (device_address) REFERENCES users(device_address)
 );
 	
-CREATE TABLE wcg_meta_infos (
-	id_distribution INTEGER,
+CREATE TABLE wcg_meta_infos(
+	distribution_id INTEGER,
 	device_address CHAR(33) NOT NULL,
 	member_id INTEGER,
 	nb_devices INTEGER,
@@ -53,9 +53,9 @@ CREATE TABLE wcg_meta_infos (
 	points_per_hour_runtime FLOAT,
 	points_per_day FLOAT,
 	points_per_result FLOAT,
-	PRIMARY KEY (id_distribution, member_id),
-	UNIQUE(id_distribution, device_address),
-	FOREIGN KEY (id_distribution) REFERENCES distributions(id),
+	PRIMARY KEY (distribution_id, member_id),
+	UNIQUE(distribution_id, device_address),
+	FOREIGN KEY (distribution_id) REFERENCES distributions(id),
 	FOREIGN KEY (device_address) REFERENCES users(device_address)
 );
 

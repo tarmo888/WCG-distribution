@@ -43,7 +43,7 @@ function processTxt(from_address, text) {
 	}
 
 	db.query(
-		"SELECT lang,salt,id,id_wcg,payout_address,account_name FROM users WHERE device_address == ? ", [from_address],
+		"SELECT lang,salt,id,member_id,payout_address,account_name FROM users WHERE device_address == ? ", [from_address],
 		function(user) {
 
 			if (user[0]) {
@@ -119,10 +119,10 @@ function processTxt(from_address, text) {
 								db.takeConnectionFromPool(function(conn) {
 								var arrQueries = [];
 								conn.addQuery(arrQueries, "BEGIN");
-								conn.addQuery(arrQueries, "UPDATE users SET id_wcg=null WHERE id_wcg=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
-								conn.addQuery(arrQueries, "UPDATE users SET id_wcg=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
-								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (id_distribution, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
-								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (id_distribution, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
+								conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
+								conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
+								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
+								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
 								conn.addQuery(arrQueries, "COMMIT");
 								async.series(arrQueries, function() {
 									conn.release();
@@ -143,7 +143,7 @@ function processTxt(from_address, text) {
 				/*
 				 * If no WCG account registered or user requested to register a new one
 				 */
-				if (!user[0].id_wcg || text == "linkAccount") {
+				if (!user[0].member_id || text == "linkAccount") {
 					var returnedTxt = i18n.__("Please create a World Community Grid account or modify an existing one with this username: {{username}} ", {
 						username: conf.prefixForName + user[0].salt + user[0].id
 					});
@@ -188,7 +188,7 @@ function processTxt(from_address, text) {
 				if (text == "changeAccountName") {
 					assocPeers[from_address].step = "changeAccountName";
 					device.sendMessageToDevice(from_address, 'text', i18n.__("Please enter the new name for your WCG account id {{accountID}}", {
-						accountID: user[0].id_wcg
+						accountID: user[0].member_id
 					}) + "\n➡ " + getTxtCommandButton(i18n.__("Cancel", "cancel")));
 					return;
 				}
@@ -224,14 +224,14 @@ function processTxt(from_address, text) {
 							ifSuccess: function(statsObject) {
 
 								assocPeers[from_address].step = "home";
-								if (user[0].id_wcg === statsObject.memberId) {
-									db.query("UPDATE users SET account_name=? WHERE id_wcg=?", [assocPeers[from_address].newName, user[0].id_wcg], function() {
+								if (user[0].member_id === statsObject.memberId) {
+									db.query("UPDATE users SET account_name=? WHERE member_id=?", [assocPeers[from_address].newName, user[0].member_id], function() {
 										device.sendMessageToDevice(from_address, 'text', i18n.__("New name validated.") + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"))
 									});
 								} else {
 									assocPeers[from_address].step = "home";
 									device.sendMessageToDevice(from_address, 'text', i18n.__("This name doesn't correspond to the WCG account ID {{accountID}}", {
-										accountID: user[0].id_wcg
+										accountID: user[0].member_id
 									}) + "\n➡ " + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 
 								}
@@ -251,7 +251,7 @@ function processTxt(from_address, text) {
 				function getSetupCompletedMessage() {
 					return i18n.__("Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.", {
 							accountName: user[0].account_name,
-							accountID: user[0].id_wcg
+							accountID: user[0].member_id
 						}) +
 						"\n" + i18n.__("For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution") + "\n"
 						 + "\n➡ " + getTxtCommandButton(i18n.__("Change linked WCG account"), "linkAccount") + "\n➡ " + getTxtCommandButton(i18n.__("Change payout address"), "changePayoutAddress") + "\n➡ " + getTxtCommandButton(i18n.__("Change account name"), "changeAccountName");
@@ -271,7 +271,7 @@ function crawlForAnyPendingDistribution() {
 
 	db.query("SELECT id from distributions WHERE is_crawled = 0", function(distributions) {
 		if (distributions.length == 1) {
-			db.query("SELECT account_name,device_address,payout_address,id_wcg from users WHERE id_wcg NOT IN (SELECT member_id FROM wcg_scores WHERE id_distribution = ?) AND account_name NOT NULL AND id_wcg NOT NULL AND has_crawl_error = 0", [distributions[0].id], function(users) {
+			db.query("SELECT account_name,device_address,payout_address,member_id from users WHERE member_id NOT IN (SELECT member_id FROM wcg_scores WHERE distribution_id = ?) AND account_name NOT NULL AND member_id NOT NULL AND has_crawl_error = 0", [distributions[0].id], function(users) {
 
 				if (users.length == 0) {
 
@@ -340,13 +340,13 @@ function crawlScores(users, handle) {
 			}, 60 * 1000);
 		},
 		ifSuccess: function(statsObject) {
-			if (users[0].id_wcg === statsObject.memberId) {
+			if (users[0].member_id === statsObject.memberId) {
 				db.takeConnectionFromPool(function(conn) {
 					var arrQueries = [];
 					conn.addQuery(arrQueries, "BEGIN");
-					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores (id_distribution, device_address, payout_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?, ? - (SELECT score FROM wcg_scores WHERE id_distribution = (SELECT max( id_distribution) FROM wcg_scores WHERE member_id =?) AND member_id =?))", [users[0].device_address, users[0].payout_address, statsObject.memberId, statsObject.points, statsObject.points, statsObject.memberId, statsObject.memberId]);
-					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos (id_distribution, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?,?,?,?,?)", [users[0].device_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
-					conn.addQuery(arrQueries, "UPDATE wcg_scores SET bytes_reward= diff_from_previous * ? WHERE id_distribution =(SELECT max( id_distribution) FROM wcg_scores WHERE member_id =?) AND member_id =?", [conversion.getPriceInBytes(1) * conf.WCGpointToDollar, statsObject.memberId, statsObject.memberId]);
+					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores (distribution_id, device_address, payout_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?, ? - (SELECT score FROM wcg_scores WHERE distribution_id = (SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?))", [users[0].device_address, users[0].payout_address, statsObject.memberId, statsObject.points, statsObject.points, statsObject.memberId, statsObject.memberId]);
+					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?,?,?,?,?)", [users[0].device_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
+					conn.addQuery(arrQueries, "UPDATE wcg_scores SET bytes_reward= diff_from_previous * ? WHERE distribution_id =(SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?", [conversion.getPriceInBytes(1) * conf.WCGpointToDollar, statsObject.memberId, statsObject.memberId]);
 					conn.addQuery(arrQueries, "COMMIT");
 					async.series(arrQueries, function() {
 						conn.release();
@@ -366,7 +366,7 @@ function crawlScores(users, handle) {
 				var device = require('byteballcore/device.js');
 				device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.", {
 					accountName: users[0].account_name,
-					WCG_id: users[0].id_wcg
+					WCG_id: users[0].member_id
 				}) + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"));
 				db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 					users.shift();
@@ -428,8 +428,8 @@ function processAnyAuthorizedDistribution() {
 
 					} else {
 
-						db.query("UPDATE wcg_scores SET payment_unit=? WHERE member_id IN (?) AND id_distribution=?", [unit, arrMemberID, authorizedDistributions[0].id], function() {
-							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.member_id IN (?) AND id_distribution=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
+						db.query("UPDATE wcg_scores SET payment_unit=? WHERE member_id IN (?) AND distribution_id=?", [unit, arrMemberID, authorizedDistributions[0].id], function() {
+							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
 									
 									var i18n = {};
@@ -469,7 +469,7 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 			AND (SELECT address FROM unit_authors WHERE unit_authors.unit=outputs.unit)=? \n\
 			AND (SELECT creation_date FROM units WHERE units.unit=outputs.unit)>? \n\
 		WHERE outputs.address IS NULL \n\
-			AND id_distribution=?  \n\
+			AND distribution_id=?  \n\
 			AND bytes_reward>0 \n\
 			AND diff_from_previous>0  \n\
 			AND payout_address IS NOT NULL  \n\
@@ -504,7 +504,7 @@ function verifyDistribution(distributionID, distributionDate) {
 		WHERE unit_authors.address=? AND outputs.address!=? AND asset IS NULL AND creation_date>?", [my_address, my_address, distributionDate],
 		function(rows) {
 			var total = rows[0].total;
-			db.query("SELECT SUM(bytes_reward) AS total_bytes FROM wcg_scores WHERE id_distribution=?", [distributionID], function(rows) {
+			db.query("SELECT SUM(bytes_reward) AS total_bytes FROM wcg_scores WHERE distribution_id=?", [distributionID], function(rows) {
 				var expected_total = Math.round(rows[0].total_bytes);
 				var overpaid = total - expected_total;
 				console.log("---- total paid: " + total + ", overpaid: " + overpaid);
@@ -518,10 +518,10 @@ function verifyDistribution(distributionID, distributionDate) {
 
 function sendReportToAdmin() {
 
-	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name FROM wcg_scores \n\
-			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
+	db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name FROM wcg_scores \n\
+			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
 			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
-			WHERE wcg_scores.id_distribution = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
+			WHERE wcg_scores.distribution_id = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
 
 		var totalAsset = 0;
 		var totalBytes = 0;
@@ -530,13 +530,13 @@ function sendReportToAdmin() {
 			totalAsset+= row.diff_from_previous;
 			totalBytes+= row.bytes_reward;
 			if(row.diff_from_previous<0){
-				return notifications.notifyAdmin("Error for distribution id " + rows[0].id_distribution, "Member ID " + row.member_id + "  has negative reward");
+				return notifications.notifyAdmin("Error for distribution id " + rows[0].distribution_id, "Member ID " + row.member_id + "  has negative reward");
 			}
 			if(row.diff_from_previous>0){
 				totalUsers++;
 			}
 		});
-		var bodyEmail = "Distribution id " + rows[0].id_distribution + " ready, paste distribute_" + rows[0].id_distribution + " to start it\n";
+		var bodyEmail = "Distribution id " + rows[0].distribution_id + " ready, paste distribute_" + rows[0].distribution_id + " to start it\n";
 		bodyEmail += "Total bytes to be distributed: " + Math.round(totalBytes) + " to " + totalUsers + " users\n";
 		bodyEmail += "Total assets to be distributed: " + Math.round(totalAsset) + " to " + totalUsers + " users\n";
 		bodyEmail += "User ID	Bytes reward	Asset reward	Account name\n";
@@ -546,7 +546,7 @@ function sendReportToAdmin() {
 				bodyEmail += row.member_id + "	 " + Math.round(row.bytes_reward) + "	 " + Math.round(row.diff_from_previous)+ "	" + row.account_name + "\n";
 			}
 		});
-		return notifications.notifyAdmin("Distribution id " + rows[0].id_distribution + "ready", bodyEmail)
+		return notifications.notifyAdmin("Distribution id " + rows[0].distribution_id + "ready", bodyEmail)
 	});
 
 }
@@ -554,10 +554,10 @@ function sendReportToAdmin() {
 
 function writeDistributionReport(distributionID, distributionDate) {
 
-	db.query("SELECT wcg_scores.id_distribution AS id_distribution,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
-			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.id_distribution = wcg_meta_infos.id_distribution\n\
+	db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
+			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
 			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
-			WHERE wcg_scores.id_distribution = ? AND bytes_reward>0 ORDER BY bytes_reward DESC", [distributionID], function(rows) {
+			WHERE wcg_scores.distribution_id = ? AND bytes_reward>0 ORDER BY bytes_reward DESC", [distributionID], function(rows) {
 
 		var totalAsset = 0;
 		var totalBytes = 0;
@@ -566,7 +566,7 @@ function writeDistributionReport(distributionID, distributionDate) {
 			totalBytes += row.bytes_reward;
 
 		});
-		var body = "<html><head><link rel='stylesheet' href='report.css'></head><body><div id='main'><div id='title'><h3>Distribution id " + rows[0].id_distribution + " on " + distributionDate + "</h3></div>";
+		var body = "<html><head><link rel='stylesheet' href='report.css'></head><body><div id='main'><div id='title'><h3>Distribution id " + rows[0].distribution_id + " on " + distributionDate + "</h3></div>";
 		body += "<div id='totalBytes'>" + Math.round(totalBytes) + " bytes distributed  to " + rows.length + " users</div>";
 		body += "<div id='totalAsset'>" + Math.round(totalAsset) +" " + conf.labelAsset + " distributed " + " to " + rows.length + " users</div>";
 		body += "<div id='tableDistrib'><table class='distribution'><tr><td>User ID</td><td>Account name</td><td>score read</td><td>bytes reward</td><td>" + conf.labelAsset + " reward</td><td>Address</td><td>Unit</td>";
