@@ -601,7 +601,7 @@ function getLanguagesSelection() {
 function createOutputsIfNeeded(asset, minQty, minAmountOutputBytes, minAmountOutputAsset) {
 
 	db.query("SELECT * FROM (SELECT COUNT(*) AS count_bytes_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset IS NULL AND is_spent=0),\n\
-(SELECT COUNT(*) AS count_asset_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>? AND asset=? AND is_spent=0)", [my_address, minAmountOutputBytes, minAmountOutputAsset, honorificAsset],
+(SELECT COUNT(*) AS count_asset_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset=? AND is_spent=0)", [my_address, minAmountOutputBytes, minAmountOutputAsset, honorificAsset],
 		function(rows) {
 			var arrOutputsBytes = [];
 			for (var i = rows[0].count_bytes_outputs; i < minQty && i <= 128; i++) {
