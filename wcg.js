@@ -117,25 +117,21 @@ function processTxt(from_address, text) {
 						},
 						ifSuccess: function(statsObject) {
 							
-								db.takeConnectionFromPool(function(conn) {
-								var arrQueries = [];
-								conn.addQuery(arrQueries, "BEGIN");
-								conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
-								conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
-								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
-								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
-								conn.addQuery(arrQueries, "COMMIT");
-								async.series(arrQueries, function() {
-									conn.release();
-									assocPeers[from_address].step = "insertAddress";
-									device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
-
+							db.takeConnectionFromPool(function(conn) {
+							var arrQueries = [];
+							conn.addQuery(arrQueries, "BEGIN");
+							conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
+							conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
+							conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
+							conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
+							conn.addQuery(arrQueries, "COMMIT");
+							async.series(arrQueries, function() {
+								conn.release();
+								assocPeers[from_address].step = "insertAddress";
+								device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
 								});
 							});
 							
-							
-							
-						
 						}
 					});
 					return;
@@ -212,18 +208,16 @@ function processTxt(from_address, text) {
 								device.sendMessageToDevice(from_address, 'text', i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n➡ " + getTxtCommandButton(i18n.__("retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("choose another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 							},
 							ifFailed: function() {
-																device.sendMessageToDevice(from_address, 'text', i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
+									device.sendMessageToDevice(from_address, 'text', i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
 									accountName: assocPeers[from_address].newName
 								}) + "\n➡ " + getTxtCommandButton(i18n.__("Retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("Change for another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 
 							},
-
 							ifError: function() {
 								assocPeers[from_address].step = "home";
 								device.sendMessageToDevice(from_address, 'text', i18n.__("An unexpected error occurred. Admin is notified. Please try again in a few hours.") + "\n" + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n" + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 							},
 							ifSuccess: function(statsObject) {
-
 								assocPeers[from_address].step = "home";
 								if (user[0].member_id === statsObject.memberId) {
 									db.query("UPDATE users SET account_name=? WHERE member_id=?", [assocPeers[from_address].newName, user[0].member_id], function() {
@@ -444,15 +438,10 @@ function processAnyAuthorizedDistribution() {
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
 
 						});
-
 					}
-
 				});
-
 			});
-
 		}
-
 	});
 }
 
@@ -601,7 +590,7 @@ function getLanguagesSelection() {
 function createOutputsIfNeeded(asset, minQty, minAmountOutputBytes, minAmountOutputAsset) {
 
 	db.query("SELECT * FROM (SELECT COUNT(*) AS count_bytes_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset IS NULL AND is_spent=0),\n\
-(SELECT COUNT(*) AS count_asset_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset=? AND is_spent=0)", [my_address, minAmountOutputBytes, minAmountOutputAsset, honorificAsset],
+	(SELECT COUNT(*) AS count_asset_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset=? AND is_spent=0)", [my_address, minAmountOutputBytes, minAmountOutputAsset, honorificAsset],
 		function(rows) {
 			var arrOutputsBytes = [];
 			for (var i = rows[0].count_bytes_outputs; i <= minQty && i <= 128; i++) {
