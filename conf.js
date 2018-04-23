@@ -11,7 +11,7 @@ exports.bIgnoreUnpairRequests = true;
 exports.hub = 'byteball.org/bb';
 exports.deviceName = 'WCG-distribution';
 exports.permanent_pairing_secret = '0000';
-exports.control_addresses = [''];
+exports.control_addresses = ['0UXWB7F3ZERLSLC5MFD7IKEHNYDSVPFWV'];
 
 
 exports.daysBetweenDistributions = 7;
@@ -49,6 +49,9 @@ exports.languagesAvailable = {
 	},
 	id: {
 		name: "Bahasa Indonesia"
+	},
+	it: {
+		name: "Italiano"
 	}
 };
 
