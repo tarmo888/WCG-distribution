@@ -378,11 +378,11 @@ function crawlScores(users, handle) {
 
 function initiateNewDistributionIfNeeded() {
 
-	db.query("SELECT max(id),CASE \n\
+	db.query("SELECT id, CASE \n\
 	WHEN is_completed = 0 THEN 0	\n\
 	WHEN creation_date < datetime('now', '-" + conf.daysBetweenDistributions + " days') THEN 1	\n\
 	END isNewDistributionNeeded	\n\
-	FROM distributions", function(rows) {
+	FROM distributions ORDER BY id DESC LIMIT 1", function(rows) {
 		if (rows[0] && rows[0].isNewDistributionNeeded) {
 			db.query("INSERT INTO distributions (is_crawled,is_authorized,is_completed) VALUES (0,0,0)", function() {
 				crawlForAnyPendingDistribution();
