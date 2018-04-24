@@ -58,10 +58,5 @@ exports.languagesAvailable = {
 	}
 };
 
-//values used to create outputs at start
-exports.minBytesOutputsAvailable = 30;
-exports.amountBytesOutputs = 100000000;
-exports.amountAssetOutputs = 1000000;
-
 
 console.log('finished WCG bot conf');

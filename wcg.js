@@ -5,6 +5,7 @@ const i18nModule = require("i18n");
 const fs = require('fs');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
+const split = require('headless-byteball/split.js');
 const desktopApp = require('byteballcore/desktop_app.js');
 const notifications = require('./modules/notifications.js');
 const randomCryptoString = require('./modules/random-crypto-string');
@@ -595,47 +596,6 @@ function getLanguagesSelection() {
 }
 
 
-function createOutputsIfNeeded(asset, minQty, minAmountOutputBytes, minAmountOutputAsset) {
-
-	db.query("SELECT * FROM (SELECT COUNT(*) AS count_bytes_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset IS NULL AND is_spent=0),\n\
-	(SELECT COUNT(*) AS count_asset_outputs FROM outputs JOIN units USING(unit) WHERE address=? AND is_stable=1 AND amount>=? AND asset=? AND is_spent=0)", [my_address, minAmountOutputBytes, minAmountOutputAsset, honorificAsset],
-		function(rows) {
-			var arrOutputsBytes = [];
-			for (var i = rows[0].count_bytes_outputs; i <= minQty && i <= 128; i++) {
-
-				arrOutputsBytes.push({
-					amount: minAmountOutputBytes,
-					address: my_address
-				});
-
-			}
-
-			var arrOutputsAsset = [];
-			for (var i = rows[0].count_asset_outputs; i <= minQty && i <= 128; i++) {
-
-				arrOutputsAsset.push({
-					amount: minAmountOutputAsset,
-					address: my_address
-				});
-
-			}
-			var opts = {
-				asset: asset,
-				base_outputs: arrOutputsBytes,
-				asset_outputs: arrOutputsAsset,
-				change_address: my_address
-			};
-			headlessWallet.sendMultiPayment(opts, function(err, unit) {
-				if (err) {
-					notifications.notifyAdmin("Creation of outputs failed", err);
-				}
-
-			});
-
-		});
-}
-
-
 function getTxtCommandButton(label, command) {
 	var text = "";
 	var _command = command ? command : label;
@@ -691,7 +651,8 @@ eventBus.on('headless_wallet_ready', function() {
 				crawlForAnyPendingDistribution()
 				processAnyAuthorizedDistribution();
 				initiateNewDistributionIfNeeded();
-				createOutputsIfNeeded(honorificAsset, conf.minBytesOutputsAvailable, conf.amountBytesOutputs, conf.amountAssetOutputs);
+				split.startCheckingAndSplittingLargestOutput(my_address);
+				split.startCheckingAndSplittingLargestOutput(my_address, honorificAsset);
 				setInterval(initiateNewDistributionIfNeeded, 5 * 60 * 1000);
 			}, 5000);
 		});
