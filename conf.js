@@ -14,7 +14,7 @@ exports.permanent_pairing_secret = '0000';
 exports.control_addresses = [''];
 
 
-exports.daysBetweenDistributions = 7;
+exports.daysBetweenDistributions = 1;
 exports.WCGpointToDollar = 1 / 200000;
 exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
