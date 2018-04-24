@@ -425,7 +425,10 @@ function processAnyAuthorizedDistribution() {
 					} else {
 
 						db.query("UPDATE wcg_scores SET payment_unit=? WHERE member_id IN (?) AND distribution_id=?", [unit, arrMemberID, authorizedDistributions[0].id], function() {
-							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores LEFT JOIN users ON users.device_address=wcg_scores.device_address WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
+							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores \n\
+									 LEFT JOIN users \n\
+									 	ON users.device_address=wcg_scores.device_address \n\
+									 WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
 									
 									if (row.lang != 'unknown' && conf.isMultiLingual) {
@@ -508,8 +511,11 @@ function verifyDistribution(distributionID, distributionDate) {
 function sendReportToAdmin() {
 
 	db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name FROM wcg_scores \n\
-			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
-			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
+			INNER JOIN wcg_meta_infos \n\
+				ON wcg_scores.member_id = wcg_meta_infos.member_id \n\
+				AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id \n\
+			LEFT JOIN users \n\
+				ON users.device_address = wcg_scores.device_address \n\
 			WHERE wcg_scores.distribution_id = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
 
 		var totalAsset = 0;
@@ -544,7 +550,9 @@ function sendReportToAdmin() {
 function writeDistributionReport(distributionID, distributionDate) {
 
 	db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
-			INNER JOIN wcg_meta_infos ON wcg_scores.member_id = wcg_meta_infos.member_id AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
+			INNER JOIN wcg_meta_infos \n\
+				ON wcg_scores.member_id = wcg_meta_infos.member_id \n\
+			 	AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
 			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
 			WHERE wcg_scores.distribution_id = ? AND bytes_reward>0 ORDER BY bytes_reward DESC", [distributionID], function(rows) {
 
