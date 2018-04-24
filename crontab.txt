@@ -1,0 +1,1 @@
+*/20 * * * * cd WCG-distribution; node check_daemon.js 1>>~/.config/WCG-distribution/check_daemon.log 2>>~/.config/WCG-distribution/check_daemon.err
