@@ -3,6 +3,7 @@
 const async = require('async');
 const i18nModule = require("i18n");
 const fs = require('fs');
+const constants = require('byteballcore/constants.js');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
 const split = require('headless-byteball/split.js');
@@ -467,7 +468,7 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 			AND diff_from_previous>0  \n\
 			AND payout_address IS NOT NULL  \n\
 		ORDER BY bytes_reward \n\
-		LIMIT 128", [my_address, distributionDate, distributionID],
+		LIMIT ?", [my_address, distributionDate, distributionID, constants.MAX_OUTPUTS_PER_PAYMENT_MESSAGE-1],
 		function(rows) {
 			if (rows.length === 0)
 				return handleOutputs();
