@@ -434,7 +434,7 @@ function processAnyAuthorizedDistribution() {
 										i18nModule.setLocale(i18n, row.lang);
 									}
 									console.log("Sent payout notification in language: "+ row.lang);
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/Math.pow(10,9)).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
 								});
 							});
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
