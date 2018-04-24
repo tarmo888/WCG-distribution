@@ -119,17 +119,17 @@ function processTxt(from_address, text) {
 						ifSuccess: function(statsObject) {
 							
 							db.takeConnectionFromPool(function(conn) {
-							var arrQueries = [];
-							conn.addQuery(arrQueries, "BEGIN");
-							conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
-							conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
-							conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
-							conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
-							conn.addQuery(arrQueries, "COMMIT");
-							async.series(arrQueries, function() {
-								conn.release();
-								assocPeers[from_address].step = "insertAddress";
-								device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
+								var arrQueries = [];
+								conn.addQuery(arrQueries, "BEGIN");
+								conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
+								conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
+								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
+								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
+								conn.addQuery(arrQueries, "COMMIT");
+								async.series(arrQueries, function() {
+									conn.release();
+									assocPeers[from_address].step = "insertAddress";
+									device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
 								});
 							});
 							
@@ -570,8 +570,8 @@ function writeDistributionReport(distributionID, distributionDate) {
 		body += "<div id='tableDistrib'><table class='distribution'><tr><td>User ID</td><td>Account name</td><td>score read</td><td>bytes reward</td><td>" + conf.labelAsset + " reward</td><td>Address</td><td>Unit</td>";
 
 		rows.forEach(function(row) {
-				body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
-					Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>"+row.payout_address+"</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>";
+			body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
+				Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>"+row.payout_address+"</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>";
 		});
 
 		body += "</table></div></div></body></html>";
@@ -640,9 +640,8 @@ eventBus.on('headless_wallet_ready', function() {
 			if (honorific_asset.length === 0) {
 				console.log("No honorific asset set yet, please fund " + my_address + " then execute create_honorific_asset.js");
 				setTimeout(function() { //let enough time for the node to initialize a first time
-						process.exit(1)
-					},
-					5000);
+					process.exit(1)
+				}, 5000);
 			}
 
 			honorificAsset = honorific_asset[0].unit;
