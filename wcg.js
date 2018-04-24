@@ -22,14 +22,14 @@ var honorificAsset;
 
 
 if (conf.isMultiLingual) {
-	var arrLanguage = [];
+	var arrLanguages = [];
 	for (var index in conf.languagesAvailable) {
-		arrLanguage.push(index);
+		arrLanguages.push(index);
 	}
 }
 
 i18nModule.configure({
-	locales: arrLanguage,
+	locales: arrLanguages,
 	directory: __dirname + '/locales'
 });
 
@@ -407,7 +407,7 @@ function processAnyAuthorizedDistribution() {
 			var composer = require('byteballcore/composer.js');
 			var i18n = {};
 			i18nModule.init(i18n);
-			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAsset,arrMemberID) {
+			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAsset,arrMemberIDs) {
 				if (!arrOutputsBytes) { // done
 					db.query("UPDATE distributions SET is_completed=1 WHERE id=?", [authorizedDistributions[0].id], function() {});
 					return verifyDistribution(authorizedDistributions[0].id, authorizedDistributions[0].creation_date);
@@ -426,11 +426,11 @@ function processAnyAuthorizedDistribution() {
 
 					} else {
 
-						db.query("UPDATE wcg_scores SET payment_unit=? WHERE member_id IN (?) AND distribution_id=?", [unit, arrMemberID, authorizedDistributions[0].id], function() {
+						db.query("UPDATE wcg_scores SET payment_unit=? WHERE member_id IN (?) AND distribution_id=?", [unit, arrMemberIDs, authorizedDistributions[0].id], function() {
 							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores \n\
 									 LEFT JOIN users \n\
 									 	ON users.device_address=wcg_scores.device_address \n\
-									 WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
+									 WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberIDs, authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
 									
 									if (row.lang != 'unknown' && conf.isMultiLingual) {
@@ -474,7 +474,7 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 				return handleOutputs();
 			var arrOutputsBytes = [];
 			var arrOutputsAsset = [];
-			var arrMemberID = [];
+			var arrMemberIDs = [];
 			rows.forEach(function(row) {
 				arrOutputsBytes.push({
 					amount: Math.round(row.bytes_reward),
@@ -484,10 +484,10 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 					amount: Math.round(row.diff_from_previous),
 					address: row.payout_address
 				});
-				arrMemberID.push(row.member_id);
+				arrMemberIDs.push(row.member_id);
 				
 			});
-			handleOutputs(arrOutputsBytes, arrOutputsAsset,arrMemberID);
+			handleOutputs(arrOutputsBytes, arrOutputsAsset,arrMemberIDs);
 		}
 	);
 }
