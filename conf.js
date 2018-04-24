@@ -55,6 +55,9 @@ exports.languagesAvailable = {
 	},
 	ru: {
 		name: "Русский"
+	},
+	tl: {
+		name: "Tagalog"
 	}
 };
 
