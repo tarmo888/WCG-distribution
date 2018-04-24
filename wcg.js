@@ -155,7 +155,7 @@ function processTxt(from_address, text) {
 				 */
 
 				if (assocPeers[from_address].step == "insertAddress") {
-					if (validationUtils.isValidAddress(text) {
+					if (validationUtils.isValidAddress(text)) {
 						db.query("UPDATE users SET payout_address=? WHERE device_address == ? ", [text, from_address], function() {
 							assocPeers[from_address].step = "home";
 							device.sendMessageToDevice(from_address, 'text', i18n.__("Congratulations!") + " " + getSetupCompletedMessage());
