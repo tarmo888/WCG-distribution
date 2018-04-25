@@ -19,6 +19,8 @@ exports.WCGpointToDollar = 1 / 200000;
 exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
 
+exports.arrayInitialRewards = [{threshold:1000,rewardInDollars:0.001}, {threshold:10000,rewardInDollars:0.01}, {threshold:100000,rewardInDollars:0.1}];
+
 exports.isMultiLingual = true;
 
 

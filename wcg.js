@@ -15,8 +15,9 @@ const db = require('byteballcore/db.js');
 const validationUtils = require("byteballcore/validation_utils.js");
 const conversion = require('./modules/conversion');
 const wcg_api = require('./modules/wcg_api.js');
-
+const mutex = require('./modules/mutex.js');
 var my_address;
+
 var assocPeers = [];
 var honorificAsset;
 
@@ -118,7 +119,18 @@ function processTxt(from_address, text) {
 							
 							db.takeConnectionFromPool(function(conn) {
 								var arrQueries = [];
+								var initialRewardToUser = 0;
 								conn.addQuery(arrQueries, "BEGIN");
+								conf.arrayInitialRewards.forEach(function(initialReward) {
+									if (statsObject.points > initialReward.threshold && initialRewardToUser < initialReward.rewardInDollars) // we find the higher reward for this user score
+										initialRewardToUser = initialReward.rewardInDollars;
+								});
+								if (initialRewardToUser > 0) {
+									conn.addQuery(arrQueries, "INSERT OR IGNORE INTO initial_rewards (bytes_reward,member_id,device_address) VALUES (CASE \n\
+																	WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
+																	ELSE 0 \n\
+																END,?,?)", [statsObject.memberId, Math.floor(initialRewardToUser * conversion.getPriceInBytes(1)), statsObject.memberId, from_address]); //If member_id already know we set 0 as initial reward
+								}
 								conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
 								conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
 								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
@@ -156,10 +168,20 @@ function processTxt(from_address, text) {
 
 				if (assocPeers[from_address].step == "insertAddress") {
 					if (validationUtils.isValidAddress(text)) {
-						db.query("UPDATE users SET payout_address=? WHERE device_address == ? ", [text, from_address], function() {
+						db.takeConnectionFromPool(function(conn) {
+						var arrQueries = [];
+						conn.addQuery(arrQueries, "BEGIN");
+						conn.addQuery(arrQueries, "UPDATE users SET payout_address=? WHERE device_address = ? ", [text, from_address]);
+						conn.addQuery(arrQueries, "UPDATE initial_rewards SET payout_address=? WHERE member_id=? AND payout_address IS NULL",[text, user[0].member_id]);
+						conn.addQuery(arrQueries, "COMMIT");
+						async.series(arrQueries, function() {
+							conn.release();
 							assocPeers[from_address].step = "home";
 							device.sendMessageToDevice(from_address, 'text', i18n.__("Congratulations!") + " " + getSetupCompletedMessage());
+							sendPendingInitialRewards();
 						});
+					});
+						
 					} else {
 						device.sendMessageToDevice(from_address, 'text', i18n.__("This is not a valid address.") + "\n" + i18n.__(getMessageInsertAddress()));
 					}
@@ -341,7 +363,7 @@ function crawlScores(users, handle) {
 					conn.addQuery(arrQueries, "BEGIN");
 					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores (distribution_id, device_address, payout_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?, ? - (SELECT score FROM wcg_scores WHERE distribution_id = (SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?))", [users[0].device_address, users[0].payout_address, statsObject.memberId, statsObject.points, statsObject.points, statsObject.memberId, statsObject.memberId]);
 					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?,?,?,?,?)", [users[0].device_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
-					conn.addQuery(arrQueries, "UPDATE wcg_scores SET bytes_reward= diff_from_previous * ? WHERE distribution_id =(SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?", [conversion.getPriceInBytes(1) * conf.WCGpointToDollar, statsObject.memberId, statsObject.memberId]);
+					conn.addQuery(arrQueries, "UPDATE wcg_scores SET bytes_reward= CAST(diff_from_previous * ? AS INT) WHERE distribution_id =(SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?", [conversion.getPriceInBytes(1) * conf.WCGpointToDollar, statsObject.memberId, statsObject.memberId]);
 					conn.addQuery(arrQueries, "COMMIT");
 					async.series(arrQueries, function() {
 						conn.release();
@@ -373,6 +395,81 @@ function crawlScores(users, handle) {
 
 	});
 }
+
+
+function sendPendingInitialRewards() {
+
+	mutex.lock(['sendPendingInitialRewards'], function(unlock) {
+		db.query(
+			"SELECT bytes_reward,payout_address, device_address,member_id \n\
+		FROM initial_rewards \n\
+		LEFT JOIN outputs \n\
+			ON initial_rewards.payout_address=outputs.address \n\
+			AND asset IS NULL \n\
+			AND (SELECT address FROM unit_authors WHERE unit_authors.unit=outputs.unit)=? \n\
+			AND CAST(bytes_reward as INT)=outputs.amount\n\
+		WHERE outputs.address IS NULL \n\
+			AND bytes_reward>0 \n\
+			AND payout_address IS NOT NULL  \n\
+			AND payment_unit IS NULL \n\
+		ORDER BY bytes_reward \n\
+		LIMIT ?", [my_address, constants.MAX_OUTPUTS_PER_PAYMENT_MESSAGE - 1],
+			function(rows) {
+				if (rows.length === 0)
+					return unlock();
+				var arrOutputsBytes = [];
+				var arrMemberIDs = [];
+				rows.forEach(function(row) {
+					arrOutputsBytes.push({
+						amount: Math.round(row.bytes_reward),
+						address: row.payout_address
+					});
+					arrMemberIDs.push(row.member_id);
+
+				});
+				var opts = {
+					base_outputs: arrOutputsBytes,
+					change_address: my_address
+				};
+				console.log(opts);
+				headlessWallet.sendMultiPayment(opts, function(err, unit) {
+					unlock();
+					if (err) {
+						notifications.notifyAdmin("a payment failed", err);
+						setTimeout(sendPendingInitialRewards, 300 * 1000);
+					} else {
+						var device = require('byteballcore/device.js');
+						var i18n = {};
+						i18nModule.init(i18n);
+						db.query("UPDATE initial_rewards SET payment_unit=? WHERE member_id IN (?)", [unit, arrMemberIDs], function() {
+							db.query("SELECT  initial_rewards.device_address AS device_address,bytes_reward,lang FROM initial_rewards \n\
+									 LEFT JOIN users \n\
+									 	ON users.device_address=initial_rewards.device_address \n\
+									 WHERE initial_rewards.member_id IN (?)", [arrMemberIDs], function(rows) {
+								rows.forEach(function(row) {
+									if (row.lang != 'unknown' && conf.isMultiLingual) {
+										i18nModule.setLocale(i18n, row.lang);
+									}
+									console.log("Sent payout notification in language: " + row.lang);
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB was made to reward your previous contribution to World Community Grid.", {
+										amountByte: (row.bytes_reward / 1e9).toFixed(5)
+									}));
+								});
+							});
+
+						});
+					}
+				});
+
+			});
+	});
+
+}
+
+
+
+
+
 
 function initiateNewDistributionIfNeeded() {
 
@@ -448,8 +545,6 @@ function processAnyAuthorizedDistribution() {
 }
 
 
-
-
 function createDistributionOutputs(distributionID, distributionDate, handleOutputs) {
 	db.query(
 		"SELECT bytes_reward,payout_address, device_address,diff_from_previous,member_id \n\
@@ -459,11 +554,13 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 			AND asset IS NULL \n\
 			AND (SELECT address FROM unit_authors WHERE unit_authors.unit=outputs.unit)=? \n\
 			AND (SELECT creation_date FROM units WHERE units.unit=outputs.unit)>? \n\
+			AND CAST(bytes_reward as INT)=outputs.amount\n\
 		WHERE outputs.address IS NULL \n\
 			AND distribution_id=?  \n\
 			AND bytes_reward>0 \n\
 			AND diff_from_previous>0  \n\
 			AND payout_address IS NOT NULL  \n\
+			AND payment_unit IS NULL \n\
 		ORDER BY bytes_reward \n\
 		LIMIT ?", [my_address, distributionDate, distributionID, constants.MAX_OUTPUTS_PER_PAYMENT_MESSAGE-1],
 		function(rows) {
@@ -650,6 +747,7 @@ eventBus.on('headless_wallet_ready', function() {
 				initiateNewDistributionIfNeeded();
 				split.startCheckingAndSplittingLargestOutput(my_address);
 				split.startCheckingAndSplittingLargestOutput(my_address, honorificAsset);
+				sendPendingInitialRewards();
 				setInterval(initiateNewDistributionIfNeeded, 5 * 60 * 1000);
 			}, 5000);
 		});
