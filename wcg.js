@@ -3,6 +3,7 @@
 const async = require('async');
 const i18nModule = require("i18n");
 const fs = require('fs');
+const constants = require('byteballcore/constants.js');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
 const split = require('headless-byteball/split.js');
@@ -21,14 +22,11 @@ var honorificAsset;
 
 
 if (conf.isMultiLingual) {
-	var arrLanguage = [];
-	for (var index in conf.languagesAvailable) {
-		arrLanguage.push(index);
-	}
+	var arrLanguages = Object.keys(conf.languagesAvailable);
 }
 
 i18nModule.configure({
-	locales: arrLanguage,
+	locales: arrLanguages,
 	directory: __dirname + '/locales'
 });
 
@@ -119,17 +117,17 @@ function processTxt(from_address, text) {
 						ifSuccess: function(statsObject) {
 							
 							db.takeConnectionFromPool(function(conn) {
-							var arrQueries = [];
-							conn.addQuery(arrQueries, "BEGIN");
-							conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
-							conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
-							conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
-							conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
-							conn.addQuery(arrQueries, "COMMIT");
-							async.series(arrQueries, function() {
-								conn.release();
-								assocPeers[from_address].step = "insertAddress";
-								device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
+								var arrQueries = [];
+								conn.addQuery(arrQueries, "BEGIN");
+								conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
+								conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
+								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
+								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos  (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,?,?,?,?,?)", [from_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
+								conn.addQuery(arrQueries, "COMMIT");
+								async.series(arrQueries, function() {
+									conn.release();
+									assocPeers[from_address].step = "insertAddress";
+									device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
 								});
 							});
 							
@@ -157,8 +155,8 @@ function processTxt(from_address, text) {
 				 */
 
 				if (assocPeers[from_address].step == "insertAddress") {
-					if (validationUtils.isValidAddress(text.trim())) {
-						db.query("UPDATE users SET payout_address=? WHERE device_address == ? ", [text.trim(), from_address], function() {
+					if (validationUtils.isValidAddress(text)) {
+						db.query("UPDATE users SET payout_address=? WHERE device_address == ? ", [text, from_address], function() {
 							assocPeers[from_address].step = "home";
 							device.sendMessageToDevice(from_address, 'text', i18n.__("Congratulations!") + " " + getSetupCompletedMessage());
 						});
@@ -378,11 +376,11 @@ function crawlScores(users, handle) {
 
 function initiateNewDistributionIfNeeded() {
 
-	db.query("SELECT max(id),CASE \n\
+	db.query("SELECT id, CASE \n\
 	WHEN is_completed = 0 THEN 0	\n\
 	WHEN creation_date < datetime('now', '-" + conf.daysBetweenDistributions + " days') THEN 1	\n\
 	END isNewDistributionNeeded	\n\
-	FROM distributions", function(rows) {
+	FROM distributions ORDER BY id DESC LIMIT 1", function(rows) {
 		if (rows[0] && rows[0].isNewDistributionNeeded) {
 			db.query("INSERT INTO distributions (is_crawled,is_authorized,is_completed) VALUES (0,0,0)", function() {
 				crawlForAnyPendingDistribution();
@@ -406,7 +404,7 @@ function processAnyAuthorizedDistribution() {
 			var composer = require('byteballcore/composer.js');
 			var i18n = {};
 			i18nModule.init(i18n);
-			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAsset,arrMemberID) {
+			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAsset,arrMemberIDs) {
 				if (!arrOutputsBytes) { // done
 					db.query("UPDATE distributions SET is_completed=1 WHERE id=?", [authorizedDistributions[0].id], function() {});
 					return verifyDistribution(authorizedDistributions[0].id, authorizedDistributions[0].creation_date);
@@ -425,18 +423,18 @@ function processAnyAuthorizedDistribution() {
 
 					} else {
 
-						db.query("UPDATE wcg_scores SET payment_unit=? WHERE member_id IN (?) AND distribution_id=?", [unit, arrMemberID, authorizedDistributions[0].id], function() {
+						db.query("UPDATE wcg_scores SET payment_unit=? WHERE member_id IN (?) AND distribution_id=?", [unit, arrMemberIDs, authorizedDistributions[0].id], function() {
 							db.query("SELECT  wcg_scores.device_address AS device_address,bytes_reward,diff_from_previous,lang FROM wcg_scores \n\
 									 LEFT JOIN users \n\
 									 	ON users.device_address=wcg_scores.device_address \n\
-									 WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberID, authorizedDistributions[0].id], function(rows) {
+									 WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberIDs, authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
 									
 									if (row.lang != 'unknown' && conf.isMultiLingual) {
 										i18nModule.setLocale(i18n, row.lang);
 									}
 									console.log("Sent payout notification in language: "+ row.lang);
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/Math.pow(10,9)).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
 								});
 							});
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
@@ -467,13 +465,13 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 			AND diff_from_previous>0  \n\
 			AND payout_address IS NOT NULL  \n\
 		ORDER BY bytes_reward \n\
-		LIMIT 128", [my_address, distributionDate, distributionID],
+		LIMIT ?", [my_address, distributionDate, distributionID, constants.MAX_OUTPUTS_PER_PAYMENT_MESSAGE-1],
 		function(rows) {
 			if (rows.length === 0)
 				return handleOutputs();
 			var arrOutputsBytes = [];
 			var arrOutputsAsset = [];
-			var arrMemberID = [];
+			var arrMemberIDs = [];
 			rows.forEach(function(row) {
 				arrOutputsBytes.push({
 					amount: Math.round(row.bytes_reward),
@@ -483,10 +481,10 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 					amount: Math.round(row.diff_from_previous),
 					address: row.payout_address
 				});
-				arrMemberID.push(row.member_id);
+				arrMemberIDs.push(row.member_id);
 				
 			});
-			handleOutputs(arrOutputsBytes, arrOutputsAsset,arrMemberID);
+			handleOutputs(arrOutputsBytes, arrOutputsAsset,arrMemberIDs);
 		}
 	);
 }
@@ -570,8 +568,8 @@ function writeDistributionReport(distributionID, distributionDate) {
 		body += "<div id='tableDistrib'><table class='distribution'><tr><td>User ID</td><td>Account name</td><td>score read</td><td>bytes reward</td><td>" + conf.labelAsset + " reward</td><td>Address</td><td>Unit</td>";
 
 		rows.forEach(function(row) {
-				body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
-					Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>"+row.payout_address+"</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>";
+			body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
+				Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>"+row.payout_address+"</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>";
 		});
 
 		body += "</table></div></div></body></html>";
@@ -640,9 +638,8 @@ eventBus.on('headless_wallet_ready', function() {
 			if (honorific_asset.length === 0) {
 				console.log("No honorific asset set yet, please fund " + my_address + " then execute create_honorific_asset.js");
 				setTimeout(function() { //let enough time for the node to initialize a first time
-						process.exit(1)
-					},
-					5000);
+					process.exit(1)
+				}, 5000);
 			}
 
 			honorificAsset = honorific_asset[0].unit;
