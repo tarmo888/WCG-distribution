@@ -421,6 +421,7 @@ function sendPendingInitialRewards() {
 		WHERE outputs_assets.address IS NULL AND outputs_bytes.address IS NULL \n\
 			AND (bytes_reward>0 OR assets_reward>0)\n\
 			AND payout_address IS NOT NULL  \n\
+			AND payment_unit IS NULL \n\
 		ORDER BY bytes_reward \n\
 		LIMIT ?", [my_address, honorificAsset, my_address, constants.MAX_OUTPUTS_PER_PAYMENT_MESSAGE - 1],
 			function(rows) {
