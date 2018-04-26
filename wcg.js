@@ -479,7 +479,8 @@ function sendPendingInitialRewards() {
 									}
 									console.log("Sent payout notification in language: " + row.lang);
 									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.", {
-										amountByte: (row.bytes_reward / 1e9).toFixed(5),amountAsset:row.assets_reward,labelAsset:conf.labelAsset
+										amountByte: (row.bytes_reward / 1e9).toLocaleString([], {maximumFractionDigits:9}),
+										amountAsset:row.assets_reward,labelAsset:conf.labelAsset
 									}));
 								});
 							});
@@ -554,7 +555,7 @@ function processAnyAuthorizedDistribution() {
 										i18nModule.setLocale(i18n, conf.languagesAvailable[row.lang].file);
 									}
 									console.log("Sent payout notification in language: "+ row.lang);
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toLocaleString([], {maximumFractionDigits:9}), amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
 								});
 							});
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
