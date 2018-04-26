@@ -15,7 +15,7 @@ const db = require('byteballcore/db.js');
 const validationUtils = require("byteballcore/validation_utils.js");
 const conversion = require('./modules/conversion');
 const wcg_api = require('./modules/wcg_api.js');
-const mutex = require('./modules/mutex.js');
+const mutex = require('byteballcore/mutex.js');
 var my_address;
 
 var assocPeers = [];
@@ -451,7 +451,7 @@ function sendPendingInitialRewards() {
 										i18nModule.setLocale(i18n, row.lang);
 									}
 									console.log("Sent payout notification in language: " + row.lang);
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB was made to reward your previous contribution to World Community Grid.", {
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.", {
 										amountByte: (row.bytes_reward / 1e9).toFixed(5)
 									}));
 								});
