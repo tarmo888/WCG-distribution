@@ -9,7 +9,7 @@ exports.storage = 'sqlite';
 
 exports.bIgnoreUnpairRequests = true;
 exports.hub = 'byteball.org/bb';
-exports.deviceName = 'WCG-distribution';
+exports.deviceName = 'WCG distribution';
 exports.permanent_pairing_secret = '0000';
 exports.control_addresses = [''];
 
