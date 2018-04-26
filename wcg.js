@@ -457,7 +457,8 @@ function sendPendingInitialRewards() {
 					asset: honorificAsset,
 					base_outputs: arrOutputsBytes,
 					asset_outputs: arrOutputsAssets,
-					change_address: my_address
+					change_address: my_address,
+					recipient_device_addresses: rows.map(row => row.device_address)
 				};
 				headlessWallet.sendMultiPayment(opts, function(err, unit) {
 					unlock();
@@ -556,6 +557,7 @@ function processAnyAuthorizedDistribution() {
 									}
 									console.log("Sent payout notification in language: "+ row.lang);
 									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toLocaleString([], {maximumFractionDigits:9}), amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
+									walletGeneral.sendPaymentNotification(row.device_address, unit);
 								});
 							});
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
