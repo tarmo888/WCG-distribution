@@ -23,7 +23,10 @@ var honorificAsset;
 
 
 if (conf.isMultiLingual) {
-	var arrLanguages = Object.keys(conf.languagesAvailable);
+		var arrLanguages = [];
+	for (var index in conf.languagesAvailable) {
+		arrLanguages.push(conf.languagesAvailable[index].file);
+}
 }
 
 i18nModule.configure({
@@ -52,7 +55,7 @@ function processTxt(from_address, text) {
 				i18nModule.init(i18n);
 
 				if (user[0].lang != 'unknown') {
-					i18nModule.setLocale(i18n, user[0].lang);
+					i18nModule.setLocale(i18n, conf.languagesAvailable[user[0].lang].file);
 				}
 
 
@@ -63,7 +66,7 @@ function processTxt(from_address, text) {
 
 					if (text.split('_')[1] && conf.languagesAvailable[text.split('_')[1]]) {
 						db.query("UPDATE users SET lang=? WHERE device_address == ? ", [text.split('_')[1], from_address]);
-						i18nModule.setLocale(i18n, text.split('_')[1]);
+						i18nModule.setLocale(i18n, conf.languagesAvailable[text.split('_')[1]].file);
 						device.sendMessageToDevice(from_address, 'text', "➡ " + getTxtCommandButton("Go back to language selection", "selectLanguage"));
 					}
 
@@ -229,7 +232,7 @@ function processTxt(from_address, text) {
 						wcg_api.query(assocPeers[from_address].newName, {
 							ifNoResponse: function() {
 								assocPeers[from_address].step = "home";
-								device.sendMessageToDevice(from_address, 'text', i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n➡ " + getTxtCommandButton(i18n.__("retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("choose another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
+								device.sendMessageToDevice(from_address, 'text', i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n➡ " + getTxtCommandButton(i18n.__("Retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("choose another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 							},
 							ifFailed: function() {
 									device.sendMessageToDevice(from_address, 'text', i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
@@ -339,7 +342,7 @@ function crawlScores(users, handle) {
 		},
 		ifFailed: function() {
 			if (users[0].lang != 'unknown' && conf.isMultiLingual) {
-				i18nModule.setLocale(i18n, users[0].lang);
+				i18nModule.setLocale(i18n, conf.languagesAvailable[users[0].lang].file);
 			}
 			var device = require('byteballcore/device.js');
 			device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}", {
@@ -379,7 +382,7 @@ function crawlScores(users, handle) {
 
 			} else {
 				if (users[0].lang != 'unknown' && conf.isMultiLingual) {
-					i18nModule.setLocale(i18n, users[0].lang);
+					i18nModule.setLocale(i18n, conf.languagesAvailable[users[0].lang].file);
 				}
 				var device = require('byteballcore/device.js');
 				device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.", {
@@ -457,7 +460,7 @@ function sendPendingInitialRewards() {
 									 WHERE initial_rewards.member_id IN (?)", [arrMemberIDs], function(rows) {
 								rows.forEach(function(row) {
 									if (row.lang != 'unknown' && conf.isMultiLingual) {
-										i18nModule.setLocale(i18n, row.lang);
+										i18nModule.setLocale(i18n, conf.languagesAvailable[row.lang].file);
 									}
 									console.log("Sent payout notification in language: " + row.lang);
 									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.", {
@@ -533,7 +536,7 @@ function processAnyAuthorizedDistribution() {
 								rows.forEach(function(row){
 									
 									if (row.lang != 'unknown' && conf.isMultiLingual) {
-										i18nModule.setLocale(i18n, row.lang);
+										i18nModule.setLocale(i18n, conf.languagesAvailable[row.lang].file);
 									}
 									console.log("Sent payout notification in language: "+ row.lang);
 									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
