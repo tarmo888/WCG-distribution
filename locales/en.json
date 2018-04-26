@@ -3,5 +3,12 @@
 	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution",
 	"Change linked WCG account": "Change linked WCG account",
 	"Change payout address": "Change payout address",
-	"Change account name": "Change account name"
+	"Change account name": "Change account name",
+	"Please create a World Community Grid account or modify an existing one with this username: {{username}} ": "Please create a World Community Grid account or modify an existing one with this username: {{username}} ",
+	"You can change it later if you desire. Click on the link below when done.": "You can change it later if you desire. Click on the link below when done.",
+	"Check my account": "Check my account",
+	"Your WCG account is successfully linked.": "Your WCG account is successfully linked.",
+	"Please insert the address you want to use as payout address (click on '...' Insert my address)": "Please insert the address you want to use as payout address (click on '...' Insert my address)",
+	"This is not a valid address.": "This is not a valid address.",
+	"Congratulations!": "Congratulations!"
 }

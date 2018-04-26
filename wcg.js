@@ -237,7 +237,7 @@ function processTxt(from_address, text) {
 							ifFailed: function() {
 									device.sendMessageToDevice(from_address, 'text', i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
 									accountName: assocPeers[from_address].newName
-								}) + "\n➡ " + getTxtCommandButton(i18n.__("Retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("Change for another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
+								}) + "\n➡ " + getTxtCommandButton(i18n.__("Retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("Change to another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
 
 							},
 							ifError: function() {

@@ -4,7 +4,7 @@
     "Check my account": "Controleer mijn account",
     "Your WCG account is successfully linked.": "Je WCG account is succesvol gelinkt.",
     "Please insert the address you want to use as payout address (click on '...' Insert my address)": "Vul alsjeblieft het adres in waar je je betalingen op wil ontvangen (klik op '...' mijn adres invoeren)",
-    "Congratulations!": "Gefeliciteerd!"
+    "Congratulations!": "Gefeliciteerd!",
     "Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.": "Setup voltooid! Eens in de zoveel tijd zullen beloningen, proportioneel aan contributies aan World Community Grid projecten van het account {{accountName]] (ID: {{accountID}}), naar je betaling account worden verstuurd.",
     "Change linked WCG account": "Verander het gelinkte WCG account",
     "Change payout address": "Verander het betaling adres",
