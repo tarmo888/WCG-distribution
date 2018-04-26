@@ -59,5 +59,15 @@ CREATE TABLE wcg_meta_infos(
 	FOREIGN KEY (device_address) REFERENCES users(device_address)
 );
 
+CREATE TABLE initial_rewards(
+	member_id INTEGER UNIQUE,
+	device_address CHAR(33) NOT NULL,
+	bytes_reward INTEGER DEFAULT 0,
+	assets_reward INTEGER DEFAULT 0,
+	payout_address CHAR(32),
+	payment_unit CHAR(44),
+	creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 
 

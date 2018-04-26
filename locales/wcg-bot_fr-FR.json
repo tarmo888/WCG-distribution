@@ -44,6 +44,16 @@
 
 	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "Le nom de compte: {{accountName}} ne correspond pas à l'id {{WCG_id}}. Vous ne recevrez pas de paiements tant que ce problème ne sera pas résolu ou que vous n'aurez pas authentifié ce nouveau compte",
 
-	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution":"Pour plus d'information, merci de visiter notre wiki: https://wiki.byteball.org/WCG_distribution"
+	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution":"Pour plus d'information, merci de visiter notre wiki: https://wiki.byteball.org/WCG_distribution",
+
+	"Retry": "Réessayer",
+
+	"Change to another account name": "Changer pour un autre nom de compte",
+
+	"This name doesn't correspond to the WCG account ID {{accountID}}": "Ce nom ne correspond pas au compte WGC ID {{accountID}}",
+
+	"Change my account name": "Changer mon nom de compte",
+
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.": "Un paiement de {{amountByte}}GB et {{amountAsset}} {{labelAsset}} vous a été fait en récompense de vos précédentes contributions à World Community Grid."
 
 }

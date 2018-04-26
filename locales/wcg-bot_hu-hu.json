@@ -1,0 +1,59 @@
+{
+
+    "Please create a World Community Grid account or modify an existing one with this username: {{username}}": "Regisztrálj egy {{username}} nevű World Community Grid felhasználót vagy módosíts egy létezőt!",
+
+    "You can change it later if you desire. Click on the link below when done.": "Később megváltoztathatod, ha akarod. Kattints az alábbi linkre, ha kész vagy!",
+
+    "Check my account": "A felhasználóm ellenőrzése",
+
+    "Your WCG account is successfully linked.": "A WCG felhasználódat sikerült azonosítani.",
+
+    "Please insert the address you want to use as payout address (click on '...' Insert my address)": "Add meg a kifizetési címet (kattints a '...' gombra és válaszd a 'Saját cím beillesztése' menüt)",
+
+    "Congratulations!": "Gratulálok!",
+
+    "Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.": "A kifizetés a megadott címedre rendszeres időközönként történik, arányosan a(z) {{accountName}} (azonosító szám: {{accountID}}}) felhasználód World Community Grid projekthez való hozzájárulása mértékében.",
+
+    "Change linked WCG account": "Kapcsolt WCG felhasználó lecserélése",
+
+    "Change payout address": "Kifizetési cím megváltoztatása",
+
+    "Change account name": "Felhasználó név megváltoztatása",
+
+    "Please enter the new name for your WCG account id {{accountID}}": "Add meg a WCG felhasználó ({{accountID}}) új nevét",
+
+    "Cancel": "Mégsem",
+
+    "New name validated.": "Az új név ellenőrizve",
+
+    "Ok": "Ok",
+
+    "Account check failed. Please make sure you set {{accountName}} as account name and retry.": "A felhasználó azonosítása nem sikerült. Ellenőrizd, hogy beállítottad-e a(z) {{accountName}} felhasználónevet, majd próbáld újra.",
+
+    "Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "Nem sikerült letölteni a WCG pontszámodat a folyamatban levő jutalom szétosztáshoz. Ellenőrizd, hogy a felhasználóneved valóban {{accountName}}",
+
+    "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "{{amountByte}}GB és {{amountAsset}} {{labelAsset}} került kifizetésre a hozzájárulasod jutalmaként.",
+
+    "An unexpected error occurred. Admin is notified. Please try again in a few hours.": "Hiba történt! Az adminisztrátornak jelentve lett. Próbáld újra pár órával később!",
+
+    "This name doesn't correspond to the WCG account ID {{accountID}}": "Ez a név nem tartozik a {{accountID}} azonosítószámú WCG felhasználóhoz",
+
+    "Change my account name": "Felhasználónév megváltoztatása",
+
+    "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "{{amountByte}}GB és {{amountAsset}} {{labelAsset}} került kifizetésre a hozzájárulásod jutalmaként.",
+
+    "This is not a valid address.": "Érvénytelen cím!",
+
+    "The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "A {{accountName}} felhasználónév nem tartozik a {{WCG_id}} azonosítóhoz. A jutalmad nem kerül kifizetésre amíg ezt a hibát ki nem javítod vagy amíg be nem állítasz egy másik WCG felhasználót.",
+
+	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "További információkért látogass a https://wiki.byteball.org/WCG_distribution weboldalra",
+
+    "Retry": "Újra",
+
+    "Change to another account name": "Másik felhasználónévre váltás",
+
+    "Change my account name": "Felhasználónév megváltoztatása",
+
+    "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.": "{{amountByte}}GB és {{amountAsset}} {{labelAsset}} került kifizetésre a korábbi World Community Grid-hez való hozzájárulásod jutalmaként."
+
+}

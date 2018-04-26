@@ -19,46 +19,69 @@ exports.WCGpointToDollar = 1 / 200000;
 exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
 
+exports.arrayInitialRewards = [{threshold:1000,rewardInDollars:0.001}, {threshold:10000,rewardInDollars:0.01}, {threshold:200000,rewardInDollars:0.02}];
+
 exports.isMultiLingual = true;
 
 
 exports.languagesAvailable = {
 	en: {
-		name: "English"
+		name: "English",
+		file: "en"
 	},
 	da: {
-		name: "Dansk"
+		name: "Dansk",
+		file: "wcg-bot_da-DK"
 	},
 	fr: {
-		name: "Français"
+		name: "Français",
+		file: "wcg-bot_fr-FR"
 	},
-	zn: {
-		name: "中文"
+	zh: {
+		name: "中文",
+		file: "wcg-bot_zh-CN"
 	},
 	ja: {
-		name: "日本語"
+		name: "日本語",
+		file: "wcg-bot_ja-JP"
 	},
 	es: {
-		name: "Español"
+		name: "Español",
+		file: "wcg_bot_es-ES"
 	},
 	de: {
-		name: "Deutsch"
+		name: "Deutsch",
+		file: "wcg-bot_de-DE"
 	},
 	ko: {
-		name: "한국어"
+		name: "한국어",
+		file: "wcg-bot_da-DK"
 	},
 	id: {
-		name: "Bahasa Indonesia"
+		name: "Bahasa Indonesia",
+		file: "wcg-bot_id-ID"
 	},
 	it: {
-		name: "Italiano"
+		name: "Italiano",
+		file: "wcg-bot_it-IT"
 	},
 	ru: {
-		name: "Русский"
+		name: "Русский",
+		file: "wcg-bot_da-DK"
 	},
 	tl: {
-		name: "Tagalog"
+		name: "Tagalog",
+		file: "wcg-bot_da-DK"
+	},
+	nl: {
+		name: "Nederlands",
+		file: "wcg-bot_nl-NL"
+	},
+	hu: {
+		name: "Magyar",
+		file: "wcg-bot_hu-hu"
 	}
+
 };
 
 
