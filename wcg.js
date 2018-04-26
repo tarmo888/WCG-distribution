@@ -23,10 +23,10 @@ var honorificAsset;
 
 
 if (conf.isMultiLingual) {
-		var arrLanguages = [];
+	var arrLanguages = [];
 	for (var index in conf.languagesAvailable) {
 		arrLanguages.push(conf.languagesAvailable[index].file);
-}
+	}
 }
 
 i18nModule.configure({
