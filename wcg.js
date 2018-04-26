@@ -171,7 +171,7 @@ function processTxt(from_address, text) {
 					var returnedTxt = i18n.__("Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} ", {
 						username: conf.prefixForName + user[0].salt + user[0].id
 					});
-					returnedTxt += "\n" + i18n.__("You can change it later if you desire. Click on the link below when done.");
+					returnedTxt += "\n\n" + i18n.__("You can change it later if you desire. Click on the link below when done.");
 					returnedTxt += "\n➡ " + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount");
 					device.sendMessageToDevice(from_address, 'text', returnedTxt);
 					return;
