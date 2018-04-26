@@ -129,14 +129,24 @@ function processTxt(from_address, text) {
 										initialRewardToUser = initialReward.rewardInDollars;
 								});
 								if (statsObject.points > 0)
-									conn.addQuery(arrQueries, "INSERT OR IGNORE INTO initial_rewards (bytes_reward,assets_reward,member_id,device_address) VALUES (CASE \n\
-																	WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
-																	ELSE 0 \n\
-																	END,\n\
-												 					CASE \n\
-																	WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
-																	ELSE 0 \n\
-																	END,?,?)", [statsObject.memberId, Math.floor(initialRewardToUser * conversion.getPriceInBytes(1)),statsObject.memberId, statsObject.points, statsObject.memberId, from_address]); //If member_id already know we set 0 as initial reward
+									conn.addQuery(
+										arrQueries, 
+										"INSERT OR IGNORE INTO initial_rewards (bytes_reward,assets_reward,member_id,device_address) \n\
+										VALUES ( \n\
+											CASE \n\
+											WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
+											ELSE 0 \n\
+											END,\n\
+											CASE \n\
+											WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
+											ELSE 0 \n\
+											END, \n\
+											?,? \n\
+										)",
+										[statsObject.memberId, Math.floor(initialRewardToUser * conversion.getPriceInBytes(1)),
+										statsObject.memberId, statsObject.points,
+										statsObject.memberId, from_address]
+									); //If member_id already known, we set 0 as initial reward
 								conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
 								conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
 								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
