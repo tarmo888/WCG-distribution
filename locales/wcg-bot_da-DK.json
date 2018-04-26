@@ -15,7 +15,7 @@
     "Ok": "Ok",
     "Account check failed. Please make sure you set {{accountName}} as account name and retry.": "Tjek af konto mislykkedes. Sørg for at du har brugt {{accountName}} som kontonavn og prøv igen.",
     "Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "Kunne ikke hente din WCG-score til igangværende distribution. Sørg for at dit kontonavn er: {{accountName}}",
-    "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Udbetaling på {{amountByte}}GB og {{amountAsset}} {{labelAsset} er gennemført som tak for din indsats",
+    "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Udbetaling på {{amountByte}}GB og {{amountAsset}} {{labelAsset}} er gennemført som tak for din indsats",
     "An unexpected error occurred. Admin is notified. Please try again in a few hours.": "Der opstod i fejl. Admin er adviseret om problemet. Prøv igen om et par timer.",
     "This name doesn't correspond to the WCG account ID {{accountID}}": "Dette navn svarer ikke til navnet på WCG kontoen med ID {{accountID}}",
     "Change my account name": "Skift mit kontonavn",
