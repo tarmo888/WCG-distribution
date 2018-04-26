@@ -128,7 +128,7 @@ function processTxt(from_address, text) {
 									if (statsObject.points > initialReward.threshold && initialRewardToUser < initialReward.rewardInDollars) // we find the higher reward for this user score
 										initialRewardToUser = initialReward.rewardInDollars;
 								});
-
+								if (statsObject.points > 0)
 									conn.addQuery(arrQueries, "INSERT OR IGNORE INTO initial_rewards (bytes_reward,assets_reward,member_id,device_address) VALUES (CASE \n\
 																	WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
 																	ELSE 0 \n\
