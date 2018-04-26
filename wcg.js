@@ -622,6 +622,8 @@ function sendReportToAdmin() {
 				ON users.device_address = wcg_scores.device_address \n\
 			WHERE wcg_scores.distribution_id = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
 
+		if (rows.length === 0)
+			return;
 		var totalAssets = 0;
 		var totalBytes = 0;
 		var totalUsers = 0;
