@@ -168,7 +168,7 @@ function processTxt(from_address, text) {
 				 * If no WCG account registered or user requested to register a new one
 				 */
 				if (!user[0].member_id || text == "linkAccount") {
-					var returnedTxt = i18n.__("Please create a World Community Grid account or modify an existing one with this username: {{username}} ", {
+					var returnedTxt = i18n.__("Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} ", {
 						username: conf.prefixForName + user[0].salt + user[0].id
 					});
 					returnedTxt += "\n" + i18n.__("You can change it later if you desire. Click on the link below when done.");
