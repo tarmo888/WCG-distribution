@@ -15,11 +15,16 @@ exports.control_addresses = [''];
 
 
 exports.daysBetweenDistributions = 1;
-exports.WCGpointToDollar = 1 / 200000;
+exports.WCGpointToDollar = 1 / 150000;
 exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
 
-exports.arrayInitialRewards = [{threshold:1000,rewardInDollars:0.001}, {threshold:10000,rewardInDollars:0.01}, {threshold:200000,rewardInDollars:0.02}];
+exports.arrayInitialRewards = [
+	{threshold: 1e5, rewardInDollars: 0.2},
+	{threshold: 1e6, rewardInDollars: 3},
+	{threshold: 10e6, rewardInDollars: 40},
+	{threshold: 100e6, rewardInDollars: 150}
+];
 
 exports.isMultiLingual = true;
 
