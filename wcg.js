@@ -517,13 +517,7 @@ function processAnyAuthorizedDistribution() {
 	db.query("SELECT id,creation_date FROM distributions WHERE is_authorized=1 AND is_completed=0", function(authorizedDistributions) {
 		if (authorizedDistributions.length === 1) {
 
-			function onError(err) {
-				throw err;
-			}
-			var network = require('byteballcore/network.js');
 			var walletGeneral = require('byteballcore/wallet_general.js');
-			var divisibleAsset = require('byteballcore/divisible_asset.js');
-			var composer = require('byteballcore/composer.js');
 			var i18n = {};
 			i18nModule.init(i18n);
 			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAssets,arrMemberIDs) {
