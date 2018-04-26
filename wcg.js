@@ -406,20 +406,23 @@ function crawlScores(users, handle) {
 function sendPendingInitialRewards() {
 
 	mutex.lock(['sendPendingInitialRewards'], function(unlock) {
-		db.query(
-			"SELECT bytes_reward,payout_address, device_address,member_id,assets_reward \n\
+		db.query("SELECT DISTINCT member_id, bytes_reward,payout_address, device_address,assets_reward\n\
 		FROM initial_rewards \n\
-		LEFT JOIN outputs \n\
-			ON initial_rewards.payout_address=outputs.address \n\
-			AND asset IS NULL \n\
-			AND (SELECT address FROM unit_authors WHERE unit_authors.unit=outputs.unit)=? \n\
-			AND CAST(bytes_reward as INT)=outputs.amount\n\
-		WHERE outputs.address IS NULL \n\
-			AND bytes_reward>0 \n\
+		LEFT JOIN outputs AS outputs_bytes\n\
+			ON initial_rewards.payout_address=outputs_bytes.address \n\
+			AND outputs_bytes.asset IS NULL \n\
+			AND (SELECT address FROM unit_authors WHERE unit_authors.unit=outputs_bytes.unit)=? \n\
+			AND CAST(bytes_reward as INT)=outputs_bytes.amount\n\
+		LEFT JOIN outputs AS outputs_assets\n\
+			ON initial_rewards.payout_address=outputs_assets.address \n\
+			AND outputs_assets.asset = ? \n\
+			AND (SELECT address FROM unit_authors WHERE unit_authors.unit=outputs_assets.unit)=? \n\
+			AND CAST(assets_reward as INT)=outputs_assets.amount\n\
+		WHERE outputs_assets.address IS NULL AND outputs_bytes.address IS NULL \n\
+			AND (bytes_reward>0 OR assets_reward>0)\n\
 			AND payout_address IS NOT NULL  \n\
-			AND payment_unit IS NULL \n\
 		ORDER BY bytes_reward \n\
-		LIMIT ?", [my_address, constants.MAX_OUTPUTS_PER_PAYMENT_MESSAGE - 1],
+		LIMIT ?", [my_address, honorificAsset, my_address, constants.MAX_OUTPUTS_PER_PAYMENT_MESSAGE - 1],
 			function(rows) {
 				if (rows.length === 0)
 					return unlock();
@@ -427,10 +430,12 @@ function sendPendingInitialRewards() {
 				var arrOutputsAssets = [];
 				var arrMemberIDs = [];
 				rows.forEach(function(row) {
-					arrOutputsBytes.push({
-						amount: row.bytes_reward,
-						address: row.payout_address
-					});
+					if (row.bytes_reward>0){
+						arrOutputsBytes.push({
+							amount: row.bytes_reward,
+							address: row.payout_address
+						});
+					}
 					arrOutputsAssets.push({
 						amount: row.assets_reward,
 						address: row.payout_address
@@ -443,7 +448,6 @@ function sendPendingInitialRewards() {
 					asset_outputs: arrOutputsAssets,
 					change_address: my_address
 				};
-				console.log(opts);
 				headlessWallet.sendMultiPayment(opts, function(err, unit) {
 					unlock();
 					if (err) {
