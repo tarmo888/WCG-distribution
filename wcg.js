@@ -128,15 +128,25 @@ function processTxt(from_address, text) {
 									if (statsObject.points > initialReward.threshold && initialRewardToUser < initialReward.rewardInDollars) // we find the higher reward for this user score
 										initialRewardToUser = initialReward.rewardInDollars;
 								});
-
-									conn.addQuery(arrQueries, "INSERT OR IGNORE INTO initial_rewards (bytes_reward,assets_reward,member_id,device_address) VALUES (CASE \n\
-																	WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
-																	ELSE 0 \n\
-																	END,\n\
-												 					CASE \n\
-																	WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
-																	ELSE 0 \n\
-																	END,?,?)", [statsObject.memberId, Math.floor(initialRewardToUser * conversion.getPriceInBytes(1)),statsObject.memberId, statsObject.points, statsObject.memberId, from_address]); //If member_id already know we set 0 as initial reward
+								if (statsObject.points > 0)
+									conn.addQuery(
+										arrQueries, 
+										"INSERT OR IGNORE INTO initial_rewards (bytes_reward,assets_reward,member_id,device_address) \n\
+										VALUES ( \n\
+											CASE \n\
+											WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
+											ELSE 0 \n\
+											END,\n\
+											CASE \n\
+											WHEN (SELECT count(*) FROM wcg_scores WHERE member_id = ?) = 0 THEN ? \n\
+											ELSE 0 \n\
+											END, \n\
+											?,? \n\
+										)",
+										[statsObject.memberId, Math.floor(initialRewardToUser * conversion.getPriceInBytes(1)),
+										statsObject.memberId, statsObject.points,
+										statsObject.memberId, from_address]
+									); //If member_id already known, we set 0 as initial reward
 								conn.addQuery(arrQueries, "UPDATE users SET member_id=null WHERE member_id=?", [statsObject.memberId]); //we remove linking for any users already using this account ID
 								conn.addQuery(arrQueries, "UPDATE users SET member_id=?,account_name=? WHERE device_address=?", [statsObject.memberId, accountName, from_address]);
 								conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores  (distribution_id, device_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_completed=1),?,?,?,0)", [from_address, statsObject.memberId, statsObject.points]);
@@ -158,10 +168,10 @@ function processTxt(from_address, text) {
 				 * If no WCG account registered or user requested to register a new one
 				 */
 				if (!user[0].member_id || text == "linkAccount") {
-					var returnedTxt = i18n.__("Please create a World Community Grid account or modify an existing one with this username: {{username}} ", {
+					var returnedTxt = i18n.__("Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} ", {
 						username: conf.prefixForName + user[0].salt + user[0].id
 					});
-					returnedTxt += "\n" + i18n.__("You can change it later if you desire. Click on the link below when done.");
+					returnedTxt += "\n\n" + i18n.__("You can change it later if you desire. Click on the link below when done.");
 					returnedTxt += "\n➡ " + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount");
 					device.sendMessageToDevice(from_address, 'text', returnedTxt);
 					return;
@@ -447,7 +457,8 @@ function sendPendingInitialRewards() {
 					asset: honorificAsset,
 					base_outputs: arrOutputsBytes,
 					asset_outputs: arrOutputsAssets,
-					change_address: my_address
+					change_address: my_address,
+					recipient_device_addresses: rows.map(row => row.device_address)
 				};
 				headlessWallet.sendMultiPayment(opts, function(err, unit) {
 					unlock();
@@ -469,7 +480,8 @@ function sendPendingInitialRewards() {
 									}
 									console.log("Sent payout notification in language: " + row.lang);
 									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.", {
-										amountByte: (row.bytes_reward / 1e9).toFixed(5),amountAsset:row.assets_reward,labelAsset:conf.labelAsset
+										amountByte: (row.bytes_reward / 1e9).toLocaleString([], {maximumFractionDigits:9}),
+										amountAsset:row.assets_reward,labelAsset:conf.labelAsset
 									}));
 								});
 							});
@@ -505,13 +517,7 @@ function processAnyAuthorizedDistribution() {
 	db.query("SELECT id,creation_date FROM distributions WHERE is_authorized=1 AND is_completed=0", function(authorizedDistributions) {
 		if (authorizedDistributions.length === 1) {
 
-			function onError(err) {
-				throw err;
-			}
-			var network = require('byteballcore/network.js');
 			var walletGeneral = require('byteballcore/wallet_general.js');
-			var divisibleAsset = require('byteballcore/divisible_asset.js');
-			var composer = require('byteballcore/composer.js');
 			var i18n = {};
 			i18nModule.init(i18n);
 			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAssets,arrMemberIDs) {
@@ -544,7 +550,8 @@ function processAnyAuthorizedDistribution() {
 										i18nModule.setLocale(i18n, conf.languagesAvailable[row.lang].file);
 									}
 									console.log("Sent payout notification in language: "+ row.lang);
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toFixed(5),amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toLocaleString([], {maximumFractionDigits:9}), amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
+									walletGeneral.sendPaymentNotification(row.device_address, unit);
 								});
 							});
 							setTimeout(processAnyAuthorizedDistribution, 30 * 1000);
@@ -627,6 +634,8 @@ function sendReportToAdmin() {
 				ON users.device_address = wcg_scores.device_address \n\
 			WHERE wcg_scores.distribution_id = (SELECT max(id) FROM distributions WHERE is_crawled=1 AND is_completed=0) ORDER BY bytes_reward DESC", function(rows) {
 
+		if (rows.length === 0)
+			return;
 		var totalAssets = 0;
 		var totalBytes = 0;
 		var totalUsers = 0;

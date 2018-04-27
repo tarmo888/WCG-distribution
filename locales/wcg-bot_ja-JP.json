@@ -1,5 +1,5 @@
 {
-    "Please create a World Community Grid account or modify an existing one with this username: {{username}} ": "World Community Gridアカウントを作成もしくは既存アカウントのユーザー名変更: {{username}} ",
+    "Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} ": "World Community Gridアカウントを作成もしくは既存アカウントのユーザー名変更: {{username}} ",
     "You can change it later if you desire. Click on the link below when done.": "必要に応じて後で変更することができます。 完了したら、下のリンクをクリックしてください.",
     "Check my account": "アカウント確認",
     "Your WCG account is successfully linked.": "WCGアカウントが正常に接続されました。",
