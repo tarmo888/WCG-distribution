@@ -499,7 +499,7 @@ function sendPendingInitialRewards() {
 function initiateNewDistributionIfNeeded() {
 
 	db.query("SELECT id, CASE \n\
-	WHEN is_completed = 0 THEN 0	\n\
+	WHEN is_completed = 0 AND (SELECT COUNT(*) FROM wcg_scores WHERE distribution_id=id) > 0 THEN 0	\n\
 	WHEN creation_date < datetime('now', '-" + conf.daysBetweenDistributions + " days') THEN 1	\n\
 	END isNewDistributionNeeded	\n\
 	FROM distributions ORDER BY id DESC LIMIT 1", function(rows) {
