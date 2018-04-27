@@ -22,5 +22,11 @@
     "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Een betaling van {{amountByte}}GB en {{amountAsset}} {{labelAsset}} was gemaakt om je contributie te belonen.",
     "This is not a valid address.": "Dit is geen valide adres.",
     "The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "Het account {{accountName}} komt niet overeen met het ID {{WCG_id}}. Je zal geen betalingen ontvangen totdat dit is opgelost of je een nieuwe WCG account hebt gelinkt.",
-	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "Voor meer informatie, bezoek onze wiki: https://wiki.byteball.org/WCG_distribution"
+	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "Voor meer informatie, bezoek onze wiki: https://wiki.byteball.org/WCG_distribution",
+	"Retry" : "Probeer opnieuw",
+	"Change to another account name" : "Verander naar een andere accountnaam",
+	"This name doesn't correspond to the WCG account ID {{accountID}}" : "Deze naam komt niet overeen met het WCG account ID {{accountID}}",
+	"Change my account name" : "Verander mijn accountnaam",
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid." : "Een betaling van {{amountByte}}GB en {{amountAsset}} {{labelAsset}} was gemaakt om je te belonen voor je vorige contributies aan World Community Grid."
+	
 }

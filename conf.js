@@ -60,7 +60,7 @@ exports.languagesAvailable = {
 	},
 	ko: {
 		name: "한국어",
-		file: "wcg-bot_da-DK"
+		file: "wcg-bot_ko-KR"
 	},
 	id: {
 		name: "Bahasa Indonesia",
@@ -72,11 +72,11 @@ exports.languagesAvailable = {
 	},
 	ru: {
 		name: "Русский",
-		file: "wcg-bot_da-DK"
+		file: "wcg-bot_ru-RU"
 	},
 	tl: {
 		name: "Tagalog",
-		file: "wcg-bot_da-DK"
+		file: "wcg-bot-tl-PH"
 	},
 	nl: {
 		name: "Nederlands",
