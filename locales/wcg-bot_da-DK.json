@@ -19,7 +19,7 @@
 	"An unexpected error occurred. Admin is notified. Please try again in a few hours.": "Der opstod i fejl. Admin er adviseret om problemet. Prøv igen om et par timer.",
 	"This name doesn't correspond to the WCG account ID {{accountID}}": "Dette navn svarer ikke til navnet på WCG kontoen med ID {{accountID}}",
 	"Change my account name": "Skift mit kontonavn",
-	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Udbetaling på {{amountByte}}GB og {{amountAsset}} {{labelAsset} er gennemført som tak for din indsats",
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Udbetaling på {{amountByte}}GB og {{amountAsset}} {{labelAsset}} er gennemført som tak for din indsats",
 	"This is not a valid address.": "Det er en ugyldig adresse.",
 	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "Kontonavnet {{accountName}} svarer ikke til ID {{WCG_id}}. Du vil ikke modtage betalinger før det er rettet eller du har linket en ny WCG-konto.",
 	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "For yderligere information, se vores wiki: https://wiki.byteball.org/WCG_distribution",
