@@ -303,7 +303,7 @@ function crawlForAnyPendingDistribution() {
 
 	db.query("SELECT id from distributions WHERE is_crawled = 0", function(distributions) {
 		if (distributions.length == 1) {
-			db.query("SELECT account_name,device_address,payout_address,member_id from users WHERE member_id NOT IN (SELECT member_id FROM wcg_scores WHERE distribution_id = ?) AND account_name NOT NULL AND member_id NOT NULL AND has_crawl_error = 0", [distributions[0].id], function(users) {
+			db.query("SELECT account_name,device_address,payout_address,member_id,lang FROM users WHERE member_id NOT IN (SELECT member_id FROM wcg_scores WHERE distribution_id = ?) AND account_name NOT NULL AND member_id NOT NULL AND has_crawl_error = 0", [distributions[0].id], function(users) {
 
 				if (users.length == 0) {
 
