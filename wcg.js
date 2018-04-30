@@ -303,7 +303,7 @@ function crawlForAnyPendingDistribution() {
 
 	db.query("SELECT id from distributions WHERE is_crawled = 0", function(distributions) {
 		if (distributions.length == 1) {
-			db.query("SELECT account_name,device_address,payout_address,member_id from users WHERE member_id NOT IN (SELECT member_id FROM wcg_scores WHERE distribution_id = ?) AND account_name NOT NULL AND member_id NOT NULL AND has_crawl_error = 0", [distributions[0].id], function(users) {
+			db.query("SELECT account_name,device_address,payout_address,member_id,lang FROM users WHERE member_id NOT IN (SELECT member_id FROM wcg_scores WHERE distribution_id = ?) AND account_name NOT NULL AND member_id NOT NULL AND has_crawl_error = 0", [distributions[0].id], function(users) {
 
 				if (users.length == 0) {
 
@@ -499,7 +499,7 @@ function sendPendingInitialRewards() {
 function initiateNewDistributionIfNeeded() {
 
 	db.query("SELECT id, CASE \n\
-	WHEN is_completed = 0 THEN 0	\n\
+	WHEN is_completed = 0 AND (SELECT COUNT(*) FROM wcg_scores WHERE distribution_id=id) > 0 THEN 0	\n\
 	WHEN creation_date < datetime('now', '-" + conf.daysBetweenDistributions + " days') THEN 1	\n\
 	END isNewDistributionNeeded	\n\
 	FROM distributions ORDER BY id DESC LIMIT 1", function(rows) {
