@@ -76,7 +76,7 @@ exports.languagesAvailable = {
 	},
 	tl: {
 		name: "Tagalog",
-		file: "wcg-bot-tl-PH"
+		file: "wcg-bot_tl-PH"
 	},
 	nl: {
 		name: "Nederlands",
