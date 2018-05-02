@@ -85,6 +85,10 @@ exports.languagesAvailable = {
 	hu: {
 		name: "Magyar",
 		file: "wcg-bot_hu-hu"
+	},
+	hi: {
+		name: "हिन्दी",
+		file: "wcg-bot_hi-IN"
 	}
 
 };
