@@ -1,6 +1,6 @@
 {
 
-	"Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} ": "Regisztrálj egy {{username}} nevű World Community Grid felhasználót vagy módosíts egy létezőt!",
+	"Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} ": "Regisztrálj egy {{username}} nevű World Community Grid felhasználót a https://www.worldcommunitygrid.org weboldalon, vagy módosíts egy létezőt!",
 
 	"You can change it later if you desire. Click on the link below when done.": "Később megváltoztathatod, ha akarod. Kattints az alábbi linkre, ha kész vagy!",
 
@@ -24,7 +24,7 @@
 
 	"Cancel": "Mégsem",
 
-	"New name validated.": "Az új név ellenőrizve",
+	"New name validated.": "Az új név ellenőrizve lett",
 
 	"Ok": "Ok",
 
