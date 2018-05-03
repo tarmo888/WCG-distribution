@@ -76,7 +76,7 @@ exports.languagesAvailable = {
 	},
 	tl: {
 		name: "Tagalog",
-		file: "wcg-bot-tl-PH"
+		file: "wcg-bot_tl-PH"
 	},
 	nl: {
 		name: "Nederlands",
@@ -85,6 +85,10 @@ exports.languagesAvailable = {
 	hu: {
 		name: "Magyar",
 		file: "wcg-bot_hu-hu"
+	},
+	hi: {
+		name: "हिन्दी",
+		file: "wcg-bot_hi-IN"
 	}
 
 };

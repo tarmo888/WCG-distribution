@@ -34,6 +34,21 @@ i18nModule.configure({
 	directory: __dirname + '/locales'
 });
 
+checkAllTranslations(); //crash now if badly formatted translation encountered
+
+function checkAllTranslations() {
+	var i18n = {};
+	i18nModule.init(i18n);
+	for (var lang in i18nModule.getCatalog()) {
+		console.log("\n------- Checking " + lang + "-------");
+		i18nModule.setLocale(i18n, lang);
+		for (var string in i18nModule.getCatalog()[lang]) {
+			console.log(i18n.__(string));
+		}
+	}
+}
+
+
 
 function processTxt(from_address, text) {
 	var device = require('byteballcore/device.js');
