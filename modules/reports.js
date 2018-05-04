@@ -2,7 +2,7 @@
 "use strict";
 
 const cheerio = require('cheerio');
-const notifications = require('./notifications.js');
+const notifications = require('../modules/notifications.js');
 const db = require('../node_modules/byteballcore/db.js');
 const fs = require('fs');
 const conf = require('../node_modules/byteballcore/conf.js');
