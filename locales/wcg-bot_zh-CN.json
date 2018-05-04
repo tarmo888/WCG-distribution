@@ -15,17 +15,14 @@
 	"Ok": "Ok",
 	"Account check failed. Please make sure you set {{accountName}} as account name and retry.": "账号核对失败. 请确保把{{accountName}} 设置为账号名并重试.",
 	"Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "无法得到正在分配中的WCG得分。请确定账号名是: {{accountName}}",
-	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your contribution.": "已经支付{{amountByte}}GB 和{{amountAsset}} {{labelAsset}} 来奖励你做出的贡献.",
+	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "已经支付{{amountByte}}GB 和{{amountAsset}} {{labelAsset}} 来奖励你做出的贡献.",
 	"An unexpected error occurred. Admin is notified. Please try again in a few hours.": "出现意外错误。已经通知管理员。请在几小时后再试.",
 	"This name doesn't correspond to the WCG account ID {{accountID}}": "此名字和WCG 账号ID {{accountID}}不符",
 	"Change my account name": "更改我的账号名字",
-	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your contribution.": "已经支付{{amountByte}}GB 和{{amountAsset}} {{labelAsset}}来奖励你所做的贡献.",
 	"This is not a valid address.": "这个地址无效.",
 	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "账号名: {{accountName}}和ID {{WCG_id}}不吻合. 在此问题被修正或者连接到新的WCG 账号之前无法接收付款.",
 	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "需要更多信息，请访问我们wiki: https://wiki.byteball.org/WCG_distribution",
 	"Retry": "重试",
-	"Change to another account name": "更改到另一个账号"
-	"This name doesn't correspond to the WCG account ID {{accountID}}": "此名字和WCG 账号ID {{accountID}}不符",
-	"Change my account name": "更改我的账号名字",
+	"Change to another account name": "更改到另一个账号",
 	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.": "已经支付{{amountByte}}GB 和{{amountAsset}} {{labelAsset}} 来奖励你之前对全球社区网格所做的贡献 ."
 }
