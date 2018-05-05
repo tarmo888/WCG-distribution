@@ -5,7 +5,7 @@
 	"Your WCG account is successfully linked.": "A WCG felhasználódat sikerült azonosítani.",
 	"Please insert the address you want to use as payout address (click on '...' Insert my address)": "Add meg a kifizetési címet (kattints a '...' gombra és válaszd a 'Saját cím beillesztése' menüt)",
 	"Congratulations!": "Gratulálok!",
-	"Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.": "A kifizetés a megadott címedre rendszeres időközönként történik, arányosan a(z) {{accountName}} (azonosító szám: {{accountID}}}) felhasználód World Community Grid projekthez való hozzájárulása mértékében.",
+	"Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.": "A kifizetés a megadott címedre rendszeres időközönként történik, arányosan a(z) {{accountName}} (azonosító szám: {{accountID}}) felhasználód World Community Grid projekthez való hozzájárulása mértékében.",
 	"Change linked WCG account": "Kapcsolt WCG felhasználó lecserélése",
 	"Change payout address": "Kifizetési cím megváltoztatása",
 	"Change account name": "Felhasználó név megváltoztatása",
