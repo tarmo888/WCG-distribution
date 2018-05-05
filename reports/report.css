@@ -17,7 +17,9 @@ h3 {
 
 th, td {
 	border-bottom: 2px solid #ddd;
+	padding-left:15px
 }
+
 
 #tableDistrib{
 	padding:20px
@@ -26,3 +28,4 @@ th, td {
 #distributions_list{
 	padding:20px
 }
+

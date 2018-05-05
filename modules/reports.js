@@ -15,7 +15,7 @@ function add(distributionID, distributionDate) {
 				ON wcg_scores.member_id = wcg_meta_infos.member_id \n\
 			 	AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
 			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
-			WHERE wcg_scores.distribution_id = ? AND bytes_reward>0 ORDER BY bytes_reward DESC", [distributionID], function(rows) {
+			WHERE wcg_scores.distribution_id = ? AND bytes_reward>0 ORDER BY bytes_reward ASC", [distributionID], function(rows) {
 
 		var totalAssets = 0;
 		var totalBytes = 0;
@@ -25,15 +25,19 @@ function add(distributionID, distributionDate) {
 
 		});
 
-
+		/*
+		*	Add distribution to index.html
+		*/
+		
 		fs.readFile('reports/index.html', (err, content) => {
 			if (err) {
 				notifications.notifyAdmin("Couldn't open index.html", err);
+				return console.log("Couldn't open index.html" + err);
 			}
 			const $ = cheerio.load(content);
 
-			$('#table_first_child').after("<tr><td>" + distributionID + "</td><td>" + distributionDate + "</td><td>" + (totalBytes / 1e9).toLocaleString([], {
-					maximumFractionDigits: 3
+			$('#table_first_child').after("<tr><td>" + distributionID + "</td><td>" + distributionDate + "</td><td>" + rows.length + "</td><td>" + (totalBytes / 1e9).toLocaleString([], {
+					maximumFractionDigits: 9
 				}) + "</td><td>" +
 				Math.round(totalAssets) + "</td><td><a href='" + distributionID + "--" + distributionDate + ".html'>details</a></td>");
 
@@ -47,26 +51,38 @@ function add(distributionID, distributionDate) {
 
 		});
 
-		var body = "<html><head><link rel='stylesheet' href='report.css'></head><body><div id='main'><div id='title'><h3>Distribution id " + distributionID + " on " + distributionDate + "</h3></div><div id='go_back_index'><a href='index.html'>Go back to list</a></div>";
-		body += "<div id='totalBytes'>" + (totalBytes / 1e9).toLocaleString([], {
-			maximumFractionDigits: 3
-		}) + "GB distributed  to " + rows.length + " users</div>";
-		body += "<div id='totalAssets'>" + Math.round(totalAssets) + " " + conf.labelAsset + " distributed " + " to " + rows.length + " users</div>";
-		body += "<div id='tableDistrib'><table class='distribution'><tr><td>User ID</td><td>Account name</td><td>Score read</td><td>Bytes reward</td><td>" + conf.labelAsset + " reward</td><td>Address</td><td>Unit</td>";
+		
+		/*
+		*	Create html file for this distribution
+		*/
 
-		rows.forEach(function(row) {
-			body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
-				Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>" + row.payout_address + "</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>";
-		});
-
-		body += "</table></div></div></body></html>";
-		fs.writeFile("reports/" + distributionID + "--" + distributionDate + ".html", body, function(err) {
+		fs.readFile('reports/templates/distribution.html', (err, content) => {
 			if (err) {
-				notifications.notifyAdmin("I couldn't write report", err);
-				return console.log("Couldn't write log file " + err);
+				notifications.notifyAdmin("Couldn't open reports/templates/distribution.html", err);
+				return console.log("Couldn't open reports/templates/distribution.html" + err);
 			}
+			const $ = cheerio.load(content);
+			
+			$('title').append("Report for distribution id " + distributionID + " on " + distributionDate);
+			$('h3').append("Distribution id " + distributionID + " on " + distributionDate);
+			$('#totalBytes').append((totalBytes / 1e9).toLocaleString([], {
+				maximumFractionDigits: 9
+			}) + "GB distributed  to " + rows.length + " addresses");
+			$('#totalAssets').append(totalAssets + conf.labelAsset + " distributed " + " to " + rows.length + " addresses");
 
+			rows.forEach(function(row) {
+			$('#table_first_child').after("<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
+				Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>" + row.payout_address + "</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>");
+			});
+
+			fs.writeFile("reports/" + distributionID + "--" + distributionDate + ".html", $.html(), function(errWriting) {
+				if (errWriting) {
+					notifications.notifyAdmin("I couldn't write report", errWriting);
+					return console.log("Couldn't write log file " + errWriting);
+				}
+			});
 		});
+
 	});
 }
 
