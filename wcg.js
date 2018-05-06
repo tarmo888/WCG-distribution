@@ -2,7 +2,6 @@
 "use strict";
 const async = require('async');
 const i18nModule = require("i18n");
-const fs = require('fs');
 const constants = require('byteballcore/constants.js');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
@@ -16,6 +15,8 @@ const validationUtils = require("byteballcore/validation_utils.js");
 const conversion = require('./modules/conversion');
 const wcg_api = require('./modules/wcg_api.js');
 const mutex = require('byteballcore/mutex.js');
+const reports = require('./modules/reports.js');
+
 var my_address;
 
 var assocPeers = [];
@@ -633,7 +634,7 @@ function verifyDistribution(distributionID, distributionDate) {
 				console.log("---- total paid: " + total + ", overpaid: " + overpaid);
 				console.error("----- total paid: " + total + ", overpaid: " + overpaid);
 				notifications.notifyAdmin("Distribution id " + distributionID + " done", distributionDate + "\n ---- total paid: " + total + ", overpaid: " + overpaid);
-				writeDistributionReport(distributionID,distributionDate);
+				reports.add(distributionID,distributionDate);
 			});
 		}
 	);
@@ -679,43 +680,6 @@ function sendReportToAdmin() {
 
 }
 
-
-function writeDistributionReport(distributionID, distributionDate) {
-
-	db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
-			INNER JOIN wcg_meta_infos \n\
-				ON wcg_scores.member_id = wcg_meta_infos.member_id \n\
-			 	AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
-			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
-			WHERE wcg_scores.distribution_id = ? AND bytes_reward>0 ORDER BY bytes_reward DESC", [distributionID], function(rows) {
-
-		var totalAssets = 0;
-		var totalBytes = 0;
-		rows.forEach(function(row) {
-			totalAssets += row.diff_from_previous;
-			totalBytes += row.bytes_reward;
-
-		});
-		var body = "<html><head><link rel='stylesheet' href='report.css'></head><body><div id='main'><div id='title'><h3>Distribution id " + rows[0].distribution_id + " on " + distributionDate + "</h3></div>";
-		body += "<div id='totalBytes'>" + Math.round(totalBytes) + " bytes distributed  to " + rows.length + " users</div>";
-		body += "<div id='totalAssets'>" + Math.round(totalAssets) +" " + conf.labelAsset + " distributed " + " to " + rows.length + " users</div>";
-		body += "<div id='tableDistrib'><table class='distribution'><tr><td>User ID</td><td>Account name</td><td>score read</td><td>bytes reward</td><td>" + conf.labelAsset + " reward</td><td>Address</td><td>Unit</td>";
-
-		rows.forEach(function(row) {
-			body += "<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
-				Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>"+row.payout_address+"</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>";
-		});
-
-		body += "</table></div></div></body></html>";
-		fs.writeFile("reports/" + distributionID + "--" + distributionDate + ".html", body, function(err) {
-			if (err) {
-				notifications.notifyAdmin("I couldn't write report", err);
-				return console.log("Couldn't write log file " + err);
-			}
-
-		});
-	});
-}
 
 function getLanguagesSelection() {
 
