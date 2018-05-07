@@ -43,13 +43,13 @@ const compareMatchingKeys = function(filepath, found, should_have, source, targe
 		console.error('\x1b[31;49mFAIL\x1b[39;49m:', filepath, '-', source, 'has', should_have, 'keys, but', found, 'found in', target);
 	}
 };
-const compareBrackets = function(filepath, opening, closing, where) {
+const compareBrackets = function(filepath, opening, closing, where, type) {
 	try {
 		assert.strictEqual(opening, closing);
-		console.log('\x1b[32;49mPASS\x1b[39;49m:', filepath, '-', opening, 'bracket pairs in', where);
+		console.log('\x1b[32;49mPASS\x1b[39;49m:', filepath, '-', opening, type, 'bracket pairs in', where);
 	}
 	catch (error) {
-		console.error('\x1b[31;49mFAIL\x1b[39;49m:', filepath, '-', opening, 'opening brackets and', closing, 'closing brackets in', where);
+		console.error('\x1b[31;49mFAIL\x1b[39;49m:', filepath, '-', opening, 'opening', type, 'brackets and', closing, 'closing', type, 'brackets in', where);
 	}
 };
 
@@ -88,22 +88,32 @@ Object.keys(translations).forEach(function(filepath) {
 Object.keys(translations).forEach(function(filepath) {
 	let openingBrackets = 0;
 	let closingBrackets = 0;
+	let openingDoubleBrackets = 0;
+	let closingDoubleBrackets = 0;
 	Object.keys(translations[filepath]['data']).forEach(function(key) {
-		openingBrackets = openingBrackets + key.split('{').length;
-		closingBrackets = closingBrackets + key.split('}').length;
+		openingBrackets = openingBrackets + key.split('{').length-1;
+		closingBrackets = closingBrackets + key.split('}').length-1;
+		openingDoubleBrackets = openingDoubleBrackets + key.split('{{').length-1;
+		closingDoubleBrackets = closingDoubleBrackets + key.split('}}').length-1;
 	});
-	compareBrackets(filepath, openingBrackets, closingBrackets, 'keys');
+	compareBrackets(filepath, openingBrackets, closingBrackets, 'keys', 'single');
+	compareBrackets(filepath, openingDoubleBrackets, closingDoubleBrackets, 'keys', 'double');
 });
 
 // compare brackets pairs in values
 Object.keys(translations).forEach(function(filepath) {
 	let openingBrackets = 0;
 	let closingBrackets = 0;
+	let openingDoubleBrackets = 0;
+	let closingDoubleBrackets = 0;
 	Object.keys(translations[filepath]['data']).forEach(function(key) {
-		openingBrackets = openingBrackets + translations[filepath]['data'][key].split('{').length;
-		closingBrackets = closingBrackets + translations[filepath]['data'][key].split('}').length;
+		openingBrackets = openingBrackets + translations[filepath]['data'][key].split('{').length-1;
+		closingBrackets = closingBrackets + translations[filepath]['data'][key].split('}').length-1;
+		openingDoubleBrackets = openingDoubleBrackets + translations[filepath]['data'][key].split('{{').length-1;
+		closingDoubleBrackets = closingDoubleBrackets + translations[filepath]['data'][key].split('}}').length-1;
 	});
-	compareBrackets(filepath, openingBrackets, closingBrackets, 'values');
+	compareBrackets(filepath, openingBrackets, closingBrackets, 'values', 'single');
+	compareBrackets(filepath, openingDoubleBrackets, closingDoubleBrackets, 'values', 'double');
 });
 //console.log(translations);
 
