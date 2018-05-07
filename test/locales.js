@@ -43,13 +43,13 @@ const compareMatchingKeys = function(filepath, found, should_have, source, targe
 		console.error('\x1b[31;49mFAIL\x1b[39;49m:', filepath, '-', source, 'has', should_have, 'keys, but', found, 'found in', target);
 	}
 };
-const compareBrackets = function(filepath, opening, closing, where, type) {
+const compareBraces = function(filepath, opening, closing, where, type) {
 	try {
 		assert.strictEqual(opening, closing);
-		console.log('\x1b[32;49mPASS\x1b[39;49m:', filepath, '-', opening, type, 'bracket pairs in', where);
+		console.log('\x1b[32;49mPASS\x1b[39;49m:', filepath, '-', opening, type, 'brace pairs in', where);
 	}
 	catch (error) {
-		console.error('\x1b[31;49mFAIL\x1b[39;49m:', filepath, '-', opening, 'opening', type, 'brackets and', closing, 'closing', type, 'brackets in', where);
+		console.error('\x1b[31;49mFAIL\x1b[39;49m:', filepath, '-', opening, 'opening', type, 'braces and', closing, 'closing', type, 'braces in', where);
 	}
 };
 
@@ -84,36 +84,36 @@ Object.keys(translations).forEach(function(filepath) {
 	compareMatchingKeys(filepath, key_matches, Object.keys(translations[filepath]['data']).length, 'translation', 'base');
 });
 
-// compare bracket pairs in keys
+// compare brace pairs in keys
 Object.keys(translations).forEach(function(filepath) {
-	let openingBrackets = 0;
-	let closingBrackets = 0;
-	let openingDoubleBrackets = 0;
-	let closingDoubleBrackets = 0;
+	let openingBraces = 0;
+	let closingBraces = 0;
+	let openingDoubleBraces = 0;
+	let closingDoubleBraces = 0;
 	Object.keys(translations[filepath]['data']).forEach(function(key) {
-		openingBrackets = openingBrackets + key.split('{').length-1;
-		closingBrackets = closingBrackets + key.split('}').length-1;
-		openingDoubleBrackets = openingDoubleBrackets + key.split('{{').length-1;
-		closingDoubleBrackets = closingDoubleBrackets + key.split('}}').length-1;
+		openingBraces = openingBraces + key.split('{').length-1;
+		closingBraces = closingBraces + key.split('}').length-1;
+		openingDoubleBraces = openingDoubleBraces + key.split('{{').length-1;
+		closingDoubleBraces = closingDoubleBraces + key.split('}}').length-1;
 	});
-	compareBrackets(filepath, openingBrackets, closingBrackets, 'keys', 'single');
-	compareBrackets(filepath, openingDoubleBrackets, closingDoubleBrackets, 'keys', 'double');
+	compareBraces(filepath, openingBraces, closingBraces, 'keys', 'single');
+	compareBraces(filepath, openingDoubleBraces, closingDoubleBraces, 'keys', 'double');
 });
 
-// compare brackets pairs in values
+// compare braces pairs in values
 Object.keys(translations).forEach(function(filepath) {
-	let openingBrackets = 0;
-	let closingBrackets = 0;
-	let openingDoubleBrackets = 0;
-	let closingDoubleBrackets = 0;
+	let openingBraces = 0;
+	let closingBraces = 0;
+	let openingDoubleBraces = 0;
+	let closingDoubleBraces = 0;
 	Object.keys(translations[filepath]['data']).forEach(function(key) {
-		openingBrackets = openingBrackets + translations[filepath]['data'][key].split('{').length-1;
-		closingBrackets = closingBrackets + translations[filepath]['data'][key].split('}').length-1;
-		openingDoubleBrackets = openingDoubleBrackets + translations[filepath]['data'][key].split('{{').length-1;
-		closingDoubleBrackets = closingDoubleBrackets + translations[filepath]['data'][key].split('}}').length-1;
+		openingBraces = openingBraces + translations[filepath]['data'][key].split('{').length-1;
+		closingBraces = closingBraces + translations[filepath]['data'][key].split('}').length-1;
+		openingDoubleBraces = openingDoubleBraces + translations[filepath]['data'][key].split('{{').length-1;
+		closingDoubleBraces = closingDoubleBraces + translations[filepath]['data'][key].split('}}').length-1;
 	});
-	compareBrackets(filepath, openingBrackets, closingBrackets, 'values', 'single');
-	compareBrackets(filepath, openingDoubleBrackets, closingDoubleBrackets, 'values', 'double');
+	compareBraces(filepath, openingBraces, closingBraces, 'values', 'single');
+	compareBraces(filepath, openingDoubleBraces, closingDoubleBraces, 'values', 'double');
 });
 //console.log(translations);
 
