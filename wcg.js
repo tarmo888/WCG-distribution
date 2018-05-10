@@ -111,7 +111,7 @@ function processTxt(from_address, text) {
 
 
 				/*
-				 * Return home if cancel command 
+				 * Return home if cancel command
 				 */
 				if (text == "cancel") {
 					assocPeers[from_address].step = "home";
@@ -132,10 +132,10 @@ function processTxt(from_address, text) {
 							}) + "\n➡ " + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount"));
 						},
 						ifError: function() {
-							device.sendMessageToDevice(from_address, 'text', i18n.__("There was an unexpected error, admin is notified. Please try again in a few hours.") + "\n" + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount"));
+							device.sendMessageToDevice(from_address, 'text', i18n.__("An unexpected error occurred. Admin is notified. Please try again in a few hours.") + "\n" + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount"));
 						},
 						ifSuccess: function(statsObject) {
-							
+
 							db.takeConnectionFromPool(function(conn) {
 								var arrQueries = [];
 								var initialRewardToUser = 0;
@@ -146,7 +146,7 @@ function processTxt(from_address, text) {
 								});
 								if (statsObject.points > 0)
 									conn.addQuery(
-										arrQueries, 
+										arrQueries,
 										"INSERT OR IGNORE INTO initial_rewards (bytes_reward,assets_reward,member_id,device_address) \n\
 										VALUES ( \n\
 											CASE \n\
@@ -174,7 +174,7 @@ function processTxt(from_address, text) {
 									device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
 								});
 							});
-							
+
 						}
 					});
 					return;
@@ -213,7 +213,7 @@ function processTxt(from_address, text) {
 							sendPendingInitialRewards();
 						});
 					});
-						
+
 					} else {
 						device.sendMessageToDevice(from_address, 'text', i18n.__("This is not a valid address.") + "\n" + i18n.__(getMessageInsertAddress()));
 					}
@@ -352,7 +352,7 @@ function crawlScores(users, handle) {
 	if (users.length == 0) {
 		return handle();
 	}
-	
+
 	var i18n = {};
 	i18nModule.init(i18n);
 
@@ -561,7 +561,7 @@ function processAnyAuthorizedDistribution() {
 									 	ON users.device_address=wcg_scores.device_address \n\
 									 WHERE wcg_scores.member_id IN (?) AND distribution_id=?", [arrMemberIDs, authorizedDistributions[0].id], function(rows) {
 								rows.forEach(function(row){
-									
+
 									if (row.lang != 'unknown' && conf.isMultiLingual) {
 										i18nModule.setLocale(i18n, conf.languagesAvailable[row.lang].file);
 									}
@@ -615,7 +615,7 @@ function createDistributionOutputs(distributionID, distributionDate, handleOutpu
 					address: row.payout_address
 				});
 				arrMemberIDs.push(row.member_id);
-				
+
 			});
 			handleOutputs(arrOutputsBytes, arrOutputsAssets,arrMemberIDs);
 		}
@@ -687,7 +687,7 @@ function getLanguagesSelection() {
 	for (var index in conf.languagesAvailable) {
 		returnedTxt += "\n➡ " + getTxtCommandButton(conf.languagesAvailable[index].name, "selectLanguage_" + index);
 	}
-	
+
 	return returnedTxt;
 }
 

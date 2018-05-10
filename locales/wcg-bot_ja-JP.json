@@ -17,16 +17,12 @@
 	"Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "現在進行中の配布のWCGスコアを取得できません。 あなたのアカウント名が{{accountName}}であることを確認してください。",
 	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "あなたの貢献に対して{{amountByte}}GB と {{amountAsset}} {{labelAsset}} の報酬が支払われました",
 	"An unexpected error occurred. Admin is notified. Please try again in a few hours.": "予期しないエラーが発生しました。 管理者に通知されますので、数時間後にもう一度お試しください",
-	"This name doesn't correspond to the WCG account ID {{accountID}}": "この名前はWCGアカウントID {{accountID}}に対応していません",
-	"Change my account name": "アカウント名変更",
-	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "あなたの貢献に対して{{amountByte}}GB と {{amountAsset}} {{labelAsset}} の報酬が支払われました",
+	"This name doesn't correspond to the WCG account ID {{accountID}}": "この名前はWCGアカウントID {{accountID}} と一致しません",
+	"Change my account name": "アカウント名を変更する",
 	"This is not a valid address.": "正しいアドレスではありません。",
 	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "アカウント名: {{accountName}} はID {{WCG_id}} に対応してません。この問題を修正するか、新しいWCGアカウントをリンクするまで報酬は受け取れません。",
 	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "より詳しい情報は、こちらのwikiからご確認ください: https://wiki.byteball.org/WCG_distribution",
 	"Retry": "リトライ",
 	"Change to another account name": "他のアカウント名に切り替える",
-	"This name doesn't correspond to the WCG account ID {{accountID}}": "この名前はWCGアカウントID {{accountID}} と一致しません",
-	"Change my account name": "アカウント名を変更する",
 	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.": "{{amountByte}}GB と {{amountAsset}} {{labelAsset}} があなたのこれまでのワールド・コミュニティ・グリッドへの貢献の報酬として支払われました。"
-
 }

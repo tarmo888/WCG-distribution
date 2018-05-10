@@ -17,15 +17,12 @@
 	"Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}": "WCG Punktestand konnte für die laufende Verteilung leider nicht abgerufen werden. Bitte stellen Sie sicher, dass folgendes Ihr Kontoname ist: {{accountName}}",
 	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Sie haben eine Auszahlung in Höhe von {{amountByte}}GB und {{amountAsset}} {{labelAsset}} für Ihren Beitrag erhalten.",
 	"An unexpected error occurred. Admin is notified. Please try again in a few hours.": "Es ist ein unvorhergesehener Fehler aufgetreten. Admin wurde benachrichtigt. Bitte versuchen Sie es in ein paar Stunden erneut.",
-	"This name doesn't correspond to the WCG account ID {{accountID}}": "Dieser Name stimmt nicht mit dem WCG Konto ID überein {{accountID}}",
-	"Change my account name": "Ändere meinen Kontonamen",
-	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.": "Sie haben eine Auszahlung in Höhe von {{amountByte}}GB und {{amountAsset}} {{labelAsset}} für Ihren Beitrag erhalten.",
+	"This name doesn't correspond to the WCG account ID {{accountID}}": "Der Name stimmt nicht mit dem Namen Ihres WCG-Kontos überein: {{accountID}}",
+	"Change my account name": "Ändere den Namen meines Kontos",
 	"This is not a valid address.": "Dies ist keine valide Adresse.",
 	"The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.": "Der Kontoname {{accountName}} stimmt nicht mit der ID {{WCG_id}} überein. Sie werden keine Auszahlung erhalten, bis dieses Problem behoben ist oder Sie ein neues WCG Konto verbinden.",
 	"For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution": "Um mehr zu erfahren, besuchen Sie bitte unser Wiki: https://wiki.byteball.org/WCG_distribution",
 	"Retry": "Erneut versuchen",
-	"Change for another account name": "Auf ein anderes Konto wechseln",
-	"This name doesn't correspond to the WCG account ID {{accountID}}": "Der Name stimmt nicht mit dem Namen Ihres WCG-Kontos überein: {{accountID}}",
-	"Change my account name": "Ändere den Namen meines Kontos",
+	"Change to another account name": "Auf ein anderes Konto wechseln",
 	"A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.": "Eine Auszahlung über {{amountByte}}GB und {{amountAsset}} {{labelAsset}} wurde getätigt um Ihren Beitrag zum World Community Grid zu belohnen."
 }

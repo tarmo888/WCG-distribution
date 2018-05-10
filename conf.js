@@ -89,6 +89,10 @@ exports.languagesAvailable = {
 	hi: {
 		name: "हिन्दी",
 		file: "wcg-bot_hi-IN"
+	},
+	et: {
+		name: "Eesti",
+		file: "wcg_bot_et-EE"
 	}
 
 };
