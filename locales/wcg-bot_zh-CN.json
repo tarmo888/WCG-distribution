@@ -12,7 +12,7 @@
 	"enterNewUsername": "请填入你的WCG 账号id {{accountID}} 的新名字",
 	"cancelButton": "取消",
 	"usernameValidated": "新名字已验证.",
-	"okButton": "okButton",
+	"okButton": "ok",
 	"accountCheckFailed": "账号核对失败. 请确保把{{accountName}} 设置为账号名并重试.",
 	"scoreFetchingFailed": "无法得到正在分配中的WCG得分。请确定账号名是: {{accountName}}",
 	"payoutForCurrentWork": "已经支付{{amountByte}}GB 和{{amountAsset}} {{labelAsset}} 来奖励你做出的贡献.",

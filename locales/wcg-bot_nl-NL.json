@@ -12,7 +12,7 @@
 	"enterNewUsername": "Vul alsjeblieft de nieuwe naam van je WCG account id {{accountID}} in",
 	"cancelButton": "Annuleren",
 	"usernameValidated": "Nieuwe naam gevalideerd.",
-	"okButton": "okButton",
+	"okButton": "ok",
 	"accountCheckFailed": "Account check mislukt. Zorg alsjeblieft dat je {{accountName}} als account naam hebt ingesteld, en probeer het opnieuw.",
 	"scoreFetchingFailed": "Niet in staat om je WCG score te krijgen voor de huidige distributie. Controleer alsjeblieft of je accountnaam {{accountname}} is.",
 	"payoutForCurrentWork": "Een betaling van {{amountByte}}GB en {{amountAsset}} {{labelAsset}} was gemaakt om je contributie te belonen.",

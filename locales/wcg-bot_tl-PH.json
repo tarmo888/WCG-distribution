@@ -12,7 +12,7 @@
 	"enterNewUsername": "Mangyaring ilagay ang bagong pangalan para sa iyong WCG na account id {{accountID}}",
 	"cancelButton": "Ikansela",
 	"usernameValidated": "Ang bagong pangalan ay binigyang-bisa.",
-	"okButton": "okButton",
+	"okButton": "ok",
 	"accountCheckFailed": "Ang pagsusuri sa account ay nabigo. Mangyaring siguradohin na naitakda mo ang {{accountName}} bilang pangalan ng account at subukan ulit.",
 	"scoreFetchingFailed": "Hindi makukuha ang iyong WCG na iskor para sa kasalukuyang distribusyon. Mangyaring siguradohin na ang pangalan ng iyong account ay: {{accountName}}",
 	"payoutForCurrentWork": "Ang bayad na {{amountByte}}GB at {{amountAsset}} {{labelAsset}} ay binigay bilang kabayaran sa iyong kontribusyon",

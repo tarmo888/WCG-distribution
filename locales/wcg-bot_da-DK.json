@@ -12,7 +12,7 @@
 	"enterNewUsername": "Angiv det nye navn på din WCG-konto med ID {{accountID}}",
 	"cancelButton": "Annuller",
 	"usernameValidated": "Nyt navn bekræftet.",
-	"okButton": "okButton",
+	"okButton": "ok",
 	"accountCheckFailed": "Tjek af konto mislykkedes. Sørg for at du har brugt {{accountName}} som kontonavn og prøv igen.",
 	"scoreFetchingFailed": "Kunne ikke hente din WCG-score til igangværende distribution. Sørg for at dit kontonavn er: {{accountName}}",
 	"payoutForCurrentWork": "Udbetaling på {{amountByte}}GB og {{amountAsset}} {{labelAsset}} er gennemført som tak for din indsats",

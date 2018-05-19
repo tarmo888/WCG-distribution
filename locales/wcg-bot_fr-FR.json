@@ -12,7 +12,7 @@
 	"enterNewUsername": "Veuillez entrer le nouveau nom de votre compte WCG id {{accountID}}",
 	"cancelButton": "Annuler",
 	"usernameValidated": "Nouveau nom validé",
-	"okButton": "okButton",
+	"okButton": "ok",
 	"accountCheckFailed": "La vérification du compte a échoué. Assurez-vous que vous avez choisi {{accountName}} comme nom de compte puis réessayer.",
 	"scoreFetchingFailed": "Il a été impossible d'obtenir votre score WCG pour la distribution en cours. Assurez-vous que le nom de votre compte est: {{accountName}}",
 	"payoutForCurrentWork": "Un paiement de {{amountByte}}GB et {{amountAsset}} {{labelAsset}} vous a été fait en récompense de votre contribution",

@@ -12,7 +12,7 @@
 	"enterNewUsername": "Inserisci il nuovo nome per il tuo WGC account id {{accountID}}",
 	"cancelButton": "Annulla",
 	"usernameValidated": "Nuovo nome validato.",
-	"okButton": "okButton",
+	"okButton": "ok",
 	"accountCheckFailed": "Controllo account fallito. Assicurati di avere impostato {{accountName}} come nome account e riprova.",
 	"scoreFetchingFailed": "Impossibile ottenere il tuo WCG score per la distribuzione in corso. Assicurati che il nome account sia: {{accountName}}",
 	"payoutForCurrentWork": "Un payout di {{amountByte}}GB e {{amountAsset}} {{labelAsset}} è stato effettuato per ricompensare  la tua contribuzione.",

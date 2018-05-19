@@ -12,7 +12,7 @@
 	"enterNewUsername": "Add meg a WCG felhasználó ({{accountID}}) új nevét",
 	"cancelButton": "Mégsem",
 	"usernameValidated": "Az új név ellenőrizve lett",
-	"okButton": "okButton",
+	"okButton": "ok",
 	"accountCheckFailed": "A felhasználó azonosítása nem sikerült. Ellenőrizd, hogy beállítottad-e a(z) {{accountName}} felhasználónevet, majd próbáld újra.",
 	"scoreFetchingFailed": "Nem sikerült letölteni a WCG pontszámodat a folyamatban levő jutalom szétosztáshoz. Ellenőrizd, hogy a felhasználóneved valóban {{accountName}}",
 	"payoutForCurrentWork": "{{amountByte}}GB és {{amountAsset}} {{labelAsset}} került kifizetésre a hozzájárulásod jutalmaként.",
