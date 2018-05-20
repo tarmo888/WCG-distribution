@@ -22,9 +22,8 @@ var my_address;
 var assocPeers = [];
 var honorificAsset;
 
-
+var arrLanguages = [];
 if (conf.isMultiLingual) {
-	var arrLanguages = [];
 	for (var index in conf.languagesAvailable) {
 		arrLanguages.push(conf.languagesAvailable[index].file);
 	}
@@ -124,15 +123,15 @@ function processTxt(from_address, text) {
 					var accountName= conf.prefixForName + user[0].salt + user[0].id;
 					wcg_api.query(accountName, {
 						ifNoResponse: function() {
-							device.sendMessageToDevice(from_address, 'text', i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n" + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount"));
+							device.sendMessageToDevice(from_address, 'text', i18n.__("seemsUnresponsive") + "\n" + getTxtCommandButton(i18n.__("checkAccountButton"), "checkAndLinkAccount"));
 						},
 						ifFailed: function() {
-							device.sendMessageToDevice(from_address, 'text', i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
+							device.sendMessageToDevice(from_address, 'text', i18n.__("accountCheckFailed", {
 								accountName: accountName
-							}) + "\n➡ " + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount"));
+							}) + "\n➡ " + getTxtCommandButton(i18n.__("checkAccountButton"), "checkAndLinkAccount"));
 						},
 						ifError: function() {
-							device.sendMessageToDevice(from_address, 'text', i18n.__("An unexpected error occurred. Admin is notified. Please try again in a few hours.") + "\n" + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount"));
+							device.sendMessageToDevice(from_address, 'text', i18n.__("errorOccurred") + "\n" + getTxtCommandButton(i18n.__("checkAccountButton"), "checkAndLinkAccount"));
 						},
 						ifSuccess: function(statsObject) {
 
@@ -171,7 +170,7 @@ function processTxt(from_address, text) {
 								async.series(arrQueries, function() {
 									conn.release();
 									assocPeers[from_address].step = "insertAddress";
-									device.sendMessageToDevice(from_address, 'text', i18n.__("Your WCG account is successfully linked.") + "\n" + i18n.__(getMessageInsertAddress()));
+									device.sendMessageToDevice(from_address, 'text', i18n.__("accountLinked") + "\n" + i18n.__("insertAddress"));
 								});
 							});
 
@@ -184,11 +183,11 @@ function processTxt(from_address, text) {
 				 * If no WCG account registered or user requested to register a new one
 				 */
 				if (!user[0].member_id || text == "linkAccount") {
-					var returnedTxt = i18n.__("Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} ", {
+					var returnedTxt = i18n.__("newAccount", {
 						username: conf.prefixForName + user[0].salt + user[0].id
 					});
-					returnedTxt += "\n\n" + i18n.__("You can change it later if you desire. Click on the link below when done.");
-					returnedTxt += "\n➡ " + getTxtCommandButton(i18n.__("Check my account"), "checkAndLinkAccount");
+					returnedTxt += "\n\n" + i18n.__("usernameCanBeChanged");
+					returnedTxt += "\n➡ " + getTxtCommandButton(i18n.__("checkAccountButton"), "checkAndLinkAccount");
 					device.sendMessageToDevice(from_address, 'text', returnedTxt);
 					return;
 				}
@@ -209,13 +208,13 @@ function processTxt(from_address, text) {
 						async.series(arrQueries, function() {
 							conn.release();
 							assocPeers[from_address].step = "home";
-							device.sendMessageToDevice(from_address, 'text', i18n.__("Congratulations!") + " " + getSetupCompletedMessage());
+							device.sendMessageToDevice(from_address, 'text', i18n.__("addressLinked") + " " + getSetupCompletedMessage());
 							sendPendingInitialRewards();
 						});
 					});
 
 					} else {
-						device.sendMessageToDevice(from_address, 'text', i18n.__("This is not a valid address.") + "\n" + i18n.__(getMessageInsertAddress()));
+						device.sendMessageToDevice(from_address, 'text', i18n.__("notValidAddress") + "\n" + i18n.__("insertAddress"));
 					}
 					return;
 				}
@@ -226,7 +225,7 @@ function processTxt(from_address, text) {
 				 */
 				if (!user[0].payout_address || text == "changePayoutAddress") {
 					assocPeers[from_address].step = "insertAddress";
-					device.sendMessageToDevice(from_address, 'text', i18n.__(getMessageInsertAddress()));
+					device.sendMessageToDevice(from_address, 'text', i18n.__("insertAddress"));
 					return;
 				}
 
@@ -237,9 +236,9 @@ function processTxt(from_address, text) {
 
 				if (text == "changeAccountName") {
 					assocPeers[from_address].step = "changeAccountName";
-					device.sendMessageToDevice(from_address, 'text', i18n.__("Please enter the new name for your WCG account id {{accountID}}", {
+					device.sendMessageToDevice(from_address, 'text', i18n.__("enterNewUsername", {
 						accountID: user[0].member_id
-					}) + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
+					}) + "\n➡ " + getTxtCommandButton(i18n.__("cancelButton"), "cancel"));
 					return;
 				}
 
@@ -258,29 +257,29 @@ function processTxt(from_address, text) {
 						wcg_api.query(assocPeers[from_address].newName, {
 							ifNoResponse: function() {
 								assocPeers[from_address].step = "home";
-								device.sendMessageToDevice(from_address, 'text', i18n.__("Error, World Community Grid seems unresponsive. Please retry later.") + "\n➡ " + getTxtCommandButton(i18n.__("Retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("choose another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
+								device.sendMessageToDevice(from_address, 'text', i18n.__("seemsUnresponsive") + "\n➡ " + getTxtCommandButton(i18n.__("retryButton"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("anotherUsernameButton"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("cancelButton"), "cancel"));
 							},
 							ifFailed: function() {
-									device.sendMessageToDevice(from_address, 'text', i18n.__("Account check failed. Please make sure you set {{accountName}} as account name and retry.", {
+									device.sendMessageToDevice(from_address, 'text', i18n.__("accountCheckFailed", {
 									accountName: assocPeers[from_address].newName
-								}) + "\n➡ " + getTxtCommandButton(i18n.__("Retry"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("Change to another account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
+								}) + "\n➡ " + getTxtCommandButton(i18n.__("retryButton"), "retryChangeName") + "\n➡ " + getTxtCommandButton(i18n.__("anotherUsernameButton"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("cancelButton"), "cancel"));
 
 							},
 							ifError: function() {
 								assocPeers[from_address].step = "home";
-								device.sendMessageToDevice(from_address, 'text', i18n.__("An unexpected error occurred. Admin is notified. Please try again in a few hours.") + "\n" + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n" + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
+								device.sendMessageToDevice(from_address, 'text', i18n.__("errorOccurred") + "\n" + getTxtCommandButton(i18n.__("changeUsernameButton"), "changeAccountName") + "\n" + getTxtCommandButton(i18n.__("cancelButton"), "cancel"));
 							},
 							ifSuccess: function(statsObject) {
 								assocPeers[from_address].step = "home";
 								if (user[0].member_id === statsObject.memberId) {
 									db.query("UPDATE users SET account_name=? WHERE member_id=?", [assocPeers[from_address].newName, user[0].member_id], function() {
-										device.sendMessageToDevice(from_address, 'text', i18n.__("New name validated.") + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"))
+										device.sendMessageToDevice(from_address, 'text', i18n.__("usernameValidated") + "\n➡ " + getTxtCommandButton(i18n.__("okButton"), "ok"))
 									});
 								} else {
 									assocPeers[from_address].step = "home";
-									device.sendMessageToDevice(from_address, 'text', i18n.__("This name doesn't correspond to the WCG account ID {{accountID}}", {
+									device.sendMessageToDevice(from_address, 'text', i18n.__("usernameMismatch", {
 										accountID: user[0].member_id
-									}) + "\n➡ " + getTxtCommandButton(i18n.__("Change my account name"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("Cancel"), "cancel"));
+									}) + "\n➡ " + getTxtCommandButton(i18n.__("changeUsernameButton"), "changeAccountName") + "\n➡ " + getTxtCommandButton(i18n.__("cancelButton"), "cancel"));
 
 								}
 							}
@@ -297,22 +296,16 @@ function processTxt(from_address, text) {
 				device.sendMessageToDevice(from_address, 'text', getSetupCompletedMessage());
 
 				function getSetupCompletedMessage() {
-					return i18n.__("Setup complete! Periodically, rewards proportional to your contribution to World Community Grid project under the account {{accountName}} (ID: {{accountID}}) will be sent to your payout account.", {
+					return i18n.__("setupComplete", {
 							accountName: user[0].account_name,
 							accountID: user[0].member_id
 						}) +
-						"\n" + i18n.__("For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution") + "\n"
-						 + "\n➡ " + getTxtCommandButton(i18n.__("Change linked WCG account"), "linkAccount") + "\n➡ " + getTxtCommandButton(i18n.__("Change payout address"), "changePayoutAddress") + "\n➡ " + getTxtCommandButton(i18n.__("Change account name"), "changeAccountName");
+						"\n" + i18n.__("visitWiki") + "\n"
+						 + "\n➡ " + getTxtCommandButton(i18n.__("changeLinkedButton"), "linkAccount") + "\n➡ " + getTxtCommandButton(i18n.__("changePayoutButton"), "changePayoutAddress") + "\n➡ " + getTxtCommandButton(i18n.__("changeUsernameButton"), "changeAccountName");
 				}
 			}
 		});
 }
-
-function getMessageInsertAddress() {
-	return "Please insert the address you want to use as payout address (click on '...' Insert my address)";
-}
-
-
 
 function crawlForAnyPendingDistribution() {
 
@@ -371,9 +364,9 @@ function crawlScores(users, handle) {
 				i18nModule.setLocale(i18n, conf.languagesAvailable[users[0].lang].file);
 			}
 			var device = require('byteballcore/device.js');
-			device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("Unable to get your WCG score for the ongoing distribution. Please make sure your account name is: {{accountName}}", {
+			device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("scoreFetchingFailed", {
 				accountName: users[0].account_name
-			}) + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"));
+			}) + "\n➡ " + getTxtCommandButton(i18n.__("okButton"), "ok"));
 			db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 				users.shift();
 				crawlScores(users, function() {
@@ -411,10 +404,10 @@ function crawlScores(users, handle) {
 					i18nModule.setLocale(i18n, conf.languagesAvailable[users[0].lang].file);
 				}
 				var device = require('byteballcore/device.js');
-				device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("The account name: {{accountName}} doesn't correspond to ID {{WCG_id}}. You won't receive payouts until you correct this issue or link your new WCG account.", {
+				device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("fixUsernameMismatch", {
 					accountName: users[0].account_name,
 					WCG_id: users[0].member_id
-				}) + "\n➡ " + getTxtCommandButton(i18n.__("Ok"), "ok"));
+				}) + "\n➡ " + getTxtCommandButton(i18n.__("okButton"), "ok"));
 				db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 					users.shift();
 					crawlScores(users, function() {
@@ -495,7 +488,7 @@ function sendPendingInitialRewards() {
 										i18nModule.setLocale(i18n, conf.languagesAvailable[row.lang].file);
 									}
 									console.log("Sent payout notification in language: " + row.lang);
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.", {
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("payoutForPreviousWork", {
 										amountByte: (row.bytes_reward / 1e9).toLocaleString([], {maximumFractionDigits:9}),
 										amountAsset:row.assets_reward,labelAsset:conf.labelAsset
 									}));
@@ -566,7 +559,7 @@ function processAnyAuthorizedDistribution() {
 										i18nModule.setLocale(i18n, conf.languagesAvailable[row.lang].file);
 									}
 									console.log("Sent payout notification in language: "+ row.lang);
-									device.sendMessageToDevice(row.device_address, 'text', i18n.__("A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward  your contribution.",{amountByte:(row.bytes_reward/1e9).toLocaleString([], {maximumFractionDigits:9}), amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
+									device.sendMessageToDevice(row.device_address, 'text', i18n.__("payoutForCurrentWork",{amountByte:(row.bytes_reward/1e9).toLocaleString([], {maximumFractionDigits:9}), amountAsset:row.diff_from_previous,labelAsset:conf.labelAsset}));
 									walletGeneral.sendPaymentNotification(row.device_address, unit);
 								});
 							});
