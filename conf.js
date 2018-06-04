@@ -44,6 +44,7 @@ exports.languagesAvailable = {
 	nl: {name: "Nederlands", file: "wcg-bot_nl-NL"},
 	ru: {name: "Русский", file: "wcg-bot_ru-RU"},
 	tl: {name: "Tagalog", file: "wcg-bot_tl-PH"},
+	uk: {name: "Українська", file: "wcg-bot_uk-UA"},
 	zh: {name: "中文", file: "wcg-bot_zh-CN"}
 };
 
