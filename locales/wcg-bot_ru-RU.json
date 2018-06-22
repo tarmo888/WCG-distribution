@@ -17,7 +17,7 @@
 	"scoreFetchingFailed": "Невозможно получить ваш WCG-баланс для планируемых выплат. Пожалуйста, убедитесь в том, что ваша учетная запись {{accountName}} верна.",
 	"payoutForCurrentWork": "В качестве награды за ваш вклад сделана выплата в размере {{amountByte}}GB и {{amountAsset}} {{labelAsset}}.",
 	"errorOccurred": "Возникла неожиданная ошибка. Администратор уведомлён. Пожалуйста, повторите операцию через несколько часов.",
-	"seemsUnresponsive": "Error, World Community Grid seems unresponsive. Please retry later.",
+	"seemsUnresponsive": "Ошибка, World Community Grid не отвечает. Пожалуйста, повторите попытку позже.",
 	"usernameMismatch": "Это имя не соответствует учётной записи WCG ID {{accountID}}",
 	"notValidAddress": "Недействительный адрес.",
 	"fixUsernameMismatch": "Имя учётной записи: {{accountName}} не соответствует её ID {{WCG_id}}. Вы не сможете получать выплаты пока не исправите соответствие или не привяжете ID к новой учётной записи WCG.",

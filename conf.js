@@ -32,6 +32,7 @@ exports.languagesAvailable = {
 	en: {name: "English", file: "en"},
 	da: {name: "Dansk", file: "wcg-bot_da-DK"},
 	de: {name: "Deutsch", file: "wcg-bot_de-DE"},
+	el: {name: "Ελληνικά", file: "wcg-bot_el-GR"},
 	es: {name: "Español", file: "wcg-bot_es-ES"},
 	et: {name: "Eesti", file: "wcg-bot_et-EE"},
 	fr: {name: "Français", file: "wcg-bot_fr-FR"},
@@ -45,6 +46,7 @@ exports.languagesAvailable = {
 	ru: {name: "Русский", file: "wcg-bot_ru-RU"},
 	tl: {name: "Tagalog", file: "wcg-bot_tl-PH"},
 	uk: {name: "Українська", file: "wcg-bot_uk-UA"},
+	vi: {name: "Tiếng Việt", file: "wcg-bot_vi-VN"},
 	zh: {name: "中文", file: "wcg-bot_zh-CN"}
 };
 
