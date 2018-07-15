@@ -1,5 +1,5 @@
 {
-	"newAccount": "Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} and make sure that you have picked the 'Display my data' option on My Profile page. Step by step guide can be seen on wiki page https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} and make sure that you have chosen the 'Display my data' option on My Profile page. Step by step guide can be seen on wiki page https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "You can change it later if you desire. Click on the link below when done.",
 	"checkAccountButton": "Check my account",
 	"accountLinked": "Your WCG account is successfully linked.",
@@ -13,8 +13,8 @@
 	"cancelButton": "cancel",
 	"usernameValidated": "New username validated.",
 	"okButton": "ok",
-	"accountCheckFailed": "Account check failed. Please make sure that you set {{accountName}} as username and that you have picked the 'Display my data' option on My Profile page.",
-	"scoreFetchingFailed": "Unable to get your WCG score for the ongoing distribution. Please make sure your username is: {{accountName}} and that you have picked the 'Display my data' option on My Profile page.",
+	"accountCheckFailed": "Account check failed. Please make sure that you set {{accountName}} as username and that you have chosen the 'Display my data' option on My Profile page.",
+	"scoreFetchingFailed": "Unable to get your WCG score for the ongoing distribution. Please make sure your username is: {{accountName}} and that you have chosen the 'Display my data' option on My Profile page.",
 	"payoutForCurrentWork": "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your contribution.",
 	"errorOccurred": "An unexpected error occurred. Admin is notified. Please try again in a few hours.",
 	"seemsUnresponsive": "Error, World Community Grid seems unresponsive. Please retry later.",
