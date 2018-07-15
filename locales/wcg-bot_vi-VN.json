@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Lỗi, mạng lưới cộng đồng thế giới dường như không phản hồi. Xin vui lòng thử lại sau.",
 	"usernameMismatch": "Tên này không tương ứng với ID tài khoản WCG {{accountID}}",
 	"notValidAddress": "Đây là địa chỉ không hợp lệ.",
-	"fixUsernameMismatch": "Tên tài khoản: {{accountName}} không tương ứng với ID {{WCG_id}}. Bạn sẽ không nhận được thanh toán cho đến khi bạn khắc phục vấn đề này hoặc liên kết tài khoản WCG mới.",
+	"fixUsernameMismatch": "Tên tài khoản: {{accountName}} không tương ứng với ID {{accountID}}. Bạn sẽ không nhận được thanh toán cho đến khi bạn khắc phục vấn đề này hoặc liên kết tài khoản WCG mới.",
 	"visitWiki": "Để biết thêm chi tiết, xin vui lòng truy cập vào wiki của chúng tôi: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Thử lại",
 	"anotherUsernameButton": "Thay đổi tên một tài khoản khác",

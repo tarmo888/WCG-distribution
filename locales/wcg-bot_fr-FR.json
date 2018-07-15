@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Error, World Community Grid seems unresponsive. Please retry later.",
 	"usernameMismatch": "Ce nom ne correspond pas au compte WGC ID {{accountID}}",
 	"notValidAddress": "Cette adresse n'est pas valide.",
-	"fixUsernameMismatch": "Le nom de compte: {{accountName}} ne correspond pas à l'id {{WCG_id}}. Vous ne recevrez pas de paiements tant que ce problème ne sera pas résolu ou que vous n'aurez pas authentifié ce nouveau compte",
+	"fixUsernameMismatch": "Le nom de compte: {{accountName}} ne correspond pas à l'id {{accountID}}. Vous ne recevrez pas de paiements tant que ce problème ne sera pas résolu ou que vous n'aurez pas authentifié ce nouveau compte",
 	"visitWiki":"Pour plus d'information, merci de visiter notre wiki: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Réessayer",
 	"anotherUsernameButton": "Changer pour un autre nom de compte",

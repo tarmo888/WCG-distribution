@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "出错，世界社区网格似乎没有反应。请稍后再试。",
 	"usernameMismatch": "此名字和WCG 账号ID {{accountID}}不符",
 	"notValidAddress": "这个地址无效.",
-	"fixUsernameMismatch": "账号名: {{accountName}}和ID {{WCG_id}}不吻合. 在此问题被修正或者连接到新的WCG 账号之前无法接收付款.",
+	"fixUsernameMismatch": "账号名: {{accountName}}和ID {{accountID}}不吻合. 在此问题被修正或者连接到新的WCG 账号之前无法接收付款.",
 	"visitWiki": "需要更多信息，请访问我们wiki: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "重试",
 	"anotherUsernameButton": "更改到另一个账号",

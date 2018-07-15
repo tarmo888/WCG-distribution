@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Error, World Community Grid seems unresponsive. Please retry later.",
 	"usernameMismatch": "Ang pangalan na ito ay hindi tumutugon sa WCG account ID na {{accountID}}",
 	"notValidAddress": "Ito ay hindi isang balidong address.",
-	"fixUsernameMismatch": "Ang pangalan ng account: {{accountName}} ay hindi tumutugon sa ID na {{WCG_id}}. Hindi ka makakatanggap ng bayad hanggang sa maitama mo ang isyu o ma-link ang iyong bagung WCG na account.",
+	"fixUsernameMismatch": "Ang pangalan ng account: {{accountName}} ay hindi tumutugon sa ID na {{accountID}}. Hindi ka makakatanggap ng bayad hanggang sa maitama mo ang isyu o ma-link ang iyong bagung WCG na account.",
 	"visitWiki": "Para sa karagdagang impormasyon, mangyaring bisitahin ang aming wiki: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Subukan muli",
 	"anotherUsernameButton": "Lumipat sa ibang pangalan ng account",

@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Error, World Community Grid seems unresponsive. Please retry later.",
 	"usernameMismatch": "यह नाम मेल नहीं करता विश्व समुदाय ग्रिड खाता आईडी {{accountID}} से,",
 	"notValidAddress": "यह एक मान्य पता नहीं है,",
-	"fixUsernameMismatch": "खाता नाम: {{accountName}} मेल नहीं करता आयीडी {{WCG_id}}| आप भुगतान नहीं पाएंगे जबतक आप इस विवाद को ठीक नहीं करते या अपना नया विश्व समुदाय ग्रिड खाता जोड़ें|, ",
+	"fixUsernameMismatch": "खाता नाम: {{accountName}} मेल नहीं करता आयीडी {{accountID}}| आप भुगतान नहीं पाएंगे जबतक आप इस विवाद को ठीक नहीं करते या अपना नया विश्व समुदाय ग्रिड खाता जोड़ें|, ",
 	"visitWiki": "अधीक जानकारी के लिए, कृप्या निरिक्षण करें हमारा विकी: https://wiki.byteball.org/WCG_distribution,",
 	"retryButton": "पुनः प्रयाश करें,",
 	"anotherUsernameButton": "अन्य खाता नाम के लिए बदलाव",
