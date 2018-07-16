@@ -28,74 +28,26 @@ exports.arrayInitialRewards = [
 
 exports.isMultiLingual = true;
 
-
 exports.languagesAvailable = {
-	en: {
-		name: "English",
-		file: "en"
-	},
-	da: {
-		name: "Dansk",
-		file: "wcg-bot_da-DK"
-	},
-	fr: {
-		name: "Français",
-		file: "wcg-bot_fr-FR"
-	},
-	zh: {
-		name: "中文",
-		file: "wcg-bot_zh-CN"
-	},
-	ja: {
-		name: "日本語",
-		file: "wcg-bot_ja-JP"
-	},
-	es: {
-		name: "Español",
-		file: "wcg_bot_es-ES"
-	},
-	de: {
-		name: "Deutsch",
-		file: "wcg-bot_de-DE"
-	},
-	ko: {
-		name: "한국어",
-		file: "wcg-bot_ko-KR"
-	},
-	id: {
-		name: "Bahasa Indonesia",
-		file: "wcg-bot_id-ID"
-	},
-	it: {
-		name: "Italiano",
-		file: "wcg-bot_it-IT"
-	},
-	ru: {
-		name: "Русский",
-		file: "wcg-bot_ru-RU"
-	},
-	tl: {
-		name: "Tagalog",
-		file: "wcg-bot_tl-PH"
-	},
-	nl: {
-		name: "Nederlands",
-		file: "wcg-bot_nl-NL"
-	},
-	hu: {
-		name: "Magyar",
-		file: "wcg-bot_hu-hu"
-	},
-	hi: {
-		name: "हिन्दी",
-		file: "wcg-bot_hi-IN"
-	},
-	et: {
-		name: "Eesti",
-		file: "wcg_bot_et-EE"
-	}
-
+	en: {name: "English", file: "en"},
+	da: {name: "Dansk", file: "wcg-bot_da-DK"},
+	de: {name: "Deutsch", file: "wcg-bot_de-DE"},
+	el: {name: "Ελληνικά", file: "wcg-bot_el-GR"},
+	es: {name: "Español", file: "wcg-bot_es-ES"},
+	et: {name: "Eesti", file: "wcg-bot_et-EE"},
+	fr: {name: "Français", file: "wcg-bot_fr-FR"},
+	hi: {name: "हिन्दी", file: "wcg-bot_hi-IN"},
+	hu: {name: "Magyar", file: "wcg-bot_hu-hu"},
+	id: {name: "Bahasa Indonesia", file: "wcg-bot_id-ID"},
+	it: {name: "Italiano", file: "wcg-bot_it-IT"},
+	ja: {name: "日本語", file: "wcg-bot_ja-JP"},
+	ko: {name: "한국어", file: "wcg-bot_ko-KR"},
+	nl: {name: "Nederlands", file: "wcg-bot_nl-NL"},
+	ru: {name: "Русский", file: "wcg-bot_ru-RU"},
+	tl: {name: "Tagalog", file: "wcg-bot_tl-PH"},
+	uk: {name: "Українська", file: "wcg-bot_uk-UA"},
+	vi: {name: "Tiếng Việt", file: "wcg-bot_vi-VN"},
+	zh: {name: "中文", file: "wcg-bot_zh-CN"}
 };
-
 
 console.log('finished WCG bot conf');
