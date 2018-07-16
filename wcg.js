@@ -190,7 +190,8 @@ function processTxt(from_address, text) {
 				 */
 				if (!user[0].member_id || text == "linkAccount") {
 					var returnedTxt = i18n.__("newAccount", {
-						username: conf.prefixForName + user[0].salt + user[0].id
+						username: conf.prefixForName + user[0].salt + user[0].id,
+						teamId: conf.teamId
 					});
 					returnedTxt += "\n\n" + i18n.__("usernameCanBeChanged");
 					returnedTxt += "\n➡ " + getTxtCommandButton(i18n.__("checkAccountButton"), "checkAndLinkAccount");
