@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Fejl, World Community Grid svarer tilsyneladende ikke lige nu. Prøv igen senere.",
 	"usernameMismatch": "Navnet svarer ikke til WCG-kontoen med ID {{accountID}}",
 	"notValidAddress": "Det er en ugyldig adresse.",
-	"fixUsernameMismatch": "Kontonavnet {{accountName}} svarer ikke til ID {{WCG_id}}. Du vil ikke modtage betalinger før det er rettet eller du har linket en ny WCG-konto.",
+	"fixUsernameMismatch": "Kontonavnet {{accountName}} svarer ikke til ID {{accountID}}. Du vil ikke modtage betalinger før det er rettet eller du har linket en ny WCG-konto.",
 	"visitWiki": "For yderligere information, se vores wiki: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Prøv igen",
 	"anotherUsernameButton": "Skift til et andet kontonavn",

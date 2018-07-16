@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Fout, World Community Grid reageert niet. Probeer het later opnieuw.",
 	"usernameMismatch": "Deze naam komt niet overeen met het WCG account ID {{accountID}}",
 	"notValidAddress": "Dit is geen geldig adres.",
-	"fixUsernameMismatch": "Het account {{accountName}} komt niet overeen met het ID {{WCG_id}}. Je zal geen betalingen ontvangen totdat dit is opgelost of je een nieuwe WCG account hebt gelinkt.",
+	"fixUsernameMismatch": "Het account {{accountName}} komt niet overeen met het ID {{accountID}}. Je zal geen betalingen ontvangen totdat dit is opgelost of je een nieuwe WCG account hebt gelinkt.",
 	"visitWiki": "Voor meer informatie, bezoek onze wiki: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Probeer opnieuw",
 	"anotherUsernameButton": "Verander naar een andere accountnaam",

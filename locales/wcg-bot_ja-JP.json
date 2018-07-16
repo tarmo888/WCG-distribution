@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "エラー、World Community Gridが応答しません。後で再試行してください。",
 	"usernameMismatch": "この名前はWCGアカウントID {{accountID}} と一致しません",
 	"notValidAddress": "これは有効なアドレスではありません。",
-	"fixUsernameMismatch": "アカウント名: {{accountName}} はID {{WCG_id}} に対応してません。この問題を修正するか、新しいWCGアカウントをリンクするまで報酬は受け取れません。",
+	"fixUsernameMismatch": "アカウント名: {{accountName}} はID {{accountID}} に対応してません。この問題を修正するか、新しいWCGアカウントをリンクするまで報酬は受け取れません。",
 	"visitWiki": "より詳しい情報は、こちらのwikiからご確認ください: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "リトライ",
 	"anotherUsernameButton": "他のアカウント名に切り替える",

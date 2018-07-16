@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Error, World Community Grid seems unresponsive. Please retry later.",
 	"usernameMismatch": "Nama ini tidak sesuai dengan ID akun WCG {{accountID}}",
 	"notValidAddress": "Ini bukan alamat yang valid",
-	"fixUsernameMismatch": "Nama akun: {{accountName}} tidak sesuai dengan ID {{WCG_id}}. Anda tidak akan menerima pembayaran sampai anda memperbaiki masalah ini atau menautkan akun WCG anda yang baru.",
+	"fixUsernameMismatch": "Nama akun: {{accountName}} tidak sesuai dengan ID {{accountID}}. Anda tidak akan menerima pembayaran sampai anda memperbaiki masalah ini atau menautkan akun WCG anda yang baru.",
 	"visitWiki": "Untuk informasi lebih lanjut, silakan kunjungi wiki kami: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Mencoba kembali",
 	"anotherUsernameButton": "Ubah ke nama akun lain",

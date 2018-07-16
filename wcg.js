@@ -43,7 +43,7 @@ function checkAllTranslations() {
 		console.log("\n------- Checking " + lang + "-------");
 		i18nModule.setLocale(i18n, lang);
 		for (var string in i18nModule.getCatalog()[lang]) {
-			console.log(i18n.__(string));
+			//console.log(i18n.__(string)); // outputting some language string here hides the passphrase input
 		}
 	}
 }
@@ -406,7 +406,7 @@ function crawlScores(users, handle) {
 				var device = require('byteballcore/device.js');
 				device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("fixUsernameMismatch", {
 					accountName: users[0].account_name,
-					WCG_id: users[0].member_id
+					accountID: users[0].member_id
 				}) + "\n➡ " + getTxtCommandButton(i18n.__("okButton"), "ok"));
 				db.query("UPDATE users SET has_crawl_error=1 WHERE device_address=?", [users[0].device_address], function() {
 					users.shift();

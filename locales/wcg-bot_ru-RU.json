@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Ошибка, World Community Grid не отвечает. Пожалуйста, повторите попытку позже.",
 	"usernameMismatch": "Это имя не соответствует учётной записи WCG ID {{accountID}}",
 	"notValidAddress": "Недействительный адрес.",
-	"fixUsernameMismatch": "Имя учётной записи: {{accountName}} не соответствует её ID {{WCG_id}}. Вы не сможете получать выплаты пока не исправите соответствие или не привяжете ID к новой учётной записи WCG.",
+	"fixUsernameMismatch": "Имя учётной записи: {{accountName}} не соответствует её ID {{accountID}}. Вы не сможете получать выплаты пока не исправите соответствие или не привяжете ID к новой учётной записи WCG.",
 	"visitWiki": "Подробности смотрите на нашем wiki по ссылке: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Попытаться снова",
 	"anotherUsernameButton": "Изменить имя учётной записи на другое",

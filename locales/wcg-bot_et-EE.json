@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Viga, World Community Grid ei vasta. Palun proovi hiljem uuesti.",
 	"usernameMismatch": "See kasutajanimi ei lähe kokku WCG kontoga, millel on ID {{accountID}}",
 	"notValidAddress": "See ei ole korrektne aadress.",
-	"fixUsernameMismatch": "Kasutajanimi: {{accountName}} ei lähe kokku WCG kontoga, millel on ID {{WCG_id}}. Sulle ei laeku väljamakseid kuni sa parandad selle vea või ühendad uue WCG kontoga.",
+	"fixUsernameMismatch": "Kasutajanimi: {{accountName}} ei lähe kokku WCG kontoga, millel on ID {{accountID}}. Sulle ei laeku väljamakseid kuni sa parandad selle vea või ühendad uue WCG kontoga.",
 	"visitWiki": "Rohkem informatsiooni saab kui külastad seda aadressi: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Proovi uuesti",
 	"anotherUsernameButton": "Proovi teist kasutajanime",

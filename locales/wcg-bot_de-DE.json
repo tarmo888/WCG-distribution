@@ -20,7 +20,7 @@
 	"seemsUnresponsive": "Fehler, World Community Grid scheint nicht zu reagiert. Versuchen Sie später erneut.",
 	"usernameMismatch": "Der Name stimmt nicht mit dem Namen Ihres WCG-Kontos überein: {{accountID}}",
 	"notValidAddress": "Dies ist keine valide Adresse.",
-	"fixUsernameMismatch": "Der Kontoname {{accountName}} stimmt nicht mit der ID {{WCG_id}} überein. Sie werden keine Auszahlung erhalten, bis dieses Problem behoben ist oder Sie ein neues WCG Konto verbinden.",
+	"fixUsernameMismatch": "Der Kontoname {{accountName}} stimmt nicht mit der ID {{accountID}} überein. Sie werden keine Auszahlung erhalten, bis dieses Problem behoben ist oder Sie ein neues WCG Konto verbinden.",
 	"visitWiki": "Um mehr zu erfahren, besuchen Sie bitte unser Wiki: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Erneut versuchen",
 	"anotherUsernameButton": "Auf ein anderes Konto wechseln",
