@@ -3,7 +3,7 @@
 const request = require('request');
 const xml2js = require('xml2js');
 const notifications = require('./notifications.js');
-
+const conf = require('byteballcore/conf.js');
 
 function query(accountName, callbacks) {
 
@@ -56,6 +56,8 @@ function checkAndReformatRawObject(rawObject, handle) {
 			pointsPerDay: 0,
 			pointsPerResult: 0
 		}
+
+		formatedObject.isUserInTeam = ((rawObject.MemberStats.MemberStat[0].TeamId && rawObject.MemberStats.MemberStat[0].TeamId[0] && rawObject.MemberStats.MemberStat[0].TeamId[0] === conf.teamId) ?  true : false);
 
 		if (rawObject.MemberStats.MemberStat[0].NumDevices && rawObject.MemberStats.MemberStat[0].NumDevices[0] &&
 			rawObject.MemberStats.MemberStat[0].StatisticsTotals && rawObject.MemberStats.MemberStat[0].StatisticsTotals[0] &&

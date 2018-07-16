@@ -15,7 +15,7 @@ exports.control_addresses = [''];
 
 
 exports.daysBetweenDistributions = 1;
-exports.WCGpointToDollar = 1 / 150000;
+exports.WCGpointToDollar = 1 / 100000;
 exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
 
@@ -25,6 +25,9 @@ exports.arrayInitialRewards = [
 	{threshold: 10e6, rewardInDollars: 40},
 	{threshold: 100e6, rewardInDollars: 150}
 ];
+
+exports.teamId= "R1RD1XTFK92";
+exports.bonusInPercentForUserInTeam = 10;
 
 exports.isMultiLingual = true;
 
