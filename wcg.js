@@ -5,7 +5,6 @@ const i18nModule = require("i18n");
 const constants = require('byteballcore/constants.js');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
-const split = require('headless-byteball/split.js');
 const desktopApp = require('byteballcore/desktop_app.js');
 const notifications = require('./modules/notifications.js');
 const randomCryptoString = require('./modules/random-crypto-string');
@@ -750,8 +749,6 @@ eventBus.on('headless_wallet_ready', function() {
 				crawlForAnyPendingDistribution()
 				processAnyAuthorizedDistribution();
 				initiateNewDistributionIfNeeded();
-				split.startCheckingAndSplittingLargestOutput(my_address);
-				split.startCheckingAndSplittingLargestOutput(my_address, honorificAsset);
 				sendPendingInitialRewards();
 				setInterval(initiateNewDistributionIfNeeded, 5 * 60 * 1000);
 			}, 5000);
