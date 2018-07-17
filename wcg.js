@@ -480,10 +480,10 @@ function sendPendingInitialRewards() {
 					recipient_device_addresses: rows.map(row => row.device_address)
 				};
 				headlessWallet.sendMultiPayment(opts, function(err, unit) {
-					unlock();
 					if (err) {
 						notifications.notifyAdmin("a payment failed", err);
 						setTimeout(sendPendingInitialRewards, 300 * 1000);
+						unlock();
 					} else {
 						var device = require('byteballcore/device.js');
 						var i18n = {};
@@ -503,6 +503,7 @@ function sendPendingInitialRewards() {
 										amountAsset:row.assets_reward,labelAsset:conf.labelAsset
 									}));
 								});
+								unlock();
 							});
 
 						});
