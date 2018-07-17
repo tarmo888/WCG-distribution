@@ -1,5 +1,5 @@
 {
-	"newAccount": "Please create a World Community Grid account at https://www.worldcommunitygrid.org or modify an existing one with this username: {{username}} and make sure that you have chosen the 'Display my data' option on My Profile page. Step by step guide can be seen on wiki page https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Please create a World Community Grid account at https://join.worldcommunitygrid.org?teamId={{teamId}} or modify an existing one with this username: {{username}} and make sure that you have chosen the 'Display my data' option on My Profile page. Step by step guide can be seen on wiki page https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "You can change it later if you desire. Click on the link below when done.",
 	"checkAccountButton": "Check my account",
 	"accountLinked": "Your WCG account is successfully linked.",
@@ -24,5 +24,7 @@
 	"visitWiki": "For more information, please visit our wiki: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Retry",
 	"anotherUsernameButton": "Change to another username",
-	"payoutForPreviousWork": "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid."
+	"payoutForPreviousWork": "A payout of {{amountByte}}GB and {{amountAsset}} {{labelAsset}} was made to reward your previous contribution to World Community Grid.",
+	"userInTeam" : "As a byteball.org team member, you will get a {{bonus}}% bonus.",
+	"userNotInTeam" : "You can join the byteball.org team and get a {{bonus}}% bonus. Go https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} to join us."
 }

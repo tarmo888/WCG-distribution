@@ -170,7 +170,13 @@ function processTxt(from_address, text) {
 								async.series(arrQueries, function() {
 									conn.release();
 									assocPeers[from_address].step = "insertAddress";
-									device.sendMessageToDevice(from_address, 'text', i18n.__("accountLinked") + "\n" + i18n.__("insertAddress"));
+									device.sendMessageToDevice(from_address, 'text', i18n.__("accountLinked") + "\n" + (statsObject.isUserInTeam ? i18n.__("userInTeam", {
+												bonus: conf.bonusInPercentForUserInTeam
+											}) : i18n.__("userNotInTeam", {
+												bonus: conf.bonusInPercentForUserInTeam,
+												teamId: conf.teamId
+											})) + 
+											"\n" + i18n.__("insertAddress"));
 								});
 							});
 
@@ -184,7 +190,8 @@ function processTxt(from_address, text) {
 				 */
 				if (!user[0].member_id || text == "linkAccount") {
 					var returnedTxt = i18n.__("newAccount", {
-						username: conf.prefixForName + user[0].salt + user[0].id
+						username: conf.prefixForName + user[0].salt + user[0].id,
+						teamId: conf.teamId
 					});
 					returnedTxt += "\n\n" + i18n.__("usernameCanBeChanged");
 					returnedTxt += "\n➡ " + getTxtCommandButton(i18n.__("checkAccountButton"), "checkAndLinkAccount");
@@ -310,7 +317,7 @@ function processTxt(from_address, text) {
 function crawlForAnyPendingDistribution() {
 
 
-	db.query("SELECT id from distributions WHERE is_crawled = 0", function(distributions) {
+	db.query("SELECT id from distributions WHERE is_crawled = 0 ORDER BY id DESC LIMIT 1", function(distributions) {
 		if (distributions.length == 1) {
 			db.query("SELECT account_name,device_address,payout_address,member_id,lang FROM users WHERE member_id NOT IN (SELECT member_id FROM wcg_scores WHERE distribution_id = ?) AND account_name NOT NULL AND member_id NOT NULL AND has_crawl_error = 0", [distributions[0].id], function(users) {
 
@@ -383,12 +390,15 @@ function crawlScores(users, handle) {
 		},
 		ifSuccess: function(statsObject) {
 			if (users[0].member_id === statsObject.memberId) {
+				var coeffForUserInTeam = 1;
+				if (statsObject.isUserInTeam)
+					coeffForUserInTeam = 1 + conf.bonusInPercentForUserInTeam/100;
 				db.takeConnectionFromPool(function(conn) {
 					var arrQueries = [];
 					conn.addQuery(arrQueries, "BEGIN");
 					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_scores (distribution_id, device_address, payout_address, member_id, score, diff_from_previous) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?, ? - (SELECT score FROM wcg_scores WHERE distribution_id = (SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?))", [users[0].device_address, users[0].payout_address, statsObject.memberId, statsObject.points, statsObject.points, statsObject.memberId, statsObject.memberId]);
 					conn.addQuery(arrQueries, "INSERT OR IGNORE INTO wcg_meta_infos (distribution_id, device_address, member_id, nb_devices, run_time_per_day, run_time_per_result, points_per_hour_runtime, points_per_day, points_per_result) VALUES ((SELECT max(id) FROM distributions WHERE is_crawled=0),?,?,?,?,?,?,?,?)", [users[0].device_address, statsObject.memberId, statsObject.numDevices, statsObject.runTimePerDay, statsObject.runTimePerResult, statsObject.pointsPerHourRunTime, statsObject.pointsPerDay, statsObject.pointsPerResult]);
-					conn.addQuery(arrQueries, "UPDATE wcg_scores SET bytes_reward= CAST(diff_from_previous * ? AS INT) WHERE distribution_id =(SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?", [conversion.getPriceInBytes(1) * conf.WCGpointToDollar, statsObject.memberId, statsObject.memberId]);
+					conn.addQuery(arrQueries, "UPDATE wcg_scores SET bytes_reward= CAST(diff_from_previous * ? AS INT) WHERE distribution_id =(SELECT max( distribution_id) FROM wcg_scores WHERE member_id =?) AND member_id =?", [conversion.getPriceInBytes(1) * conf.WCGpointToDollar * coeffForUserInTeam, statsObject.memberId, statsObject.memberId]);
 					conn.addQuery(arrQueries, "COMMIT");
 					async.series(arrQueries, function() {
 						conn.release();
