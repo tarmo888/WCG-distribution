@@ -5,7 +5,6 @@ const i18nModule = require("i18n");
 const constants = require('byteballcore/constants.js');
 const eventBus = require('byteballcore/event_bus.js');
 const headlessWallet = require('headless-byteball');
-const split = require('headless-byteball/split.js');
 const desktopApp = require('byteballcore/desktop_app.js');
 const notifications = require('./modules/notifications.js');
 const randomCryptoString = require('./modules/random-crypto-string');
@@ -480,10 +479,10 @@ function sendPendingInitialRewards() {
 					recipient_device_addresses: rows.map(row => row.device_address)
 				};
 				headlessWallet.sendMultiPayment(opts, function(err, unit) {
-					unlock();
 					if (err) {
 						notifications.notifyAdmin("a payment failed", err);
 						setTimeout(sendPendingInitialRewards, 300 * 1000);
+						unlock();
 					} else {
 						var device = require('byteballcore/device.js');
 						var i18n = {};
@@ -503,6 +502,7 @@ function sendPendingInitialRewards() {
 										amountAsset:row.assets_reward,labelAsset:conf.labelAsset
 									}));
 								});
+								unlock();
 							});
 
 						});
@@ -749,8 +749,6 @@ eventBus.on('headless_wallet_ready', function() {
 				crawlForAnyPendingDistribution()
 				processAnyAuthorizedDistribution();
 				initiateNewDistributionIfNeeded();
-				split.startCheckingAndSplittingLargestOutput(my_address);
-				split.startCheckingAndSplittingLargestOutput(my_address, honorificAsset);
 				sendPendingInitialRewards();
 				setInterval(initiateNewDistributionIfNeeded, 5 * 60 * 1000);
 			}, 5000);
