@@ -1,5 +1,5 @@
 {
-	"newAccount": "Maak alsjeblieft een World Community Grid account aan op https://www.worldcommunitygrid.org of geef een bestaand account de volgende gebruikersnaam: {{username}}",
+	"newAccount": "Maak alsjeblieft een World Community Grid account aan op https://join.worldcommunitygrid.org?teamId={{teamId}} of geef een bestaand account de volgende gebruikersnaam: {{username}}",
 	"usernameCanBeChanged": "Je kan het later terug veranderen als je dit zou willen. Klik als je klaar bent op de onderstaande link.",
 	"checkAccountButton": "Controleer mijn account",
 	"accountLinked": "Je WCG account is succesvol gelinkt.",
