@@ -1,5 +1,5 @@
 {
-	"newAccount": "Vui lòng tạo tài khoản Mạng lưới Cộng đồng Thế giới tại https://www.worldcommunitygrid.org hoặc sửa đổi tài khoản hiện có với tên người dùng này: {{username}}",
+	"newAccount": "Vui lòng tạo tài khoản Mạng lưới Cộng đồng Thế giới tại https://join.worldcommunitygrid.org?teamId={{teamId}} hoặc sửa đổi tài khoản hiện có với tên người dùng này: {{username}}",
 	"usernameCanBeChanged": "Bạn có thể thay đổi nó sau này nếu bạn muốn. Nhấp vào liên kết bên dưới khi hoàn tất.",
 	"checkAccountButton": "Kiểm tra tài khoản của tôi",
 	"accountLinked": "Tài khoản WCG của bạn được liên kết thành công.",

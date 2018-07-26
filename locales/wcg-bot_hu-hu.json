@@ -1,5 +1,5 @@
 {
-	"newAccount": "Regisztrálj egy {{username}} nevű World Community Grid felhasználót a https://www.worldcommunitygrid.org weboldalon, vagy módosíts egy létezőt!",
+	"newAccount": "Regisztrálj egy {{username}} nevű World Community Grid felhasználót a https://join.worldcommunitygrid.org?teamId={{teamId}} weboldalon, vagy módosíts egy létezőt!",
 	"usernameCanBeChanged": "Később megváltoztathatod, ha akarod. Kattints az alábbi linkre, ha kész vagy!",
 	"checkAccountButton": "A felhasználóm ellenőrzése",
 	"accountLinked": "A WCG felhasználódat sikerült azonosítani.",

@@ -1,5 +1,5 @@
 {
-	"newAccount": "Palun loo World Community Grid (WCG) konto aadressil https://www.worldcommunitygrid.org või muuda oma olemasoleva konto kasutajanimeks: {{username}}",
+	"newAccount": "Palun loo World Community Grid konto aadressil https://join.worldcommunitygrid.org?teamId={{teamId}} või muuda oma olemasoleva konto kasutajanimeks: {{username}} ja veendu, et oled My Profile leheküljel privaatsusseadeteks valinud 'Display my data'. Juhendi selleks leiab sealt https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "Kui soovid, siis sa saad seda pärast muuta. Vajuta järgmisele lingile kui said tehtud.",
 	"checkAccountButton": "Ühenda minu kontoga",
 	"accountLinked": "Sinu WCG kontoga on ühendus edukalt loodud.",
@@ -8,14 +8,14 @@
 	"setupComplete": "Seadmistamine on tehtud! Makseid hakatakse tegema perioodiliselt sinu väljamakse aadressile vastavalt {{accountName}} (ID: {{accountID}}) kontoga tehtud panuse eest projektis World Community Grid",
 	"changeLinkedButton": "Muuda ühendatud WCG kontot",
 	"changePayoutButton": "Muuda väljamakse aadressi",
-	"changeUsernameButton": "Muuda kasutajanime",
+	"changeUsernameButton": "Muuda WCG kasutajanime",
 	"enterNewUsername": "Palun sisesta uus kasutajanimi, mille panid WCG kontole ID {{accountID}}",
 	"cancelButton": "Katkesta",
 	"usernameValidated": "Uus kasutajanimi kinnitatud.",
 	"okButton": "Edasi",
-	"accountCheckFailed": "Konto ühendamine ebaõnnestus. Palun kontrolli üle, et sa panid kontole kasutajanimeks {{accountName}} ja proovi uuesti.",
-	"scoreFetchingFailed": "Sinu WCG punktisumma kogumine ebaõnnestus. Palun kontrolli üle, et su konto kasutajanimi on: {{accountName}}",
-	"payoutForCurrentWork": "Sinu panuse eest tehti väljamakse summas {{amountByte}}GB ja {{amountAsset}} {{labelAsset}}.",
+	"accountCheckFailed": "Konto ühendamine ebaõnnestus. Palun kontrolli üle, et sa panid kontole kasutajanimeks {{accountName}} ja veendu, et oled My Profile leheküljel privaatsusseadeteks valinud 'Display my data'.",
+	"scoreFetchingFailed": "Sinu WCG punktisumma kogumine ebaõnnestus. Palun kontrolli üle, et su konto kasutajanimi on: {{accountName}} ja veendu, et oled My Profile leheküljel privaatsusseadeteks valinud 'Display my data'.",
+	"payoutForCurrentWork": "Sinu panuse eest tehti väljamakse summas {{amountByte}} GB ja {{amountAsset}} {{labelAsset}}.",
 	"errorOccurred": "Süsteemis esines viga. Administraatorit on sellest teavitatud. Palun proovi hiljem uuesti.",
 	"seemsUnresponsive": "Viga, World Community Grid ei vasta. Palun proovi hiljem uuesti.",
 	"usernameMismatch": "See kasutajanimi ei lähe kokku WCG kontoga, millel on ID {{accountID}}",
@@ -24,5 +24,7 @@
 	"visitWiki": "Rohkem informatsiooni saab kui külastad seda aadressi: https://wiki.byteball.org/WCG_distribution",
 	"retryButton": "Proovi uuesti",
 	"anotherUsernameButton": "Proovi teist kasutajanime",
-	"payoutForPreviousWork": "Sinu eelneva panuse eest projektis World Community Grid tehti väljamakse summas {{amountByte}}GB ja {{amountAsset}} {{labelAsset}}."
+	"payoutForPreviousWork": "Sinu eelneva panuse eest projektis World Community Grid tehti väljamakse summas {{amountByte}} GB ja {{amountAsset}} {{labelAsset}}.",
+	"userInTeam": "Sa saad {{bonus}}% lisatasu tänu sellele, et oled byteball.org meeskonna liige.",
+	"userNotInTeam": "Sa võid liituda byteball.org meeskonnaga ja teenida {{bonus}}% lisatasu. Mine https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} ja liitu meiega."
 }
