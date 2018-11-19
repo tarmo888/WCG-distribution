@@ -28,6 +28,7 @@ exports.arrayInitialRewards = [
 
 exports.teamId= "R1RD1XTFK92";
 exports.bonusInPercentForUserInTeam = 10;
+exports.maxDevices = 40;
 
 exports.isMultiLingual = true;
 
