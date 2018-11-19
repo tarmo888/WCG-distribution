@@ -1,5 +1,5 @@
 {
-	"newAccount": "Παρακαλούμε δημιουργήστε έναν λογαριασμό World Community Grid στο https://www.worldcommunitygrid.org ή επεξεργαστείτε έναν υπάρχον με το εξής όνομα: {{username}}",
+	"newAccount": "Παρακαλούμε δημιουργήστε έναν λογαριασμό World Community Grid στο https://join.worldcommunitygrid.org?teamId={{teamId}} ή επεξεργαστείτε έναν υπάρχον με το εξής όνομα: {{username}}",
 	"usernameCanBeChanged": "Μπορείτε να το αλλάξετε αργότερα, εάν το επιθυμείτε. Κάντε κλικ στον παρακάτω σύνδεσμο όταν τελειώσετε.",
 	"checkAccountButton": "Έλεγχος του λογαριασμού μου",
 	"accountLinked": "Ο λογαριασμός WCG έχει συνδεθεί επιτυχώς.",

@@ -1,5 +1,5 @@
 {
-	"newAccount": "请在 https://www.worldcommunitygrid.org 创建一个世界社区网格帐号, 或者用此用户名修改现有帐号: {{username}}",
+	"newAccount": "请在 https://join.worldcommunitygrid.org?teamId={{teamId}} 创建一个世界社区网格帐号, 或者用此用户名修改现有帐号: {{username}}",
 	"usernameCanBeChanged": "如果你想要的话，可以在后续对它进行修改。完成后请点击以下链接.",
 	"checkAccountButton": "核对我的账号",
 	"accountLinked": "WCG 账号已成功连接.",
