@@ -4,6 +4,7 @@ const request = require('request');
 const xml2js = require('xml2js');
 const notifications = require('./notifications.js');
 const conf = require('byteballcore/conf.js');
+const moment = require ('moment');
 
 function query(accountName, callbacks) {
 
@@ -54,12 +55,14 @@ function checkAndReformatRawObject(rawObject, handle) {
 			runTimePerResult: 0,
 			pointsPerHourRunTime: 0,
 			pointsPerDay: 0,
-			pointsPerResult: 0
+			pointsPerResult: 0,
+			accountAge:0
 		}
 
 		formatedObject.isUserInTeam = ((rawObject.MemberStats.MemberStat[0].TeamId && rawObject.MemberStats.MemberStat[0].TeamId[0] && rawObject.MemberStats.MemberStat[0].TeamId[0] === conf.teamId) ?  true : false);
 
-		if (rawObject.MemberStats.MemberStat[0].NumDevices && rawObject.MemberStats.MemberStat[0].NumDevices[0] &&
+		if (rawObject.MemberStats.MemberStat[0].RegisterDate && rawObject.MemberStats.MemberStat[0].RegisterDate[0] &&
+			rawObject.MemberStats.MemberStat[0].NumDevices && rawObject.MemberStats.MemberStat[0].NumDevices[0] &&
 			rawObject.MemberStats.MemberStat[0].StatisticsTotals && rawObject.MemberStats.MemberStat[0].StatisticsTotals[0] &&
 			rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points && rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points[0] &&
 			rawObject.MemberStats.MemberStat[0].StatisticsAverages && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0] &&
@@ -69,6 +72,7 @@ function checkAndReformatRawObject(rawObject, handle) {
 			rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerDay[0] &&
 			rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult && rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].PointsPerResult[0]) {
 
+			formatedObject.accountAge = moment().diff(moment(rawObject.MemberStats.MemberStat[0].RegisterDate[0]), 'years');
 			formatedObject.numDevices = Number(rawObject.MemberStats.MemberStat[0].NumDevices[0]);
 			formatedObject.points = Number(rawObject.MemberStats.MemberStat[0].StatisticsTotals[0].Points[0]);
 			formatedObject.runTimePerDay = Number(rawObject.MemberStats.MemberStat[0].StatisticsAverages[0].RunTimePerDay[0]);
