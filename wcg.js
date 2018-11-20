@@ -335,7 +335,6 @@ function crawlForAnyPendingDistribution() {
 					});
 
 				} else {
-
 					crawlScores(users, function() {
 						crawlForAnyPendingDistribution();
 					});
@@ -393,9 +392,13 @@ function crawlScores(users, handle) {
 				if (statsObject.isUserInTeam)
 					coeffForUserInTeam = 1 + conf.bonusInPercentForUserInTeam/100;
 				
+				var maxDevices = conf.maxDevices;
+				if (statsObject.accountAge > 1)
+					maxDevices *= statsObject.accountAge;
+				
 				var coeffForDevicesOverLimit = 1;
-				if (statsObject.numDevices > conf.maxDevices)
-					coeffForDevicesOverLimit = conf.maxDevices / statsObject.numDevices;
+				if (statsObject.numDevices > maxDevices)
+					coeffForDevicesOverLimit = maxDevices / statsObject.numDevices;
 				
 				db.takeConnectionFromPool(function(conn) {
 					var arrQueries = [];
