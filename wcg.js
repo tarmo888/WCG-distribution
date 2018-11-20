@@ -335,7 +335,7 @@ function crawlForAnyPendingDistribution() {
 					});
 
 				} else {
-						crawlScores(users, function() {
+					crawlScores(users, function() {
 						crawlForAnyPendingDistribution();
 					});
 				}
