@@ -47,10 +47,12 @@ exports.languagesAvailable = {
 	ja: {name: "日本語", file: "wcg-bot_ja-JP"},
 	ko: {name: "한국어", file: "wcg-bot_ko-KR"},
 	nl: {name: "Nederlands", file: "wcg-bot_nl-NL"},
+	pl: {name: "Polski", file: "wcg-bot_pl-PL"},
 	ru: {name: "Русский", file: "wcg-bot_ru-RU"},
 	tl: {name: "Tagalog", file: "wcg-bot_tl-PH"},
 	uk: {name: "Українська", file: "wcg-bot_uk-UA"},
 	vi: {name: "Tiếng Việt", file: "wcg-bot_vi-VN"},
+	yo: {name: "Yorùbá", file: "wcg-bot_yo-NG"},
 	zh: {name: "中文", file: "wcg-bot_zh-CN"}
 };
 
