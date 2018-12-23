@@ -15,7 +15,7 @@ exports.control_addresses = [''];
 
 
 exports.daysBetweenDistributions = 1;
-exports.WCGpointToDollar = 1 / 100000;
+exports.WCGpointToDollar = 1 / 1000000;
 exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
 
