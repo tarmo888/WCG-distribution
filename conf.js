@@ -20,10 +20,10 @@ exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
 
 exports.arrayInitialRewards = [
-	{threshold: 1e5, rewardInDollars: 0.2},
-	{threshold: 1e6, rewardInDollars: 3},
-	{threshold: 10e6, rewardInDollars: 40},
-	{threshold: 100e6, rewardInDollars: 150}
+	{threshold: 1e5, rewardInDollars: 0.02},
+	{threshold: 1e6, rewardInDollars: 0.3},
+	{threshold: 10e6, rewardInDollars: 4},
+	{threshold: 100e6, rewardInDollars: 15}
 ];
 
 exports.teamId= "R1RD1XTFK92";
