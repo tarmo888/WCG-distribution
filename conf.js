@@ -15,15 +15,15 @@ exports.control_addresses = [''];
 
 
 exports.daysBetweenDistributions = 1;
-exports.WCGpointToDollar = 1 / 100000;
+exports.WCGpointToDollar = 1 / 1000000;
 exports.labelAsset="WCG";
 exports.prefixForName = "Byteball_";
 
 exports.arrayInitialRewards = [
-	{threshold: 1e5, rewardInDollars: 0.2},
-	{threshold: 1e6, rewardInDollars: 3},
-	{threshold: 10e6, rewardInDollars: 40},
-	{threshold: 100e6, rewardInDollars: 150}
+	{threshold: 1e5, rewardInDollars: 0.02},
+	{threshold: 1e6, rewardInDollars: 0.3},
+	{threshold: 10e6, rewardInDollars: 4},
+	{threshold: 100e6, rewardInDollars: 15}
 ];
 
 exports.teamId= "R1RD1XTFK92";
@@ -47,10 +47,12 @@ exports.languagesAvailable = {
 	ja: {name: "日本語", file: "wcg-bot_ja-JP"},
 	ko: {name: "한국어", file: "wcg-bot_ko-KR"},
 	nl: {name: "Nederlands", file: "wcg-bot_nl-NL"},
+	pl: {name: "Polski", file: "wcg-bot_pl-PL"},
 	ru: {name: "Русский", file: "wcg-bot_ru-RU"},
 	tl: {name: "Tagalog", file: "wcg-bot_tl-PH"},
 	uk: {name: "Українська", file: "wcg-bot_uk-UA"},
 	vi: {name: "Tiếng Việt", file: "wcg-bot_vi-VN"},
+	yo: {name: "Yorùbá", file: "wcg-bot_yo-NG"},
 	zh: {name: "中文", file: "wcg-bot_zh-CN"}
 };
 
