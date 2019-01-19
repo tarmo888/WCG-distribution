@@ -1,8 +1,8 @@
 /*jslint node: true */
 "use strict";
-const eventBus = require('byteballcore/event_bus.js');
-const headlessWallet = require('headless-byteball');
-const db = require('byteballcore/db.js');
+const eventBus = require('ocore/event_bus.js');
+const headlessWallet = require('headless-obyte');
+const db = require('ocore/db.js');
 
 
 function onError(err){
@@ -10,8 +10,8 @@ function onError(err){
 }
 
 function createAsset(){
-	var composer = require('byteballcore/composer.js');
-	var network = require('byteballcore/network.js');
+	var composer = require('ocore/composer.js');
+	var network = require('ocore/network.js');
 	var callbacks = composer.getSavingCallbacks({
 		ifNotEnoughFunds: onError,
 		ifError: onError,

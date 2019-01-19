@@ -1,9 +1,9 @@
 /*jslint node: true */
 "use strict";
 var async = require('async');
-var db = require('byteballcore/db.js');
-var eventBus = require('byteballcore/event_bus.js');
-var headlessWallet = require('headless-byteball');
+var db = require('ocore/db.js');
+var eventBus = require('ocore/event_bus.js');
+var headlessWallet = require('headless-obyte');
 
 
 //const announcement = "At Byteball, we're greatful for your contribution to science and healthcare. But did you know you could earn additional 10% of Bytes by joining the Byteball.org team? Join here https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId=R1RD1XTFK92 and help us win the THOR Challenge by contributing more run time to the team, currently we are 2nd https://www.worldcommunitygrid.org/about_us/viewNewsArticle.do?articleId=574";
@@ -28,7 +28,7 @@ const message = announcement;// + optout_text;
 headlessWallet.setupChatEventHandlers();
 
 function sendAnnouncement(){
-	var device = require('byteballcore/device.js');
+	var device = require('ocore/device.js');
 	db.query(
 		"SELECT device_address FROM users",
 		rows => {
@@ -54,7 +54,7 @@ function sendAnnouncement(){
 }
 
 eventBus.on('text', function(from_address, text){
-	var device = require('byteballcore/device.js');
+	var device = require('ocore/device.js');
 	console.log('text from '+from_address+': '+text);
 	text = text.trim().toLowerCase();
 	/*if (text === 'optout'){

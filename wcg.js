@@ -2,18 +2,18 @@
 "use strict";
 const async = require('async');
 const i18nModule = require("i18n");
-const constants = require('byteballcore/constants.js');
-const eventBus = require('byteballcore/event_bus.js');
-const headlessWallet = require('headless-byteball');
-const desktopApp = require('byteballcore/desktop_app.js');
+const constants = require('ocore/constants.js');
+const eventBus = require('ocore/event_bus.js');
+const headlessWallet = require('headless-obyte');
+const desktopApp = require('ocore/desktop_app.js');
 const notifications = require('./modules/notifications.js');
 const randomCryptoString = require('./modules/random-crypto-string');
-const conf = require('byteballcore/conf.js');
-const db = require('byteballcore/db.js');
-const validationUtils = require("byteballcore/validation_utils.js");
+const conf = require('ocore/conf.js');
+const db = require('ocore/db.js');
+const validationUtils = require("ocore/validation_utils.js");
 const conversion = require('./modules/conversion');
 const wcg_api = require('./modules/wcg_api.js');
-const mutex = require('byteballcore/mutex.js');
+const mutex = require('ocore/mutex.js');
 const reports = require('./modules/reports.js');
 
 var my_address;
@@ -50,7 +50,7 @@ function checkAllTranslations() {
 
 
 function processTxt(from_address, text) {
-	var device = require('byteballcore/device.js');
+	var device = require('ocore/device.js');
 	text = text.trim();
 
 	if (!assocPeers[from_address]) {
@@ -368,7 +368,7 @@ function crawlScores(users, handle) {
 			if (users[0].lang != 'unknown' && conf.isMultiLingual) {
 				i18nModule.setLocale(i18n, conf.languagesAvailable[users[0].lang].file);
 			}
-			var device = require('byteballcore/device.js');
+			var device = require('ocore/device.js');
 			device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("scoreFetchingFailed", {
 				accountName: users[0].account_name
 			}) + "\n➡ " + getTxtCommandButton(i18n.__("okButton"), "ok"));
@@ -420,7 +420,7 @@ function crawlScores(users, handle) {
 				if (users[0].lang != 'unknown' && conf.isMultiLingual) {
 					i18nModule.setLocale(i18n, conf.languagesAvailable[users[0].lang].file);
 				}
-				var device = require('byteballcore/device.js');
+				var device = require('ocore/device.js');
 				device.sendMessageToDevice(users[0].device_address, 'text', i18n.__("fixUsernameMismatch", {
 					accountName: users[0].account_name,
 					accountID: users[0].member_id
@@ -492,7 +492,7 @@ function sendPendingInitialRewards() {
 						setTimeout(sendPendingInitialRewards, 300 * 1000);
 						unlock();
 					} else {
-						var device = require('byteballcore/device.js');
+						var device = require('ocore/device.js');
 						var i18n = {};
 						i18nModule.init(i18n);
 						db.query("UPDATE initial_rewards SET payment_unit=? WHERE member_id IN (?)", [unit, arrMemberIDs], function() {
@@ -540,11 +540,11 @@ function initiateNewDistributionIfNeeded() {
 }
 
 function processAnyAuthorizedDistribution() {
-	var device = require('byteballcore/device.js');
+	var device = require('ocore/device.js');
 	db.query("SELECT id,creation_date FROM distributions WHERE is_authorized=1 AND is_completed=0", function(authorizedDistributions) {
 		if (authorizedDistributions.length === 1) {
 
-			var walletGeneral = require('byteballcore/wallet_general.js');
+			var walletGeneral = require('ocore/wallet_general.js');
 			var i18n = {};
 			i18nModule.init(i18n);
 			createDistributionOutputs(authorizedDistributions[0].id, authorizedDistributions[0].creation_date, function(arrOutputsBytes, arrOutputsAssets,arrMemberIDs) {

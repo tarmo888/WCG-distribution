@@ -3,7 +3,7 @@
 const request = require('request');
 const xml2js = require('xml2js');
 const notifications = require('./notifications.js');
-const conf = require('byteballcore/conf.js');
+const conf = require('ocore/conf.js');
 const moment = require ('moment');
 
 function query(accountName, callbacks) {
