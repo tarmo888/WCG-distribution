@@ -3,9 +3,9 @@
 
 const cheerio = require('cheerio');
 const notifications = require('../modules/notifications.js');
-const db = require('../node_modules/byteballcore/db.js');
+const db = require('ocore/db.js');
 const fs = require('fs');
-const conf = require('../node_modules/byteballcore/conf.js');
+const conf = require('ocore/conf.js');
 
 
 function add(distributionID, distributionDate) {
@@ -72,7 +72,7 @@ function add(distributionID, distributionDate) {
 
 			rows.forEach(function(row) {
 			$('#table_first_child').after("<tr><td>" + row.member_id + "</td><td>" + row.account_name + "</td><td>" + row.score + "</td><td>" +
-				Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.byteball.org/#" + row.payout_address + "'>" + row.payout_address + "</a></td><td><a href='https://explorer.byteball.org/#" + row.payment_unit + "'>unit</a></td></tr>");
+				Math.round(row.bytes_reward) + "</td><td>" + Math.round(row.diff_from_previous) + "</td><td><a href='https://explorer.obyte.org/#" + row.payout_address + "'>" + row.payout_address + "</a></td><td><a href='https://explorer.obyte.org/#" + row.payment_unit + "'>unit</a></td></tr>");
 			});
 
 			fs.writeFile("reports/" + distributionID + "--" + distributionDate + ".html", $.html(), function(errWriting) {

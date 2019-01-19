@@ -8,7 +8,7 @@ exports.bSingleAddress = true;
 exports.storage = 'sqlite';
 
 exports.bIgnoreUnpairRequests = true;
-exports.hub = 'byteball.org/bb';
+exports.hub = 'obyte.org/bb';
 exports.deviceName = 'WCG distribution';
 exports.permanent_pairing_secret = '0000';
 exports.control_addresses = [''];
@@ -17,7 +17,7 @@ exports.control_addresses = [''];
 exports.daysBetweenDistributions = 1;
 exports.WCGpointToDollar = 1 / 1000000;
 exports.labelAsset="WCG";
-exports.prefixForName = "Byteball_";
+exports.prefixForName = "Obyte_";
 
 exports.arrayInitialRewards = [
 	{threshold: 1e5, rewardInDollars: 0.02},

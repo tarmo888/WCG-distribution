@@ -1,13 +1,13 @@
 {
 	"name": "WCG-distribution",
 	"version": "1.0.0",
-	"description": "A byteball bot to reward WCG contributors",
+	"description": "An Obyte bot to reward WCG contributors",
 	"main": "wcg.js",
 	"author": "papabyte.com",
 	"license": "MIT",
 	"dependencies": {
-		"byteballcore": "git+https://github.com/byteball/byteballcore.git",
-		"headless-byteball": "git+https://github.com/byteball/headless-byteball.git",
+		"ocore": "git+https://github.com/byteball/ocore.git",
+		"headless-obyte": "git+https://github.com/byteball/headless-obyte.git",
 		"i18n": "^0.8.3",
 		"request": "^2.85.0",
 		"xml2js": "^0.4.19",

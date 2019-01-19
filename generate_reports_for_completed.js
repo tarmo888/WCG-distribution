@@ -1,7 +1,7 @@
 /*jslint node: true */
 "use strict";
 
-const db = require('byteballcore/db.js');
+const db = require('ocore/db.js');
 const fs = require('fs');
 const reports = require('./modules/reports.js');
 
