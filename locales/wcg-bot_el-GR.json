@@ -1,5 +1,5 @@
 {
-	"newAccount": "Παρακαλούμε δημιουργήστε έναν λογαριασμό World Community Grid στο https://join.worldcommunitygrid.org?teamId={{teamId}} ή τροποποιήστε έναν ήδη υπάρχων λογαριασμό με αυτό το όνομα χρήστη: {{username}} και επιβεβαιώστε πως ενεργοποιήσατε την επιλογή 'Προβολή των δεδομένων μου' στην σελίδα 'Το Προφίλ Μου'. Οδηγίες βήμα προς βήμα, μπορείτε να βρείτε στην παρακάτω σελίδα του wiki https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Παρακαλούμε δημιουργήστε έναν λογαριασμό World Community Grid στο https://join.worldcommunitygrid.org?teamId={{teamId}} ή τροποποιήστε έναν ήδη υπάρχων λογαριασμό με αυτό το όνομα χρήστη: {{username}} και επιβεβαιώστε πως ενεργοποιήσατε την επιλογή 'Προβολή των δεδομένων μου' στην σελίδα 'Το Προφίλ Μου'. Οδηγίες βήμα προς βήμα, μπορείτε να βρείτε στην παρακάτω σελίδα του wiki https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "Μπορείτε να το αλλάξετε αργότερα, εάν το επιθυμείτε. Κάντε κλικ στον παρακάτω σύνδεσμο όταν τελειώσετε.",
 	"checkAccountButton": "Έλεγχος του λογαριασμού μου",
 	"accountLinked": "Ο λογαριασμός WCG έχει συνδεθεί επιτυχώς.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "Αυτό το όνομα δεν αντιστοιχεί στο όνομα χρήστη του λογαριασμού WCG με ID {{accountID}}",
 	"notValidAddress": "Αυτή δεν είναι μια έγκυρη διεύθυνση.",
 	"fixUsernameMismatch": "Το όνομα χρήστη: {{accountName}} δεν αντιστοιχεί στο ID {{accountID}}. Δεν θα λάβετε πληρωμές μέχρι να διορθώσετε το πρόβλημα ή να συνδέσετε νέο λογαριασμό WCG.",
-	"visitWiki": "Για περισσότερες πληροφορίες, παρακαλούμε επισκεφθείτε το wiki: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "Για περισσότερες πληροφορίες, παρακαλούμε επισκεφθείτε το wiki: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Επανάληψη",
 	"anotherUsernameButton": "Αλλαγή ονόματος χρήστη",
 	"payoutForPreviousWork": "Μια πληρωμή {{amountByte}} GB και {{amountAsset}} {{labelAsset}} έγινε ως επιβράβευση για την συμβολή σας στο World Community Grid.",
-	"userInTeam": "Σαν μέλος της ομάδας του byteball.org, θα πάρετε μπόνους {{bonus}}%.",
+	"userInTeam": "Σαν μέλος της ομάδας του obyte.org, θα πάρετε μπόνους {{bonus}}%.",
 	"userNotInTeam": "Μπορείτε να γίνετε μέλος της ομάδας του bytebal.org και να πάρετε μπόνους {{bonus}}%. Πηγαίνετε στην σελίδα https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} για να γίνετε μέλος."
 }

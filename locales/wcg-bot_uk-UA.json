@@ -1,5 +1,5 @@
 {
-	"newAccount": "Будь ласка створіть обліковий запис World Community Grid на https://join.worldcommunitygrid.org?teamId={{teamId}} або змініть існуючий на це імя:{{username}} і переконайтесь що ви вибрали параметр 'Показати мої дані' на сторінці профілю. Покрокова інструкція доступна на вікі сторінці https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Будь ласка створіть обліковий запис World Community Grid на https://join.worldcommunitygrid.org?teamId={{teamId}} або змініть існуючий на це імя:{{username}} і переконайтесь що ви вибрали параметр 'Показати мої дані' на сторінці профілю. Покрокова інструкція доступна на вікі сторінці https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "Ви можете змінити це пізніше, якщо забажаєте. Для закінчення натисніть на посилання нижче.",
 	"checkAccountButton": "Перевірити мій обліковий запис",
 	"accountLinked": "Ваш WCG обліковий запис успішно підв'язано.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "Цей обліковий запис не відповідає обліковому запису WCG з ID {{accountID}}",
 	"notValidAddress": "Це не коректний адрес.",
 	"fixUsernameMismatch": "Ім'я облікового запису: {{accountName}} не відповідає ID {{accountID}}. Ви не отримаєте виплат, доки ви не виправити цю проблему або не підв'яжете його з новим обліковим записом WCG.",
-	"visitWiki": "Для додаткової інформації, відвідайте будь ласка наш вікі-сайт: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "Для додаткової інформації, відвідайте будь ласка наш вікі-сайт: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Спробувати знову",
 	"anotherUsernameButton": "Змінити обліковий запис на інший",
 	"payoutForPreviousWork": "Виплати {{amountByte}} GB і {{amountAsset}} {{labelAsset}} було зроблено, як подяка за ваш попередній внесок до World Community Grid.",
-	"userInTeam": "Як член команди byteball.org ви отримаєте бонус {{bonus}}%.",
-	"userNotInTeam": "Ви можете приєднатися до команди byteball.org і отримати бонус {{bonus}}%. Перейдіть сюди https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} щоб приєднатися до нас."
+	"userInTeam": "Як член команди obyte.org ви отримаєте бонус {{bonus}}%.",
+	"userNotInTeam": "Ви можете приєднатися до команди obyte.org і отримати бонус {{bonus}}%. Перейдіть сюди https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} щоб приєднатися до нас."
 }

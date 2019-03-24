@@ -21,7 +21,7 @@
 	"usernameMismatch": "Ez a név nem tartozik a {{accountID}} azonosítószámú WCG felhasználóhoz",
 	"notValidAddress": "Érvénytelen cím!",
 	"fixUsernameMismatch": "A {{accountName}} felhasználónév nem tartozik a {{accountID}} azonosítóhoz. A jutalmad nem kerül kifizetésre amíg ezt a hibát ki nem javítod vagy amíg be nem állítasz egy másik WCG felhasználót.",
-	"visitWiki": "További információkért látogass a https://wiki.byteball.org/WCG_distribution weboldalra",
+	"visitWiki": "További információkért látogass a https://wiki.obyte.org/WCG_distribution weboldalra",
 	"retryButton": "Újra",
 	"anotherUsernameButton": "Másik felhasználónévre váltás",
 	"payoutForPreviousWork": "{{amountByte}}GB és {{amountAsset}} {{labelAsset}} került kifizetésre a korábbi World Community Grid-hez való hozzájárulásod jutalmaként."

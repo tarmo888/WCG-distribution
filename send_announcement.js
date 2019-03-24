@@ -6,20 +6,20 @@ var eventBus = require('ocore/event_bus.js');
 var headlessWallet = require('headless-obyte');
 
 
-//const announcement = "At Byteball, we're greatful for your contribution to science and healthcare. But did you know you could earn additional 10% of Bytes by joining the Byteball.org team? Join here https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId=R1RD1XTFK92 and help us win the THOR Challenge by contributing more run time to the team, currently we are 2nd https://www.worldcommunitygrid.org/about_us/viewNewsArticle.do?articleId=574";
+//const announcement = "At Obyte, we're greatful for your contribution to science and healthcare. But did you know you could earn additional 10% of Bytes by joining the Obyte WCG team? Join here https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId=R1RD1XTFK92 and help us win the THOR Challenge by contributing more run time to the team, currently we are 2nd https://www.worldcommunitygrid.org/about_us/viewNewsArticle.do?articleId=574";
 const announcement = `Dear WCG cruncher,
 
 First of all we want to wish you Happy Holidays with your friends and family! 
 
 Last time we wrote you about diminishing returns for more than 40 connected devices. This measure alone has proven to be ineffective. Unfortunately we are going to have to change the rules a second time.
 
-Again, WCG rewards are meant for new users to be able to discover Byteball by donating some spare CPU power to a good cause, not to make money. 
+Again, WCG rewards are meant for new users to be able to discover Obyte by donating some spare CPU power to a good cause, not to make money. 
 
 For now we are going to reduce the reward to $1 per 1,000,000 WCG points earned, effective from Monday December 24 on. This way the method will still work like a faucet but it will be much harder to make a profit, which was never intended. We’ll monitor what this change does and make further changes when necessary.
 
 Happy crunching :)
 
-The Byteball Team
+The Obyte WCG Team
 `;
 
 //const optout_text = "\n\nIf you don't want to receive news here, [click here to opt out](command:optout).";

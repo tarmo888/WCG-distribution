@@ -1,5 +1,5 @@
 {
-	"newAccount": "Opret en World Community Grid-konto på https://join.worldcommunitygrid.org?teamid={{teamId}} eller ret en eksisterende kontos username til {{username}} og sørg for at \"Display my data\"-valget til på My Profile-siden. Der er lavet en skridt-for-skridt guide på denne wiki-side: https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Opret en World Community Grid-konto på https://join.worldcommunitygrid.org?teamid={{teamId}} eller ret en eksisterende kontos username til {{username}} og sørg for at \"Display my data\"-valget til på My Profile-siden. Der er lavet en skridt-for-skridt guide på denne wiki-side: https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "Du kan ændre navnet senere hvis du vil. Klik på linket herunder når du er klar.",
 	"checkAccountButton": "Tjek min konto",
 	"accountLinked": "Din WCG-konto blev linket korrekt.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "Brugernavnet svarer ikke til WCG-kontoen med ID {{accountID}}",
 	"notValidAddress": "Det er en ugyldig adresse.",
 	"fixUsernameMismatch": "Kontonavnet {{accountName}} svarer ikke til ID {{accountID}}. Du vil ikke modtage betalinger før det er rettet eller du har linket en ny WCG-konto.",
-	"visitWiki": "For yderligere information, se vores wiki: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "For yderligere information, se vores wiki: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Prøv igen",
 	"anotherUsernameButton": "Skift til et andet brugernavn",
 	"payoutForPreviousWork": "Udbetaling af {{amountByte}} GB og {{amountAsset}} {{labelAsset}} er sendt som tak for dit hidtidige bidrag til World Community Grid.",
-	"userInTeam": "Som medlem af byteball.org-holdet modtager du en bonus på {{bonus}}%.",
-	"userNotInTeam": "Du kan tilmelde dig byteball.org-holdet og modtage en bonus på {{bonus}}%. Gå til https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} for at tilmelde dig holdet."
+	"userInTeam": "Som medlem af obyte.org-holdet modtager du en bonus på {{bonus}}%.",
+	"userNotInTeam": "Du kan tilmelde dig obyte.org-holdet og modtage en bonus på {{bonus}}%. Gå til https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} for at tilmelde dig holdet."
 }
