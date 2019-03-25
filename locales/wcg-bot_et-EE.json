@@ -1,5 +1,5 @@
 {
-	"newAccount": "Palun loo World Community Grid konto aadressil https://join.worldcommunitygrid.org?teamId={{teamId}} või muuda oma olemasoleva konto kasutajanimeks: {{username}} ja veendu, et oled My Profile leheküljel privaatsusseadeteks valinud 'Display my data'. Juhendi selleks leiab sealt https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Palun loo World Community Grid konto aadressil https://join.worldcommunitygrid.org?teamId={{teamId}} või muuda oma olemasoleva konto kasutajanimeks: {{username}} ja veendu, et oled My Profile leheküljel privaatsusseadeteks valinud 'Display my data'. Juhendi selleks leiab sealt https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "Kui soovid, siis sa saad seda pärast muuta. Vajuta järgmisele lingile kui said tehtud.",
 	"checkAccountButton": "Ühenda minu kontoga",
 	"accountLinked": "Sinu WCG kontoga on ühendus edukalt loodud.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "See kasutajanimi ei lähe kokku WCG kontoga, millel on ID {{accountID}}",
 	"notValidAddress": "See ei ole korrektne aadress.",
 	"fixUsernameMismatch": "Kasutajanimi: {{accountName}} ei lähe kokku WCG kontoga, millel on ID {{accountID}}. Sulle ei laeku väljamakseid kuni sa parandad selle vea või ühendad uue WCG kontoga.",
-	"visitWiki": "Rohkem informatsiooni saab kui külastad seda aadressi: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "Rohkem informatsiooni saab kui külastad seda aadressi: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Proovi uuesti",
 	"anotherUsernameButton": "Proovi teist kasutajanime",
 	"payoutForPreviousWork": "Sinu eelneva panuse eest projektis World Community Grid tehti väljamakse summas {{amountByte}} GB ja {{amountAsset}} {{labelAsset}}.",
-	"userInTeam": "Sa saad {{bonus}}% lisatasu tänu sellele, et oled byteball.org meeskonna liige.",
-	"userNotInTeam": "Sa võid liituda byteball.org meeskonnaga ja teenida {{bonus}}% lisatasu. Mine https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} ja liitu meiega."
+	"userInTeam": "Sa saad {{bonus}}% lisatasu tänu sellele, et oled Obyte WCG meeskonna liige.",
+	"userNotInTeam": "Sa võid liituda Obyte WCG meeskonnaga ja teenida {{bonus}}% lisatasu. Mine https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} ja liitu meiega."
 }

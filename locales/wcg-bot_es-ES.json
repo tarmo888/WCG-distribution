@@ -21,7 +21,7 @@
 	"usernameMismatch": "Este nombre no corresponde al ID de cuenta de la WCG {{accountID}}",
 	"notValidAddress": "Esta dirección no es válida.",
 	"fixUsernameMismatch": "La cuenta con nombre: {{accountName}} no se corresponde con el ID {{accountID}}. No recibirá pagos hasta que corrija el problema o hasta que enlace nueva cuenta WCG.",
-	"visitWiki": "Para más información, por favor visite nuestra wiki: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "Para más información, por favor visite nuestra wiki: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Reintentar",
 	"anotherUsernameButton": "Cambiar a otro nombre de cuenta",
 	"payoutForPreviousWork": "Un pago por {{amountByte}}GB y {{amountAsset}} {{labelAsset}} fue realizado para recompensar tu contribución previa a la World Community Grid."

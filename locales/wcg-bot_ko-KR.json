@@ -1,5 +1,5 @@
 {
-	"newAccount": "https://join.worldcommunitygrid.org?teamId={{teamId}}에서 World Community Grid 계정을 생성하거나 기존 계정을 이 사용자 이름 {{username}} 으로 변경해주세요. 또한, 내 프로필 화면에서 'Display my data'를 선택했는지 확인해주세요. 단계별 가이드 문서는 위키 페이지에서 확인하실 수 있습니다 https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "https://join.worldcommunitygrid.org?teamId={{teamId}}에서 World Community Grid 계정을 생성하거나 기존 계정을 이 사용자 이름 {{username}} 으로 변경해주세요. 또한, 내 프로필 화면에서 'Display my data'를 선택했는지 확인해주세요. 단계별 가이드 문서는 위키 페이지에서 확인하실 수 있습니다 https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "언제든지 설정은 변경할 수 있습니다. 완료하셨다면 아래 링크를 클릭해주세요.",
 	"checkAccountButton": "내 계정 확인하기",
 	"accountLinked": "WCG 계정이 성공적으로 연결되었습니다.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "이 사용자 이름은 WCG 계정 ID {{accountID}}와 일치하지 않습니다",
 	"notValidAddress": "주소 정보가 올바르지 않습니다.",
 	"fixUsernameMismatch": "사용자 이름: {{accountName}} 이 ID {{accountID}} 와 일치하지 않습니다. 이 문제를 해결하지 못하거나 새로운 WCG 계정을 연결하지 않으면 보상이 지급되지 않습니다",
-	"visitWiki": "추가 정보는 위키 사이트를 방문해주세요: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "추가 정보는 위키 사이트를 방문해주세요: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "재시도",
 	"anotherUsernameButton": "다른 사용자 이름으로 변경하기",
 	"payoutForPreviousWork": "{{amountByte}}GB 와 {{amountAsset}} {{labelAsset}} 는 이전에 수행한 World Community Grid 관련 공헌 보상입니다.",
-	"userInTeam": "byteball.org 팀 구성원이라면 {{bonus}}%를 보너스로 받을 수 있을 것입니다.",
-	"userNotInTeam": "byteball.org 팀에 합류해서 {{bonus}}% 보너스를 받으세요. 가입은 이곳에서 하시면 됩니다: https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}}."
+	"userInTeam": "obyte.org 팀 구성원이라면 {{bonus}}%를 보너스로 받을 수 있을 것입니다.",
+	"userNotInTeam": "obyte.org 팀에 합류해서 {{bonus}}% 보너스를 받으세요. 가입은 이곳에서 하시면 됩니다: https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}}."
 }

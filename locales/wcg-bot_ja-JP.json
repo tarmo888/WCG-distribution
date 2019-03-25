@@ -1,5 +1,5 @@
 {
-	"newAccount": "https://join.worldcommunitygrid.org?teamId={{teamId}} でWorld Community Gridアカウントを作成するか、ユーザー名: {{username}}で登録しているアカウントを修正し、My Profileページで「Display my data」オプションを選択していることを確認してください。Wikiに手引きがあります https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "https://join.worldcommunitygrid.org?teamId={{teamId}} でWorld Community Gridアカウントを作成するか、ユーザー名: {{username}}で登録しているアカウントを修正し、My Profileページで「Display my data」オプションを選択していることを確認してください。Wikiに手引きがあります https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "必要に応じて後で変更することができます。 完了したら、下のリンクをクリックしてください。",
 	"checkAccountButton": "アカウント確認",
 	"accountLinked": "WCGアカウントが正常に接続されました。",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "このユーザー名はWCGアカウントID {{accountID}} と一致しません",
 	"notValidAddress": "これは有効なアドレスではありません。",
 	"fixUsernameMismatch": "ユーザー名: {{accountName}} はID {{accountID}} に対応してません。この問題を修正するか、新しいWCGアカウントをリンクするまで報酬は受け取れません。",
-	"visitWiki": "より詳しい情報は、こちらのwikiからご確認ください: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "より詳しい情報は、こちらのwikiからご確認ください: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "リトライ",
 	"anotherUsernameButton": "他のユーザー名に切り替える",
 	"payoutForPreviousWork": "{{amountByte}} GB と {{amountAsset}} {{labelAsset}} があなたのこれまでのWorld Community Gridへの貢献の報酬として支払われました。",
-	"userInTeam": "byteball.orgのチームメンバーとして、あなたは{{bonus}}%のボーナスを得ます。",
-	"userNotInTeam": "byteball.orgチームに参加して{{bonus}}%のボーナスを手に入れましょう。 https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} に移動して参加しよう。"
+	"userInTeam": "obyte.orgのチームメンバーとして、あなたは{{bonus}}%のボーナスを得ます。",
+	"userNotInTeam": "obyte.orgチームに参加して{{bonus}}%のボーナスを手に入れましょう。 https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} に移動して参加しよう。"
 }

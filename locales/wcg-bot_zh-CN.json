@@ -1,5 +1,5 @@
 {
-	"newAccount": "请在https://join.worldcommunitygrid.org?teamId={{teamId}}创建一个World Community Grid帐户，或者以此用户名：{{username}} 修改现有帐户，并确保在您的个人资料页面选中“显示我的数据”选项。可在如下维基页面查看分步指南：https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "请在https://join.worldcommunitygrid.org?teamId={{teamId}}创建一个World Community Grid帐户，或者以此用户名：{{username}} 修改现有帐户，并确保在您的个人资料页面选中“显示我的数据”选项。可在如下维基页面查看分步指南：https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "如果你想要的话，可以在后续对它进行修改。完成后请点击以下链接.",
 	"checkAccountButton": "核对我的账号",
 	"accountLinked": "WCG 账号已成功连接.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "这个用户名与 WCG 账户 ID {{accountID}} 不符",
 	"notValidAddress": "这个地址无效.",
 	"fixUsernameMismatch": "用户名：{{accountName}} 与 ID {{accountID}} 不符。在您修正这个错误或链接到新的WCG账户之前，您不会收到付款。",
-	"visitWiki": "需要更多信息，请访问我们wiki: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "需要更多信息，请访问我们wiki: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "重试",
 	"anotherUsernameButton": "更改到另一个用户名",
 	"payoutForPreviousWork": "已经支付 {{amountByte}} GB 和 {{amountAsset}} {{labelAsset}} 来奖励您之前对世界社区网格所做出的贡献。",
-	"userInTeam": "作为 byteball.org 团队成员，您会获得 {{bonus}}% 的奖金。",
-	"userNotInTeam": "您可以加入 byteball.org 团队，以获得 {{bonus}}% 奖金。请访问 https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} 来加入我们。"
+	"userInTeam": "作为 obyte.org 团队成员，您会获得 {{bonus}}% 的奖金。",
+	"userNotInTeam": "您可以加入 obyte.org 团队，以获得 {{bonus}}% 奖金。请访问 https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} 来加入我们。"
 }

@@ -1,5 +1,5 @@
 {
-	"newAccount": "Maak alsjeblieft een World Community Grid account aan via https://join.worldcommunitygrid.org?teamId={{teamId}} of verander een bestaand account met gebruikersnaam: {{username}} en zorg er voor dat je de \"Data weergeven\" optie aan hebt staan in Mijn Profiel. Een stap voor stap pagina kan worden gevonden op de wiki pagina https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Maak alsjeblieft een World Community Grid account aan via https://join.worldcommunitygrid.org?teamId={{teamId}} of verander een bestaand account met gebruikersnaam: {{username}} en zorg er voor dat je de \"Data weergeven\" optie aan hebt staan in Mijn Profiel. Een stap voor stap pagina kan worden gevonden op de wiki pagina https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "Je kan het later terug veranderen als je dit zou willen. Klik als je klaar bent op de onderstaande link.",
 	"checkAccountButton": "Controleer mijn account",
 	"accountLinked": "Je WCG account is succesvol gelinkt.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "Deze gebruikersnaam komt niet overeen met het WCG account ID {{accountID}}",
 	"notValidAddress": "Dit is geen geldig adres.",
 	"fixUsernameMismatch": "De gebruikersnaam: {{accountName}} komt niet overeen met het ID {{accountID}}. Je zal geen betalingen ontvangen totdat dit is opgelost of totdat je een nieuw WCG account hebt gelinkt.",
-	"visitWiki": "Voor meer informatie, bezoek onze wiki: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "Voor meer informatie, bezoek onze wiki: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Probeer opnieuw",
 	"anotherUsernameButton": "Verander naar een andere gebruikersnaam",
 	"payoutForPreviousWork": "Een betaling van {{amountByte}} GB en {{amountAsset}}{{labelAsset}} was gemaakt om je te belonen voor je vorige contributies aan World Community Grid.",
-	"userInTeam": "Als lid van team byteball.org krijg je een {{bonus}}% bonus.",
-	"userNotInTeam": "Je kan lid worden van het byteball.org team en een {{bonus}}% bonus krijgen. Ga naar https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} om lid te worden."
+	"userInTeam": "Als lid van team obyte.org krijg je een {{bonus}}% bonus.",
+	"userNotInTeam": "Je kan lid worden van het obyte.org team en een {{bonus}}% bonus krijgen. Ga naar https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamId={{teamId}} om lid te worden."
 }

@@ -21,7 +21,7 @@
 	"usernameMismatch": "Nama ini tidak sesuai dengan ID akun WCG {{accountID}}",
 	"notValidAddress": "Ini bukan alamat yang valid",
 	"fixUsernameMismatch": "Nama akun: {{accountName}} tidak sesuai dengan ID {{accountID}}. Anda tidak akan menerima pembayaran sampai anda memperbaiki masalah ini atau menautkan akun WCG anda yang baru.",
-	"visitWiki": "Untuk informasi lebih lanjut, silakan kunjungi wiki kami: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "Untuk informasi lebih lanjut, silakan kunjungi wiki kami: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Mencoba kembali",
 	"anotherUsernameButton": "Ubah ke nama akun lain",
 	"payoutForPreviousWork": "Pembayaran dari {{amountByte}} GB dan {{amountAsset}} {{labelAsset}} dibuat untuk memberi penghargaan atas kontribusi anda sebelumnya ke World Community Grid."

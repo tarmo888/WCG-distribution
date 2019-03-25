@@ -1,5 +1,5 @@
 {
-	"newAccount": "Jowo seda akanti Giridi Awujo Agbaye ni https://join.worldcommunitygrid.org?teamId= {{teamId}} tabi satunse eyi ti o ti wa tele pelu oruko olumulo yi: {{username}} ki o si ri daju pe o ti yan asayan 'Safihan data mi' lori ojuewe Awori Mi. Itosona lesese wa ni ojuewe wiki https://wiki.byteball.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
+	"newAccount": "Jowo seda akanti Giridi Awujo Agbaye ni https://join.worldcommunitygrid.org?teamId= {{teamId}} tabi satunse eyi ti o ti wa tele pelu oruko olumulo yi: {{username}} ki o si ri daju pe o ti yan asayan 'Safihan data mi' lori ojuewe Awori Mi. Itosona lesese wa ni ojuewe wiki https://wiki.obyte.org/WCG_distribution#A_quick_guide_to_linking_your_wallet_with_WCG",
 	"usernameCanBeChanged": "O le yipada nigbamiran ti o ba fe. Te lori itokasi to wa labe ti o ba setan.",
 	"checkAccountButton": "Sayewo akanti mi",
 	"accountLinked": "Akanti WCG re ti je sisopo laseyori.",
@@ -21,10 +21,10 @@
 	"usernameMismatch": "Oruko olumulo yi ko ba ID akanti WCG naa mu {{accountID}}",
 	"notValidAddress": "Eyi ki se adiresi to fidimule.",
 	"fixUsernameMismatch": "Oruko olumulo naa: {{accountName}} ko ba ID mu {{accountID}}. O ko ni gba owo jade titi ti iwo o fi se atunse yi tabi se asopo akanti WCG re tuntun.",
-	"visitWiki": "Fun alaye siwaju si, jowo kan si wiki wa: https://wiki.byteball.org/WCG_distribution",
+	"visitWiki": "Fun alaye siwaju si, jowo kan si wiki wa: https://wiki.obyte.org/WCG_distribution",
 	"retryButton": "Tun gbiyanju",
 	"anotherUsernameButton": "Yi pada si oruko olumulo miran",
 	"payoutForPreviousWork": "Iye to je {{amountByte}} GB ati {{amountAsset}} {{labelAsset}} ni a ti san lati je ere fun ilowosi re tele si Giridi Awujo Agbaye.",
-	"userInTeam": "Gege bi omo egbe byteball.org, wa gba ebun {{bonus}}%.",
-	"userNotInTeam": "O le darapo mo egbe byteball.org ki o si gba ebun {{bonus}}%. Lo si https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamld={{teamId}} lati darapo mowa."
+	"userInTeam": "Gege bi omo egbe obyte.org, wa gba ebun {{bonus}}%.",
+	"userNotInTeam": "O le darapo mo egbe obyte.org ki o si gba ebun {{bonus}}%. Lo si https://www.worldcommunitygrid.org/team/viewTeamInfo.do?teamld={{teamId}} lati darapo mowa."
 }
