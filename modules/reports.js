@@ -119,10 +119,10 @@ async function add(distributionID, distributionDate) {
 	}
 
 	$ = cheerio.load(content);
-	$('title').append("Report for distribution id " + distributionID + " on " + distributionDate);
-	$('h3').append("Distribution id " + distributionID + " on " + distributionDate);
-	$('#totalBytes').append(normalTotalBytes + "GB distributed  to " + rows.length + " addresses");
-	$('#totalAssets').append(totalAssets + conf.labelAsset + " distributed " + " to " + rows.length + " addresses");
+	$('title').append(`Report for distribution id ${distributionID} on ${distributionDate}`);
+	$('h3').append(`Distribution id ${distributionID} on ${distributionDate}`);
+	$('#totalBytes').append(`${normalTotalBytes} GB distributed to ${rows.length} addresses`);
+	$('#totalAssets').append(`${totalAssets} ${conf.labelAsset} distributed to ${rows.length} addresses`);
 
 	rows.forEach(function(row) {
 		$('#table_first_child').after(
@@ -138,7 +138,7 @@ async function add(distributionID, distributionDate) {
 	});
 
 	try {
-		await writeFile("reports/" + distributionID + "--" + distributionDate + ".html", $.html());
+		await writeFile(`reports/${distributionID}--${distributionDate}.html`, $.html());
 	}
 	catch (err) {
 		notifications.notifyAdmin("I couldn't write report", err);
