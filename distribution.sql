@@ -10,14 +10,12 @@ CREATE TABLE users (
 	creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (device_address) REFERENCES correspondent_devices(device_address)
 );
-
-
+-- query separator
 CREATE TABLE honorific_asset (
 	unit CHAR(44),
 	creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
-
+-- query separator
 CREATE TABLE distributions (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	is_crawled TINYINT DEFAULT 0,
@@ -25,9 +23,9 @@ CREATE TABLE distributions (
 	is_completed TINYINT DEFAULT 0,
 	creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
+-- query separator
 INSERT INTO distributions (is_crawled,is_completed,is_authorized) VALUES (1,1,1); -- insert a first dummy distribution
-
+-- query separator
 CREATE TABLE wcg_scores (
 	distribution_id INTEGER,
 	device_address CHAR(33) NOT NULL,
@@ -42,7 +40,7 @@ CREATE TABLE wcg_scores (
 	FOREIGN KEY (distribution_id) REFERENCES distributions(id),
 	FOREIGN KEY (device_address) REFERENCES users(device_address)
 );
-	
+-- query separator
 CREATE TABLE wcg_meta_infos(
 	distribution_id INTEGER,
 	device_address CHAR(33) NOT NULL,
@@ -58,7 +56,7 @@ CREATE TABLE wcg_meta_infos(
 	FOREIGN KEY (distribution_id) REFERENCES distributions(id),
 	FOREIGN KEY (device_address) REFERENCES users(device_address)
 );
-
+-- query separator
 CREATE TABLE initial_rewards(
 	member_id INTEGER UNIQUE,
 	device_address CHAR(33) NOT NULL,

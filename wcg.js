@@ -750,9 +750,11 @@ eventBus.on('headless_wallet_ready', function() {
 					process.exit(1)
 				}, 5000);
 			}
+			else {
+				honorificAsset = honorific_asset[0].unit;
+				console.log("honorific asset: " + honorificAsset);
+			}
 
-			honorificAsset = honorific_asset[0].unit;
-			console.log("honorific asset: " + honorificAsset);
 			setTimeout(function() {
 				crawlForAnyPendingDistribution()
 				processAnyAuthorizedDistribution();
