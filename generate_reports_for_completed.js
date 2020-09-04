@@ -38,15 +38,12 @@ async function startGeneration() {
 
 startGeneration();
 
-function generateReports(rows) {
-
+async function generateReports(rows) {
 	if (!rows[0]) {
 		console.log("\nHTML files generated");
 		process.exit();
 	}
-	reports.add(rows[0].id, rows[0].creation_date);
+	await reports.add(rows[0].id, rows[0].creation_date);
 	rows.shift();
-	setTimeout(function() {
-		generateReports(rows)
-	}, 50)
+	generateReports(rows);
 }

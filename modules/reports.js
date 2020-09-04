@@ -16,13 +16,12 @@ async function add(distributionID, distributionDate) {
 	// fix path on Windows
 	distributionDate = process.platform === 'win32' ? distributionDate.replace(/:/g, '.') : distributionDate;
 
-	let rows = db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
+	let rows = await db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
 			INNER JOIN wcg_meta_infos \n\
 				ON wcg_scores.member_id = wcg_meta_infos.member_id \n\
 			 	AND wcg_scores.distribution_id = wcg_meta_infos.distribution_id\n\
 			LEFT JOIN users ON users.device_address = wcg_scores.device_address\n\
 			WHERE wcg_scores.distribution_id = ? AND bytes_reward>0 ORDER BY bytes_reward ASC", [distributionID]);
-	rows = rows.length ? rows : [];
 
 	let $;
 	let content;
@@ -101,7 +100,6 @@ async function add(distributionID, distributionDate) {
 		return console.error(err);
 	}
 
-	
 	/*
 	*	Create html file for this distribution
 	*/
