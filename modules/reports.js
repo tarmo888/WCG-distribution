@@ -46,15 +46,15 @@ async function add(distributionID, distributionDate) {
 	}
 
 	$ = cheerio.load(content);
-	$('#table_first_child').after(
-	`<tr>
-		<td>${distributionID}</td>
-		<td>${distributionDate}</td>
-		<td>${rows.length}</td>
-		<td>${normalTotalBytes}</td>
-		<td>${normalTotalAssets}</td>
-		<td><a href="${distributionID}--${distributionDate}.html">details</a></td>
-	</tr>`);
+	$('#table_first_child').after(`
+		<tr>
+			<td>${distributionID}</td>
+			<td>${distributionDate}</td>
+			<td>${rows.length}</td>
+			<td>${normalTotalBytes}</td>
+			<td>${normalTotalAssets}</td>
+			<td><a href="${distributionID}--${distributionDate}.html">details</a></td>
+		</tr>`);
 
 	try {
 		await writeFile("reports/index.html", $.html());
@@ -80,14 +80,14 @@ async function add(distributionID, distributionDate) {
 		  normalizeWhitespace: true,
 		}
 	});
-	const newItem = 
-	`<item>
-		<title>Distribution ${distributionID}</title>
-		<link>https://wcg.report/${distributionID}--${encodeURIComponent(distributionDate)}.html</link>
-		<description>Addresses: ${rows.length}, Total GB: ${normalTotalBytes}, Total WCG points: ${normalTotalAssets}</description>
-		<pubDate>${distributionUTCDate}</pubDate>
-		<guid isPermaLink="false">guid:wcg.report:ID=${distributionID}</guid>
-	</item>`;
+	const newItem = `
+		<item>
+			<title>Distribution ${distributionID}</title>
+			<link>https://wcg.report/${distributionID}--${encodeURIComponent(distributionDate)}.html</link>
+			<description>Addresses: ${rows.length}, Total GB: ${normalTotalBytes}, Total WCG points: ${normalTotalAssets}</description>
+			<pubDate>${distributionUTCDate}</pubDate>
+			<guid isPermaLink="false">guid:wcg.report:ID=${distributionID}</guid>
+		</item>`;
 
 	if (!$('item').length) {
 		$('channel').append(newItem);
@@ -125,16 +125,16 @@ async function add(distributionID, distributionDate) {
 	$('#totalAssets').append(`${totalAssets} ${conf.labelAsset} distributed to ${rows.length} addresses`);
 
 	rows.forEach(function(row) {
-		$('#table_first_child').after(
-		`<tr>
-			<td>${row.member_id}</td>
-			<td>${row.account_name}</td>
-			<td>${row.score}</td>
-			<td>${Math.round(row.bytes_reward)}</td>
-			<td>${Math.round(row.diff_from_previous)}</td>
-			<td><a href="https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org/#${row.payout_address}">${row.payout_address}</a></td>
-			<td><a href="https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org/#${row.payment_unit}">unit</a></td>
-		</tr>`);
+		$('#table_first_child').after(`
+			<tr>
+				<td>${row.member_id}</td>
+				<td>${row.account_name}</td>
+				<td>${row.score}</td>
+				<td>${Math.round(row.bytes_reward)}</td>
+				<td>${Math.round(row.diff_from_previous)}</td>
+				<td><a href="https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org/#${row.payout_address}">${row.payout_address}</a></td>
+				<td><a href="https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org/#${row.payment_unit}">unit</a></td>
+			</tr>`);
 	});
 
 	try {
