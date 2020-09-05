@@ -11,10 +11,15 @@ const writeFile = util.promisify(fs.writeFile);
 const conf = require('ocore/conf.js');
 
 
-async function add(distributionID, distributionDate) {
+async function add(distributionID, distributionDate, cb) {
 	const distributionUTCDate = new Date(distributionDate).toUTCString();
 	// fix path on Windows
 	distributionDate = process.platform === 'win32' ? distributionDate.replace(/:/g, '.') : distributionDate;
+	if (typeof cb !== 'function') {
+		cb = function(err){
+			if (err) console.error(err);
+		};
+	}
 
 	let rows = await db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
 			INNER JOIN wcg_meta_infos \n\
@@ -42,7 +47,7 @@ async function add(distributionID, distributionDate) {
 	}
 	catch (err) {
 		notifications.notifyAdmin("Couldn't open index.html", err);
-		return console.error(err);
+		return cb(err);
 	}
 
 	$ = cheerio.load(content);
@@ -61,7 +66,7 @@ async function add(distributionID, distributionDate) {
 	}
 	catch (err) {
 		notifications.notifyAdmin("I couldn't write index.html", err);
-		return console.error(err);
+		return cb(err);
 	}
 
 	/*
@@ -72,7 +77,7 @@ async function add(distributionID, distributionDate) {
 	}
 	catch (err) {
 		notifications.notifyAdmin("Couldn't open rss.xml", err);
-		return console.error(err);
+		return cb(err);
 	}
 
 	$ = cheerio.load(content, {
@@ -93,6 +98,9 @@ async function add(distributionID, distributionDate) {
 		$('channel').append(newItem);
 	}
 	else {
+		if ($('item').length >= 20) {
+			$('item').last().remove();
+		}
 		$('item').before(newItem);
 	}
 	const newDate = new Date().toUTCString();
@@ -104,18 +112,27 @@ async function add(distributionID, distributionDate) {
 	}
 	catch (err) {
 		notifications.notifyAdmin("I couldn't write rss.xml", err);
-		return console.error(err);
+		return cb(err);
 	}
 
 	/*
-	*	Create html file for this distribution
+	*	Create html file for this distribution (if needed)
 	*/
+	const detailedReport = `reports/${distributionID}--${distributionDate}.html`;
+	try {
+		await readFile(detailedReport);
+		console.log('existed', detailedReport);
+		return cb(null);
+	}
+	catch (err) {}
+	console.log('regenerated', detailedReport);
+
 	try {
 		content = await readFile('reports/templates/distribution.html');
 	}
 	catch (err) {
 		notifications.notifyAdmin("Couldn't open reports/templates/distribution.html", err);
-		return console.error(err);
+		return cb(err);
 	}
 
 	$ = cheerio.load(content);
@@ -123,6 +140,7 @@ async function add(distributionID, distributionDate) {
 	$('h3').append(`Distribution id ${distributionID} on ${distributionDate}`);
 	$('#totalBytes').append(`${normalTotalBytes} GB distributed to ${rows.length} addresses`);
 	$('#totalAssets').append(`${totalAssets} ${conf.labelAsset} distributed to ${rows.length} addresses`);
+	const explorer = `https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org`;
 
 	rows.forEach(function(row) {
 		$('#table_first_child').after(`
@@ -132,18 +150,19 @@ async function add(distributionID, distributionDate) {
 				<td>${row.score}</td>
 				<td>${Math.round(row.bytes_reward)}</td>
 				<td>${Math.round(row.diff_from_previous)}</td>
-				<td><a href="https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org/#${row.payout_address}">${row.payout_address}</a></td>
-				<td><a href="https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org/#${row.payment_unit}">unit</a></td>
+				<td><a href="${explorer}/#${row.payout_address}">${row.payout_address}</a></td>
+				<td><a href="${explorer}/#${row.payment_unit}">unit</a></td>
 			</tr>`);
 	});
 
 	try {
-		await writeFile(`reports/${distributionID}--${distributionDate}.html`, $.html());
+		await writeFile(detailedReport, $.html());
 	}
 	catch (err) {
 		notifications.notifyAdmin("I couldn't write report", err);
-		return console.error(err);
+		return cb(err);
 	}
+	cb(null);
 }
 
 
