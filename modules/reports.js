@@ -120,7 +120,7 @@ async function add(distributionID, distributionDate, cb) {
 	*/
 	const detailedReport = `reports/${distributionID}--${distributionDate}.html`;
 	try {
-		await readFile();
+		await readFile(detailedReport);
 		console.log('existed', detailedReport);
 		return cb(null);
 	}
