@@ -8,7 +8,7 @@ exports.bSingleAddress = true;
 exports.storage = 'sqlite';
 
 exports.bIgnoreUnpairRequests = true;
-exports.hub = 'obyte.org/bb';
+exports.hub = process.env.testnet ? 'obyte.org/bb-test' : 'obyte.org/bb';
 exports.deviceName = 'WCG distribution';
 exports.permanent_pairing_secret = '0000';
 exports.control_addresses = [''];

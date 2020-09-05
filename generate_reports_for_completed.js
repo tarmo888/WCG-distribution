@@ -3,41 +3,47 @@
 
 const db = require('ocore/db.js');
 const fs = require('fs');
+const util = require('util');
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 const reports = require('./modules/reports.js');
+const notifications = require('./modules/notifications.js');
 
 /*
 *	Erase the current index.html with the template then regenerate all reports
 */
 
-fs.readFile('reports/templates/index.html', (errReading, content) => {
-	if (errReading) {
-		notifications.notifyAdmin("Couldn't open reports/templates/index.html", errReading);
-		return console.log("Couldn't open reports/templates/index.html\n" + errReading);
+async function startGeneration() {
+	let content;
+	try {
+		content = await readFile('reports/templates/index.html');
+		await writeFile("reports/index.html", content);
 	}
-
-	fs.writeFile("reports/index.html", content, function(errWriting) {
-		if (errWriting) {
-			notifications.notifyAdmin("I couldn't write index.html", errWriting);
-			return console.log("Couldn't write reports/index.html\n" + errWriting);
-		}
-
-		db.query("SELECT id,creation_date FROM distributions WHERE is_completed=1 ORDER BY id ASC", function(rows) {
-			generateReports(rows);
-		});
-
+	catch (error) {
+		notifications.notifyAdmin("Couldn't open/write reports/templates/index.html", error);
+		return console.error(error);
+	}
+	try {
+		content = await readFile('reports/templates/rss.xml');
+		await writeFile("reports/rss.xml", content);
+	}
+	catch (error) {
+		notifications.notifyAdmin("Couldn't open/write reports/templates/rss.xml", error);
+		return console.error(error);
+	}
+	db.query("SELECT id,creation_date FROM distributions WHERE is_completed=1 ORDER BY id ASC", function(rows) {
+		generateReports(rows);
 	});
+}
 
-});
+startGeneration();
 
-
-
-function generateReports(rows) {
-
-	if (!rows[0])
-		return console.log("\nHTML files generated");
-	reports.add(rows[0].id, rows[0].creation_date);
+async function generateReports(rows) {
+	if (!rows[0]) {
+		console.log("\nHTML files generated");
+		process.exit();
+	}
+	await reports.add(rows[0].id, rows[0].creation_date);
 	rows.shift();
-	setTimeout(function() {
-		generateReports(rows)
-	}, 50)
+	generateReports(rows);
 }
