@@ -94,13 +94,13 @@ async function add(distributionID, distributionDate, cb) {
 			<guid isPermaLink="false">guid:wcg.report:ID=${distributionID}</guid>
 		</item>`;
 
+	if ($('item').length >= 20) {
+		$('item').last().remove();
+	}
 	if (!$('item').length) {
 		$('channel').append(newItem);
 	}
 	else {
-		if ($('item').length >= 20) {
-			$('item').last().remove();
-		}
 		$('item').before(newItem);
 	}
 	const newDate = new Date().toUTCString();
