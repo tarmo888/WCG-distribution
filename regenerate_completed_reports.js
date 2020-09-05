@@ -13,7 +13,7 @@ const notifications = require('./modules/notifications.js');
 *	Erase the current index.html with the template then regenerate all reports
 */
 
-async function startGeneration() {
+async function initializeReporting() {
 	let content;
 	try {
 		content = await readFile('reports/templates/index.html');
@@ -31,19 +31,19 @@ async function startGeneration() {
 		notifications.notifyAdmin("Couldn't open/write reports/templates/rss.xml", error);
 		return console.error(error);
 	}
-	db.query("SELECT id,creation_date FROM distributions WHERE is_completed=1 ORDER BY id ASC", function(rows) {
-		generateReports(rows);
-	});
+	db.query("SELECT id,creation_date FROM distributions WHERE is_completed=1 ORDER BY id ASC", regenerateReports);
 }
 
-startGeneration();
+initializeReporting();
 
-async function generateReports(rows) {
+function regenerateReports(rows) {
 	if (!rows[0]) {
-		console.log("\nHTML files generated");
+		console.log("\nReporting files regenerated");
 		process.exit();
 	}
-	await reports.add(rows[0].id, rows[0].creation_date);
-	rows.shift();
-	generateReports(rows);
+	reports.add(rows[0].id, rows[0].creation_date, function(err){
+		if (err) console.error(err);
+		rows.shift();
+		regenerateReports(rows);
+	});
 }
