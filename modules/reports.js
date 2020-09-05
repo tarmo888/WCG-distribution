@@ -82,7 +82,7 @@ async function add(distributionID, distributionDate, cb) {
 
 	$ = cheerio.load(content, {
 		xml: {
-		  normalizeWhitespace: true,
+		  normalizeWhitespace: false,
 		}
 	});
 	const newItem = `
