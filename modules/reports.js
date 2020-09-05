@@ -15,7 +15,11 @@ async function add(distributionID, distributionDate, cb) {
 	const distributionUTCDate = new Date(distributionDate).toUTCString();
 	// fix path on Windows
 	distributionDate = process.platform === 'win32' ? distributionDate.replace(/:/g, '.') : distributionDate;
-	cb = (typeof cb === 'function') ? cb : function(err){if (err) console.error(err)};
+	if (typeof cb !== 'function') {
+		cb = function(err){
+			if (err) console.error(err);
+		};
+	}
 
 	let rows = await db.query("SELECT wcg_scores.distribution_id AS distribution_id,wcg_scores.member_id AS member_id,bytes_reward, diff_from_previous,account_name,payment_unit,score,wcg_scores.payout_address AS payout_address FROM wcg_scores \n\
 			INNER JOIN wcg_meta_infos \n\
