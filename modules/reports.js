@@ -85,8 +85,7 @@ async function add(distributionID, distributionDate, cb) {
 		  normalizeWhitespace: false,
 		}
 	});
-	const newItem = `
-		<item>
+	const newItem = `<item>
 			<title>Distribution ${distributionID}</title>
 			<link>https://wcg.report/${distributionID}--${encodeURIComponent(distributionDate)}.html</link>
 			<description>Addresses: ${rows.length}, Total GB: ${normalTotalBytes}, Total WCG points: ${normalTotalAssets}</description>
@@ -143,7 +142,8 @@ async function add(distributionID, distributionDate, cb) {
 	const explorer = `https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org`;
 
 	rows.forEach(function(row) {
-		$('#table_first_child').after(`<tr>
+		$('#table_first_child').after(`
+			<tr>
 				<td>${row.member_id}</td>
 				<td>${row.account_name}</td>
 				<td>${row.score}</td>
