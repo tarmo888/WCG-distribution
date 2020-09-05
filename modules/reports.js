@@ -101,7 +101,7 @@ async function add(distributionID, distributionDate, cb) {
 		$('channel').append(newItem);
 	}
 	else {
-		$('item').before(newItem);
+		$('item').first().before(newItem);
 	}
 	const newDate = new Date().toUTCString();
 	$('pubDate').text(newDate);
