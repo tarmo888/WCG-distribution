@@ -143,8 +143,7 @@ async function add(distributionID, distributionDate, cb) {
 	const explorer = `https://${(process.env.testnet ? 'testnet' : '')}explorer.obyte.org`;
 
 	rows.forEach(function(row) {
-		$('#table_first_child').after(`
-			<tr>
+		$('#table_first_child').after(`<tr>
 				<td>${row.member_id}</td>
 				<td>${row.account_name}</td>
 				<td>${row.score}</td>
