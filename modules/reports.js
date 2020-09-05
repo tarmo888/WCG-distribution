@@ -118,13 +118,14 @@ async function add(distributionID, distributionDate, cb) {
 	/*
 	*	Create html file for this distribution (if needed)
 	*/
+	const detailedReport = `reports/${distributionID}--${distributionDate}.html`;
 	try {
-		await readFile(`reports/${distributionID}--${distributionDate}.html`);
-		console.log('existed', `reports/${distributionID}--${distributionDate}.html`);
+		await readFile();
+		console.log('existed', detailedReport);
 		return cb(null);
 	}
 	catch (err) {}
-	console.log('regenerated', `reports/${distributionID}--${distributionDate}.html`);
+	console.log('regenerated', detailedReport);
 
 	try {
 		content = await readFile('reports/templates/distribution.html');
@@ -155,7 +156,7 @@ async function add(distributionID, distributionDate, cb) {
 	});
 
 	try {
-		await writeFile(`reports/${distributionID}--${distributionDate}.html`, $.html());
+		await writeFile(detailedReport, $.html());
 	}
 	catch (err) {
 		notifications.notifyAdmin("I couldn't write report", err);
