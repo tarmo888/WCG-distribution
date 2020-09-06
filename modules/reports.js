@@ -103,8 +103,8 @@ async function add(distributionID, distributionDate, cb) {
 		$('item').first().before(newItem);
 	}
 	const newDate = new Date().toUTCString();
-	$('pubDate').text(newDate);
-	$('lastBuildDate').text(newDate);
+	$('pubDate').first().text(newDate);
+	$('lastBuildDate').first().text(newDate);
 
 	try {
 		await writeFile("reports/rss.xml", $.xml());
