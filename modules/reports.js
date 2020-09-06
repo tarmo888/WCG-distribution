@@ -82,11 +82,10 @@ async function add(distributionID, distributionDate, cb) {
 
 	$ = cheerio.load(content, {
 		xml: {
-		  normalizeWhitespace: true,
+		  normalizeWhitespace: false,
 		}
 	});
-	const newItem = `
-		<item>
+	const newItem = `<item>
 			<title>Distribution ${distributionID}</title>
 			<link>https://wcg.report/${distributionID}--${encodeURIComponent(distributionDate)}.html</link>
 			<description>Addresses: ${rows.length}, Total GB: ${normalTotalBytes}, Total WCG points: ${normalTotalAssets}</description>
@@ -101,11 +100,11 @@ async function add(distributionID, distributionDate, cb) {
 		$('channel').append(newItem);
 	}
 	else {
-		$('item').before(newItem);
+		$('item').first().before(newItem);
 	}
 	const newDate = new Date().toUTCString();
-	$('pubDate').text(newDate);
-	$('lastBuildDate').text(newDate);
+	$('pubDate').first().text(newDate);
+	$('lastBuildDate').first().text(newDate);
 
 	try {
 		await writeFile("reports/rss.xml", $.xml());
